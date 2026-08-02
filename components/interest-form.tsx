@@ -49,7 +49,7 @@ export function InterestForm({ locale }: { locale: Locale }) {
       <div className="container split">
         <div>
           <p className="eyebrow">{it ? "Validazione anonima" : "Anonymous validation"}</p>
-          <h2>{it ? "Sei interessato al servizio" : "Are you interested in the service?"}</h2>
+          <h2>{it ? "Sei interessato al servizio?" : "Are you interested in the service?"}</h2>
           <p className="lead">
             {it
               ? "Raccogliamo dati utili a valutare periodo, prodotto e area di domanda."

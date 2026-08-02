@@ -135,8 +135,8 @@ function PricingTables({ locale }: { locale: Locale }) {
           <h2>{it ? "Prezzi per scooter" : "Prices per scooter"}</h2>
           <p className="lead">
             {it
-              ? "Importi provvisori, IVA inclusa, da confermare con disponibilità e condizioni."
-              : "Provisional prices including VAT, subject to availability and confirmation of terms."}
+              ? "Importi provvisori, calcolati per 125cc, IVA inclusa e assicurazione completa, da confermare con disponibilità e condizioni."
+              : "Provisional prices including VAT calculated and full insurance for 125cc, subject to availability and confirmation of terms."}
           </p>
           <div className="table-scroll">
             <table className="rate-table">
@@ -162,8 +162,8 @@ function PricingTables({ locale }: { locale: Locale }) {
           </div>
           <p className="table-note">
             {it
-              ? "Noleggio minimo di 24 ore con 150 km inclusi, anche per un utilizzo di sole quattro ore; 900 km nei 7 giorni. Extra: 0,25 €/km."
-              : "Minimum 24-hour rental with 150 km included, even for only four hours of use; 900 km for 7 days. Extra distance: €0.25/km."}
+              ? "Noleggio minimo di 24 ore con 150 km inclusi; 900 km nei 7 giorni. Extra: 0,25 €/km."
+              : "Minimum 24-hour rental with 150 km included; 900 km for 7 days. Extra distance: €0.25/km."}
           </p>
         </div>
 

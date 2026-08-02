@@ -31,7 +31,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           {!hasEmail && !hasPhone && (
             <p><Link href={contactPath}>{it ? "Invia una richiesta" : "Send an enquiry"}</Link></p>
           )}
-          <small>{it ? "Ritiro in zona Viale Alghero, Bosa." : "Pickup in the Viale Alghero area of Bosa."}</small>
+          <small>{it ? "Ritiro a Bosa." : "Pickup in Bosa."}</small>
         </div>
       </div>
     </footer>

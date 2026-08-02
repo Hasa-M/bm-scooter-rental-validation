@@ -328,7 +328,7 @@ export const itPages: PageContent[] = [
       {
         heading: "Titolare del trattamento",
         body: [
-          "Il titolare è " + businessConfig.legalName + ", marchio " + businessConfig.brandName + ", con sede in " + businessConfig.address.streetAddress + ", " + businessConfig.address.postalCode + " " + businessConfig.address.city + " (" + businessConfig.address.province + "), Italia. Contatto privacy: " + businessConfig.email + ". I valori tra parentesi quadre devono essere completati prima della pubblicazione.",
+          "Contatto privacy: " + businessConfig.email + ". I valori tra parentesi quadre devono essere completati prima della pubblicazione.",
         ],
       },
       {
