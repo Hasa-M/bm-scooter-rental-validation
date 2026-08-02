@@ -1,18 +1,23 @@
-import type { ScooterInterest, ServiceLocation } from "./options";
+import type { AgeBand, OriginArea, ScooterInterest, ServiceLocation } from "./options";
 
 export type Lead = {
   startDate: string;
   endDate: string;
   scooters: number;
-  name: string;
-  email: string;
   vehicleType: ScooterInterest;
-  age: number;
+  ageBand: AgeBand;
   licensedOverFiveYears: boolean;
   stayLocation: ServiceLocation;
-  origin?: string;
-  language: "it" | "en";
+  originArea: OriginArea;
   notes?: string;
+  language: "it" | "en";
+  contactRequested: boolean;
+  email?: string;
+  contactConsentGrantedAt?: string;
+  privacyNoticeAcknowledgedAt: string;
+  submittedAt: string;
+  researchPurpose: "market-validation";
+  reviewAfter: string;
 };
 
 export interface LeadRepository {

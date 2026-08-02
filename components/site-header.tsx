@@ -1,6 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Locale, PageContent } from "@/lib/content/types";
 import { businessConfig } from "@/lib/config/business";
+import { siteImagePaths } from "@/lib/config/images";
 import { getAlternatePath } from "@/lib/content";
 
 export function SiteHeader({ locale, page }: { locale: Locale; page: PageContent }) {
@@ -14,7 +16,7 @@ export function SiteHeader({ locale, page }: { locale: Locale; page: PageContent
       <a className="skip-link" href="#main">{isIt ? "Vai al contenuto" : "Skip to content"}</a>
       <div className="container nav">
         <Link className="brand" href={"/" + locale}>
-          <span className="brand-mark" aria-hidden="true">B</span>
+          <Image className="brand-logo" src={siteImagePaths.logo} alt="" width={44} height={44} priority />
           {businessConfig.brandName}
         </Link>
         <nav className="nav-links" aria-label={isIt ? "Navigazione principale" : "Main navigation"}>

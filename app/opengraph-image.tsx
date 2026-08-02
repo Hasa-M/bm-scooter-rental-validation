@@ -14,15 +14,15 @@ export default function Image() {
         flexDirection: "column",
         justifyContent: "space-between",
         padding: "72px",
-        color: "#17312d",
-        background: "linear-gradient(135deg,#f4ead8,#fffaf1 55%,#b9ddd5)",
+        color: "#281b35",
+        background: "linear-gradient(135deg,#f1e8ff,#fbf9ff 48%,#ffe4d1)",
         fontFamily: "sans-serif",
       }}
     >
       <div style={{ fontSize: 24, fontWeight: 800, letterSpacing: 2 }}>BOSA · SARDEGNA</div>
       <div style={{ display: "flex", flexDirection: "column" }}>
         <div style={{ fontSize: 82, lineHeight: 1, fontWeight: 800 }}>Bosa in Scooter</div>
-        <div style={{ marginTop: 24, fontSize: 34, color: "#0f756b" }}>Più libertà. Più Bosa.</div>
+        <div style={{ marginTop: 24, fontSize: 34, color: "#7c3aed" }}>Più libertà. Più Bosa.</div>
       </div>
       <div style={{ fontSize: 22 }}>Scooter 50cc e 125cc · Condizioni indicative</div>
     </div>,

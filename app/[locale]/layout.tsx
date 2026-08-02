@@ -14,7 +14,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(businessConfig.baseUrl),
   title: { default: businessConfig.brandName, template: "%s" },
   description: "Scooter 50cc e 125cc per muoversi tra Bosa, Bosa Marina e la costa.",
-  icons: { icon: siteImagePaths.favicon, shortcut: siteImagePaths.favicon },
+  icons: {
+    icon: [{ url: siteImagePaths.favicon, type: "image/png", sizes: "512x512" }],
+    shortcut: siteImagePaths.favicon,
+    apple: siteImagePaths.favicon,
+  },
 };
 
 export default async function LocaleLayout({

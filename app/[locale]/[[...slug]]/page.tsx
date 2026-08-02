@@ -37,7 +37,7 @@ function Cta({ locale }: { locale: Locale }) {
   return (
     <div className="actions">
       <a className="button" href="#interest-form">
-        {it ? "Facci sapere se sei interessato" : "Let us know if you are interested"}
+        {it ? "Facci sapere se voi prenotare" : "Let us know if you are interested"}
       </a>
       <a className="button secondary" href="#interest-form">
         {it ? "Chiedi informazioni" : "Ask for details"}
@@ -81,6 +81,7 @@ function PageVisual({
         {image?.src && (
           <Image
             className="site-image"
+            style={{ objectPosition: image.position }}
             src={image.src}
             alt={image.alt}
             fill
@@ -97,7 +98,14 @@ function PageVisual({
   if (image?.src) {
     return (
       <div className="page-image">
-        <Image className="site-image" src={image.src} alt={image.alt} fill sizes="(max-width: 820px) 100vw, 38vw" />
+        <Image
+          className="site-image"
+          style={{ objectPosition: image.position }}
+          src={image.src}
+          alt={image.alt}
+          fill
+          sizes="(max-width: 820px) 100vw, 38vw"
+        />
       </div>
     );
   }
@@ -127,8 +135,8 @@ function PricingTables({ locale }: { locale: Locale }) {
           <h2>{it ? "Prezzi per scooter" : "Prices per scooter"}</h2>
           <p className="lead">
             {it
-              ? "Importi indicativi, IVA inclusa, da confermare con disponibilità e condizioni."
-              : "Indicative prices including VAT, subject to availability and confirmation of terms."}
+              ? "Importi provvisori, IVA inclusa, da confermare con disponibilità e condizioni."
+              : "Provisional prices including VAT, subject to availability and confirmation of terms."}
           </p>
           <div className="table-scroll">
             <table className="rate-table">
@@ -268,8 +276,8 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
           {page.kind === "commercial" && <Cta locale={locale} />}
           <div className="notice">
             {it
-              ? "Tariffe, dotazioni, coperture e servizi sono indicativi: difenteranno effettivi solo all'apertura del business."
-              : "Rates, equipment, cover and services are indicative and only become final upon business opening."}
+              ? "Tariffe, dotazioni, coperture e servizi sono provvisori: difenteranno effettivi solo all'apertura del business."
+              : "Rates, equipment, cover and services are provisional and only become final upon business opening."}
           </div>
         </div>
       </section>
@@ -289,7 +297,28 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
                 {section.bullets && <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}
               </section>
             ))}
-            {page.kind === "guide" && (
+            {page.slug === "privacy" && (
+              <section className="privacy-references">
+                <h2>{it ? "Riferimenti ufficiali" : "Official references"}</h2>
+                <ul>
+                  <li>
+                    <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj" target="_blank" rel="noreferrer">
+                      {it ? "Regolamento generale sulla protezione dei dati (GDPR)" : "General Data Protection Regulation (GDPR)"}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://www.garanteprivacy.it/it/i-miei-diritti" target="_blank" rel="noreferrer">
+                      {it ? "Diritti e reclami — Garante Privacy" : "Rights and complaints — Italian Data Protection Authority"}
+                    </a>
+                  </li>
+                  <li>
+                    <a href="https://www.edpb.europa.eu/documents/guideline/guidelines-052020-on-consent-under-regulation-2016679_en" target="_blank" rel="noreferrer">
+                      {it ? "Linee guida EDPB sul consenso" : "EDPB guidelines on consent"}
+                    </a>
+                  </li>
+                </ul>
+              </section>
+            )}            {page.kind === "guide" && (
               <p>
                 <Link href={"/" + locale + "/" + (it ? "noleggio-scooter-bosa" : "scooter-rental-bosa")}>
                   {it ? "Scopri gli scooter disponibili a Bosa" : "Explore available scooters in Bosa"}

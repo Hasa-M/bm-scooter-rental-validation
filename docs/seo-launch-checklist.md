@@ -4,7 +4,7 @@
 
 - [ ] Sostituire dominio, brand, ragione sociale, email, telefono, WhatsApp, indirizzo e luogo di ritiro in `lib/config/business.ts`.
 - [ ] Configurare `NEXT_PUBLIC_SITE_URL` e `LEAD_WEBHOOK_URL`; eseguire una richiesta end-to-end.
-- [ ] Aggiungere privacy policy, cookie policy e condizioni approvate.
+- [ ] Completare e approvare /it/privacy e /en/privacy; indicare provider webhook, regioni, trasferimenti e garanzie effettive.
 - [ ] Verificare HTTPS, canonical, hreflang, metadata, sitemap, robots, favicon e social image.
 - [ ] Sostituire tutti i placeholder con fotografie autentiche, compresse e dotate di alt pertinente.
 - [ ] Verificare prezzi, coperture, cauzione, patente, ritiro, assistenza e contatti.

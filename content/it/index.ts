@@ -1,4 +1,5 @@
 import type { PageContent } from "@/lib/content/types";
+import { businessConfig } from "@/lib/config/business";
 
 const commonFaq = [
   {
@@ -149,7 +150,7 @@ export const itPages: PageContent[] = [
     primaryKeyword: "come noleggiare scooter a Bosa",
     intro: "Il sito raccoglie manifestazioni di interesse: non effettua prenotazioni o pagamenti automatici. Ogni condizione viene confermata prima del noleggio.",
     sections: [
-      { heading: "1. Invia la richiesta", body: ["Indica date, numero di scooter, modello preferito, età, esperienza di patente e località del soggiorno."] },
+      { heading: "1. Invia una risposta", body: ["Indica date, numero di scooter, modello preferito, fascia d'età, esperienza di patente, località del soggiorno e macroarea di provenienza. Il ricontatto email è separato e facoltativo."] },
       { heading: "2. Scegli il mezzo", body: ["Verifichiamo disponibilità di 50cc o 125cc, requisiti della patente e formula più adatta al tuo programma."] },
       { heading: "3. Ricevi il preventivo", body: ["Prezzo, chilometri, cauzione, coperture, dotazioni e logistica vengono riepilogati per iscritto."] },
       { heading: "4. Ritira o richiedi la consegna", body: ["Puoi ritirare in zona Viale Alghero oppure concordare consegna e raccolta, se fattibili."] },
@@ -183,11 +184,11 @@ export const itPages: PageContent[] = [
     description: "Condividi il tuo interesse per uno scooter 50cc o 125cc e aiutaci a organizzare il servizio sul territorio.",
     eyebrow: "Contatto diretto",
     primaryKeyword: "contatti scooter Bosa",
-    intro: "Raccontaci quale scooter ti interessa, quando vorresti utilizzarlo e dove soggiornerai. Ti contatteremo esclusivamente via email.",
+    intro: "Condividi una risposta anonima per aiutarci a validare la domanda. Il ricontatto email è separato e completamente facoltativo.",
     sections: [
       {
         heading: "Informazioni utili",
-        body: ["Seleziona la località del soggiorno e il modello che preferisci. Usa le note soltanto per aggiungere esigenze particolari; non inserire documenti o dati di pagamento."],
+        body: ["Seleziona periodo, quantità, fascia d'età, modello, località del soggiorno e macroarea di provenienza. Non inserire documenti, dati di pagamento o informazioni sensibili."],
       },
     ],
   },
@@ -313,4 +314,76 @@ export const itPages: PageContent[] = [
     ],
     faq: commonFaq.slice(0, 5),
   },
-];
+  {
+    slug: "privacy",
+    alternateSlug: "privacy",
+    kind: "info",
+    title: "Informativa privacy | Bosa in Scooter",
+    h1: "Informativa privacy",
+    description: "Informazioni sul trattamento dei dati raccolti per validare il servizio e per l'eventuale ricontatto facoltativo.",
+    eyebrow: "Articolo 13 GDPR",
+    primaryKeyword: "informativa privacy Bosa in Scooter",
+    intro: "Questa informativa descrive i dati raccolti dal sito, perché vengono trattati, per quanto tempo e come esercitare i propri diritti.",
+    sections: [
+      {
+        heading: "Titolare del trattamento",
+        body: [
+          "Il titolare è " + businessConfig.legalName + ", marchio " + businessConfig.brandName + ", con sede in " + businessConfig.address.streetAddress + ", " + businessConfig.address.postalCode + " " + businessConfig.address.city + " (" + businessConfig.address.province + "), Italia. Contatto privacy: " + businessConfig.email + ". I valori tra parentesi quadre devono essere completati prima della pubblicazione.",
+        ],
+      },
+      {
+        heading: "Dati, finalità e basi giuridiche",
+        body: [
+          "Per la validazione raccogliamo periodo richiesto, numero di scooter, fascia d'età, preferenza 50cc/125cc, località di soggiorno, macroarea di provenienza e indicazione sulla patente oltre cinque anni. Non chiediamo nome, età esatta, indirizzo o documenti. È disponibile un campo note facoltativo di massimo 500 caratteri, nel quale non devono essere inseriti dati sensibili.",
+          "Le risposte sono progettate per non identificare direttamente la persona e servono a misurare domanda, stagionalità e prodotto. Gli eventuali dati tecnici strettamente necessari a sicurezza e funzionamento sono trattati sulla base del legittimo interesse del titolare, articolo 6(1)(f) GDPR, previa valutazione di necessità e bilanciamento.",
+          "Se chiedi volontariamente di essere ricontattato, raccogliamo l'email sulla base del consenso, articolo 6(1)(a). Il consenso è separato, facoltativo e revocabile. Per una successiva richiesta specifica di disponibilità o informazioni, i dati necessari possono essere trattati per misure precontrattuali richieste dall'interessato, articolo 6(1)(b).",
+        ],
+      },
+      {
+        heading: "Dati obbligatori e facoltativi",
+        body: [
+          "I campi anonimi e la dichiarazione di lettura dell'informativa sono necessari per inviare la risposta. Le note, il ricontatto, l'email e il relativo consenso sono sempre facoltativi. Senza ricontatto il modulo non mostra né invia alcun indirizzo email.",
+        ],
+      },
+      {
+        heading: "Destinatari e fornitori",
+        body: [
+          "Il sito è previsto su Vercel, che può trattare dati tecnici di hosting e log secondo il servizio configurato. Le risposte vengono inviate server-to-server al fornitore indicato tramite LEAD_WEBHOOK_URL: il titolare deve identificarlo in questa informativa e nel registro dei trattamenti prima della pubblicazione.",
+          "Nel codice attuale non risultano attive integrazioni Neon o PostHog. Se Neon, PostHog o altri servizi vengono attivati, l'informativa e le preferenze cookie devono essere aggiornate prima della raccolta, indicando ruolo, finalità, dati, conservazione e trasferimenti.",
+          "I dati non sono venduti e non vengono usati per newsletter, promozioni o marketing senza un ulteriore consenso specifico.",
+        ],
+      },
+      {
+        heading: "Trasferimenti fuori dallo SEE",
+        body: [
+          "Vercel e l'eventuale fornitore del webhook possono comportare trattamenti fuori dallo Spazio economico europeo. Prima della pubblicazione il titolare deve verificare regioni effettive, decisioni di adeguatezza, clausole contrattuali standard o altre garanzie applicabili e renderle disponibili su richiesta. Neon e PostHog non sono attivi; ogni futura attivazione richiede la stessa verifica.",
+        ],
+      },
+      {
+        heading: "Conservazione e cancellazione",
+        body: [
+          "Le risposte grezze sono usate per ricerca di mercato e sottoposte a una verifica documentata di necessità almeno ogni 24 mesi. Se un record individuale non è più necessario, viene cancellato oppure trasformato in dato realmente anonimo e aggregato. Le statistiche irreversibilmente anonime possono essere conservate senza un termine fisso.",
+          "Le email sono conservate solo finché serve per comunicare la disponibilità del servizio o fino alla revoca del consenso. La necessità viene rivalutata almeno ogni 24 mesi; se la finalità non è più attuale, l'email viene cancellata oppure viene richiesto un nuovo consenso. La sola mancata richiesta di cancellazione non giustifica una conservazione illimitata.",
+        ],
+      },
+      {
+        heading: "Diritti e revoca del consenso",
+        body: [
+          "Puoi chiedere accesso, rettifica, cancellazione, limitazione, opposizione e, quando applicabile, portabilità. Puoi revocare in qualsiasi momento il consenso al ricontatto scrivendo al titolare; la revoca non pregiudica la liceità del trattamento svolto prima della revoca.",
+          "Puoi presentare reclamo al Garante per la protezione dei dati personali. Le risposte completamente anonime potrebbero non essere tecnicamente riconducibili a una persona e quindi non sempre possono essere individuate per una richiesta individuale.",
+        ],
+      },
+      {
+        heading: "Cookie e analytics",
+        body: [
+          "Il codice attuale non installa analytics di terze parti né cookie non essenziali. Gli eventi analytics dell'interfaccia sono locali e, senza un'integrazione esterna, non trasmettono dati. Possono esistere log tecnici necessari a hosting e sicurezza. Prima di attivare PostHog o altri strumenti non essenziali sarà necessario aggiornare l'informativa e, quando richiesto, raccogliere una preferenza cookie valida.",
+        ],
+      },
+      {
+        heading: "Aggiornamenti",
+        body: [
+          "Questa informativa deve essere aggiornata quando cambiano titolare, contatti, fornitori, finalità, basi giuridiche, tempi di conservazione o tecnologie di tracciamento. Revisione organizzativa: agosto 2026.",
+        ],
+      },
+    ],
+  },];

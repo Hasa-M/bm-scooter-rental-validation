@@ -1,8 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { FormEvent, useState } from "react";
 import type { Locale } from "@/lib/content/types";
-import { serviceLocations } from "@/lib/leads/options";
+import { ageBands, originAreas, serviceLocations } from "@/lib/leads/options";
 import { track } from "@/lib/analytics";
 
 type State = "idle" | "loading" | "success" | "error";
@@ -11,6 +12,7 @@ export function InterestForm({ locale }: { locale: Locale }) {
   const it = locale === "it";
   const [state, setState] = useState<State>("idle");
   const [message, setMessage] = useState("");
+  const [wantsContact, setWantsContact] = useState(false);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -19,7 +21,7 @@ export function InterestForm({ locale }: { locale: Locale }) {
 
     setState("loading");
     setMessage("");
-    track("form_submit");
+    track("form_submit", { contactRequested: wantsContact });
 
     try {
       const response = await fetch("/api/availability", {
@@ -29,9 +31,12 @@ export function InterestForm({ locale }: { locale: Locale }) {
       });
       const payload = await response.json() as { message?: string };
       if (!response.ok) throw new Error(payload.message || (it ? "Invio non riuscito." : "Request failed."));
+
+      setMessage(payload.message || (it ? "Risposta registrata." : "Response recorded."));
       setState("success");
-      track("form_success");
+      track("form_success", { contactRequested: wantsContact });
       form.reset();
+      setWantsContact(false);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : (it ? "Invio non riuscito." : "Request failed."));
       setState("error");
@@ -43,12 +48,17 @@ export function InterestForm({ locale }: { locale: Locale }) {
     <section className="section alt interest-section">
       <div className="container split">
         <div>
-          <p className="eyebrow">{it ? "Il tuo interesse conta" : "Your interest matters"}</p>
-          <h2>{it ? "Facci sapere se sei interessato" : "Let us know if you’re interested"}</h2>
+          <p className="eyebrow">{it ? "Validazione anonima" : "Anonymous validation"}</p>
+          <h2>{it ? "Sei interessato al servizio" : "Are you interested in the service?"}</h2>
           <p className="lead">
             {it
-              ? "Raccontaci quale soluzione stai cercando: ci aiuterai a organizzare un servizio più utile per chi visita Bosa e il territorio."
-              : "Tell us what you are looking for: you will help us shape a more useful service for people visiting Bosa and the surrounding area."}
+              ? "Raccogliamo dati utili a valutare periodo, prodotto e area di domanda."
+              : "We collect only what is useful to assess timing, product and demand area."}
+          </p>
+          <p className="form-note">
+            {it
+              ? "Se vuoi essere avvisato quando il servizio sarà disponibile, puoi attivare separatamente il ricontatto facoltativo."
+              : "If you want an update when the service becomes available, you can separately enable the optional contact path."}
           </p>
         </div>
 
@@ -63,17 +73,23 @@ export function InterestForm({ locale }: { locale: Locale }) {
             <label htmlFor="startDate">{it ? "Data di inizio" : "Start date"}</label>
             <input id="startDate" name="startDate" type="date" required />
           </div>
+
           <div className="field">
             <label htmlFor="endDate">{it ? "Data di fine" : "End date"}</label>
             <input id="endDate" name="endDate" type="date" required />
           </div>
+
           <div className="field">
             <label htmlFor="scooters">{it ? "Numero di scooter" : "Number of scooters"}</label>
             <input id="scooters" name="scooters" type="number" min="1" max="3" defaultValue="1" required />
           </div>
+
           <div className="field">
-            <label htmlFor="age">{it ? "Età" : "Age"}</label>
-            <input id="age" name="age" type="number" min="18" max="79" inputMode="numeric" required />
+            <label htmlFor="ageBand">{it ? "Fascia d'età" : "Age range"}</label>
+            <select id="ageBand" name="ageBand" defaultValue="" required>
+              <option value="" disabled>{it ? "Seleziona una fascia" : "Select a range"}</option>
+              {ageBands.map((band) => <option key={band} value={band}>{band}</option>)}
+            </select>
           </div>
 
           <fieldset className="field full vehicle-choice">
@@ -85,8 +101,8 @@ export function InterestForm({ locale }: { locale: Locale }) {
                   <strong>125cc</strong>
                   <small>
                     {it
-                      ? "Più adatto per soggiorni lunghi, paesi vicini e calette più lontane."
-                      : "Better suited to longer stays, nearby villages and more remote coves."}
+                      ? "Per soggiorni lunghi, paesi vicini e calette più lontane."
+                      : "For longer stays, nearby villages and more remote coves."}
                   </small>
                 </span>
               </label>
@@ -96,8 +112,8 @@ export function InterestForm({ locale }: { locale: Locale }) {
                   <strong>50cc</strong>
                   <small>
                     {it
-                      ? "Ideale per restare tra il borgo medievale e le località di mare più vicine."
-                      : "Ideal for staying around the medieval village and nearby seaside spots."}
+                      ? "Per il borgo, la marina e le località di mare più vicine."
+                      : "For the old town, marina and nearby seaside spots."}
                   </small>
                 </span>
               </label>
@@ -113,36 +129,75 @@ export function InterestForm({ locale }: { locale: Locale }) {
           </div>
 
           <div className="field full">
-            <label htmlFor="email">
-              {"Email"}
-              <small className="label-info">{it ? "Facoltativo, ma apprezzato, non verrai ricontattato in ogni caso." : "Optional, but appreciated, you will not be contacted in any case."}</small>
-            </label>
-            <input id="email" name="email" type="email" autoComplete="email" />
+            <label htmlFor="originArea">{it ? "Macroarea di provenienza" : "Origin macro-region"}</label>
+            <select id="originArea" name="originArea" defaultValue="" required>
+              <option value="" disabled>{it ? "Seleziona una macroarea" : "Select a macro-region"}</option>
+              {originAreas.map((area) => (
+                <option key={area.value} value={area.value}>{area[locale]}</option>
+              ))}
+            </select>
+            <small className="label-info">
+              {it ? "Non chiediamo città, indirizzo o nazionalità esatta." : "We do not ask for your city, address or exact nationality."}
+            </small>
           </div>
 
-          <div className="field full">
-            <label htmlFor="origin">
-              {it ? "Luogo di origine" : "Place of origin"}
-              <small className="label-info">{it ? "Città / Nazione · facoltativo" : "City / Country · optional"}</small>
-            </label>
-            <input id="origin" name="origin" autoComplete="country-name" />
-          </div>
+          <fieldset className="field full vehicle-choice">
+            <legend>{it ? "Hai la patente da oltre cinque anni?" : "Have you held your licence for more than five years?"}</legend>
+            <div className="binary-choice">
+              <label><input type="radio" name="licensedOverFiveYears" value="yes" required />{it ? "Sì" : "Yes"}</label>
+              <label><input type="radio" name="licensedOverFiveYears" value="no" required />No</label>
+            </div>
+          </fieldset>
 
-          <label className="checkbox field full">
-            <input name="licensedOverFiveYears" type="checkbox" value="yes" defaultChecked />
-            <span>
-              {it ? "Ho la patente da oltre 5 anni" : "I have held a driving licence for more than 5 years"}
-            </span>
-          </label>
+          <fieldset className="field full contact-panel">
+            <legend>{it ? "Ricontatto facoltativo" : "Optional contact"}</legend>
+            <label className="checkbox">
+              <input
+                name="wantsContact"
+                type="checkbox"
+                value="yes"
+                checked={wantsContact}
+                onChange={(event) => setWantsContact(event.target.checked)}
+                aria-controls="contact-details"
+                aria-expanded={wantsContact}
+              />
+              <span>
+                {it
+                  ? "Desidero essere ricontattato via email quando il servizio sarà disponibile"
+                  : "I would like to be contacted by email when the service becomes available"}
+              </span>
+            </label>
+
+            {wantsContact && (
+              <div id="contact-details" className="contact-details">
+                <div className="field">
+                  <label htmlFor="email">Email</label>
+                  <input id="email" name="email" type="email" autoComplete="email" maxLength={160} required />
+                </div>
+                <label className="checkbox">
+                  <input name="contactConsent" type="checkbox" value="yes" required />
+                  <span>
+                    {it
+                      ? "Acconsento al ricontatto via email per essere avvisato sulla disponibilità del servizio. Posso revocare il consenso in qualsiasi momento tramite email."
+                      : "I consent to being contacted by email about service availability. I may withdraw consent at any time by emailing the controller."}
+                  </span>
+                </label>
+              </div>
+            )}
+          </fieldset>
 
           <div className="field full">
             <label htmlFor="notes">
               {it ? "Note" : "Notes"}
-              <small className="label-info">{it ? "Facoltative" : "Optional"}</small>
+              <small className="label-info">{it ? "Facoltative · massimo 500 caratteri" : "Optional · maximum 500 characters"}</small>
             </label>
-            <textarea id="notes" name="notes" maxLength={1500} />
+            <textarea id="notes" name="notes" maxLength={500} />
+            <small className="label-info">
+              {it
+                ? "Non inserire documenti, dati sanitari o altre informazioni sensibili."
+                : "Do not enter documents, health data or other sensitive information."}
+            </small>
           </div>
-
           <input type="hidden" name="language" value={locale} />
           <div className="field" aria-hidden="true" style={{ position: "absolute", left: "-10000px" }}>
             <label htmlFor="website">Website</label>
@@ -150,28 +205,25 @@ export function InterestForm({ locale }: { locale: Locale }) {
           </div>
 
           <label className="checkbox field full">
-            <input name="privacyConsent" type="checkbox" value="yes" required />
+            <input name="privacyNoticeAcknowledged" type="checkbox" value="yes" required />
             <span>
-              {it
-                ? "Acconsento al trattamento dei dati per valutare la richiesta e la fattibilità del servizio. Nessun dato sarà condiviso con terze parti o usato a fini di marketing."
-                : "I consent to the use of my data to evaluate the request and the feasibility of the service. No data will be shared with third parties or used for marketing purposes."}
+              {it ? "Dichiaro di aver letto l'" : "I confirm that I have read the "}
+              <Link href={"/" + locale + "/privacy"}>
+                {it ? "informativa privacy" : "privacy notice"}
+              </Link>.
             </span>
           </label>
 
           <div className="field full">
             <button className="button" disabled={state === "loading"}>
-              {state === "loading" ? (it ? "Invio…" : "Sending…") : (it ? "Invia il tuo interesse" : "Send your interest")}
+              {state === "loading"
+                ? (it ? "Invio…" : "Sending…")
+                : (it ? "Invia la risposta" : "Submit response")}
             </button>
           </div>
 
           <div className="field full" aria-live="polite">
-            {state === "success" && (
-              <p className="success">
-                {it
-                  ? "Grazie, abbiamo ricevuto il tuo interesse. Ti contatteremo via email."
-                  : "Thank you, we have received your interest. We will contact you by email."}
-              </p>
-            )}
+            {state === "success" && <p className="success">{message}</p>}
             {state === "error" && <p className="error" role="alert">{message}</p>}
           </div>
         </form>

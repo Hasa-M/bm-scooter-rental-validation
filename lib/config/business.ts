@@ -1,9 +1,9 @@
 export const businessConfig = {
-  status: "active" as "validation" | "active",
+  status: "validation" as "validation" | "active",
   brandName: "Bosa in Scooter",
   legalName: "[RAGIONE SOCIALE]",
   baseUrl: process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com",
-  email: "[EMAIL]",
+  email: "info@bosainscooter.it",
   phone: "[TELEFONO]",
   whatsappNumber: "[NUMERO WHATSAPP]",
   address: {

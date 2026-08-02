@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Scooter 50cc e 125cc per muoversi a Bosa e Bosa Marina.",
     start_url: "/it",
     display: "standalone",
-    background_color: "#fffaf1",
-    theme_color: "#164a42",
-    icons: [{ src: siteImagePaths.favicon, sizes: "any", type: "image/svg+xml" }],
+    background_color: "#fbf9ff",
+    theme_color: "#7c3aed",
+    icons: [{ src: siteImagePaths.favicon, sizes: "512x512", type: "image/png" }],
   };
 }

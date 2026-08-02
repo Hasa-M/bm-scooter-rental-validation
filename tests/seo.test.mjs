@@ -38,17 +38,20 @@ test("JSON-LD is serialized safely and uses visible FAQ content", async () => {
   assert.match(source, /FAQPage/);
 });
 
-test("shared interest form has required fields, email-only contact and no vehicle preset", async () => {
+test("shared validation form separates anonymous research from optional contact", async () => {
   const source = await read("components/interest-form.tsx");
-  assert.match(source, /htmlFor="email"/);
-  assert.match(source, /privacyConsent/);
-  assert.match(source, /type="checkbox" value="yes" required/);
+  assert.match(source, /name="ageBand"/);
+  assert.match(source, /name="originArea"/);
   assert.match(source, /name="vehicleType"/);
-  assert.match(source, /name="age"/);
   assert.match(source, /name="stayLocation"/);
   assert.match(source, /name="licensedOverFiveYears"/);
-  assert.match(source, /name="origin"/);
-  assert.doesNotMatch(source, /name="phone"|name="people"|marketingConsent|defaultChecked/);
+  assert.match(source, /name="wantsContact"/);
+  assert.match(source, /wantsContact &&/);
+  assert.match(source, /name="contactConsent"/);
+  assert.match(source, /name="privacyNoticeAcknowledged"/);
+  assert.match(source, /name="notes" maxLength=\{500\}/);
+  assert.ok(source.includes('href={"/" + locale + "/privacy"}'));
+  assert.doesNotMatch(source, /name="name"|name="age"|privacyConsent|defaultChecked/);
   assert.doesNotMatch(source, /localStorage/);
 });
 test("brand and active fleet are consistent across customer surfaces", async () => {
@@ -124,7 +127,8 @@ test("UI refinements and centralized image registry are present", async () => {
 
   assert.match(css, /text-align:left !important/);
   assert.match(css, /checkbox input\[type="checkbox"\]/);
-  assert.match(css, /background:#eff6ff/);
+  assert.match(css, /--brand-gradient: linear-gradient\(135deg, #7c3aed.*#f97316/);
+  assert.match(css, /background:#f4edff/);
   assert.match(page, /getPageImage/);
   assert.match(images, /siteImagePaths/);
   assert.match(images, /homeHero/);
@@ -166,13 +170,33 @@ test("service location list contains every supported area", async () => {
   ]) assert.match(source, new RegExp('"' + location + '"'));
 });
 
-test("interest API and lead schema exclude removed fields", async () => {
+test("market research API minimises fields and applies a 24-month review", async () => {
   const api = await read("app/api/availability/route.ts");
   const repository = await read("lib/leads/repository.ts");
 
-  assert.match(api, /vehicleTypes/);
-  assert.match(api, /serviceLocations/);
-  assert.match(api + repository, /licensedOverFiveYears/);
-  assert.match(api + repository, /stayLocation/);
+  assert.match(api, /ageBands/);
+  assert.match(api, /originAreas/);
+  assert.match(api, /contactRequested/);
+  assert.match(api + repository, /researchPurpose/);
+  assert.match(api + repository, /reviewAfter/);
+  assert.match(api, /getUTCFullYear\(\) \+ 2/);
+  assert.match(api + repository, /notes\?: string/);
+  assert.match(api, /notes\.length > 500/);
+  assert.doesNotMatch(api + repository, /name: string|age: number|deleteAfter/);
   assert.doesNotMatch(api + repository, /people|phone|accommodation|marketingConsent/);
+});
+
+test("privacy pages disclose providers, rights and research retention", async () => {
+  const it = await read("content/it/index.ts");
+  const en = await read("content/en/index.ts");
+  const combined = it + en;
+
+  assert.match(it, /slug: "privacy"/);
+  assert.match(en, /slug: "privacy"/);
+  assert.match(combined, /Vercel/);
+  assert.match(combined, /Neon/);
+  assert.match(combined, /PostHog/);
+  assert.match(combined, /24 mesi|24 months/);
+  assert.match(combined, /aggregate|aggregate data/);
+  assert.match(combined, /Garante|Italian Data Protection Authority/);
 });

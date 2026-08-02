@@ -1,4 +1,5 @@
 import type { PageContent } from "@/lib/content/types";
+import { businessConfig } from "@/lib/config/business";
 
 const commonFaq = [
   {
@@ -149,7 +150,7 @@ export const enPages: PageContent[] = [
     primaryKeyword: "how to rent a scooter in Bosa",
     intro: "The website collects expressions of interest; it does not process instant bookings or payments. Every condition is confirmed before rental.",
     sections: [
-      { heading: "1. Send your request", body: ["Share your dates, number of scooters, preferred model, age, licence experience and where you will be staying."] },
+      { heading: "1. Submit a response", body: ["Share dates, scooter quantity, preferred model, age range, licence experience, stay location and origin macro-region. Email contact is separate and optional."] },
       { heading: "2. Choose the scooter", body: ["We check 50cc or 125cc availability, licence requirements and the rental option that best matches your plans."] },
       { heading: "3. Receive the quote", body: ["Price, mileage, deposit, cover, equipment and logistics are set out in writing."] },
       { heading: "4. Collect or request delivery", body: ["Collect near Viale Alghero or arrange delivery and collection when feasible."] },
@@ -183,11 +184,11 @@ export const enPages: PageContent[] = [
     description: "Share your interest in a 50cc or 125cc scooter and help us organise the service across the local area.",
     eyebrow: "Direct enquiry",
     primaryKeyword: "Bosa scooter contact",
-    intro: "Tell us which scooter interests you, when you would use it and where you will be staying. We will contact you by email only.",
+    intro: "Share an anonymous response to help validate demand. Email contact is separate and entirely optional.",
     sections: [
       {
         heading: "Useful details",
-        body: ["Select where you will be staying and your preferred model. Use the notes only for particular requirements; do not enter identity or payment details."],
+        body: ["Select period, quantity, age range, model, stay location and origin macro-region. Do not enter documents, payment details or sensitive information."],
       },
     ],
   },
@@ -313,4 +314,76 @@ export const enPages: PageContent[] = [
     ],
     faq: commonFaq.slice(0, 5),
   },
-];
+  {
+    slug: "privacy",
+    alternateSlug: "privacy",
+    kind: "info",
+    title: "Privacy notice | Bosa in Scooter",
+    h1: "Privacy notice",
+    description: "How data is handled for the Bosa in Scooter validation experiment and optional contact request.",
+    eyebrow: "GDPR Article 13",
+    primaryKeyword: "Bosa in Scooter privacy notice",
+    intro: "This notice explains what the site collects, why it is processed, how long it is kept and how you can exercise your rights.",
+    sections: [
+      {
+        heading: "Data controller",
+        body: [
+          "The controller is " + businessConfig.legalName + ", trading as " + businessConfig.brandName + ", at " + businessConfig.address.streetAddress + ", " + businessConfig.address.postalCode + " " + businessConfig.address.city + " (" + businessConfig.address.province + "), Italy. Privacy contact: " + businessConfig.email + ". Values still shown in square brackets must be completed before publication.",
+        ],
+      },
+      {
+        heading: "Data, purposes and lawful bases",
+        body: [
+          "For validation we collect requested period, scooter quantity, age range, 50cc/125cc preference, stay location, origin macro-region and whether the licence has been held for more than five years. We do not ask for a name, exact age, address or documents. An optional notes field is available with a 500-character limit and must not contain sensitive data.",
+          "Responses are designed not to identify a person directly and are used to measure demand, seasonality and product fit. Any technical data strictly required for security and operation is processed under the controller's legitimate interests, GDPR Article 6(1)(f), following a necessity and balancing assessment.",
+          "If you voluntarily request contact, we collect your email on the basis of consent under Article 6(1)(a). Consent is separate, optional and withdrawable. If you later make a specific availability or information request, necessary data may be processed to take pre-contractual steps at your request under Article 6(1)(b).",
+        ],
+      },
+      {
+        heading: "Required and optional data",
+        body: [
+          "The anonymous fields and confirmation that the notice was read are required to submit a response. Notes, contact, email and related consent are always optional. Without contact, the form does not display or submit an email address.",
+        ],
+      },
+      {
+        heading: "Recipients and providers",
+        body: [
+          "The site is intended to be hosted on Vercel, which may process technical hosting and log data according to the configured service. Responses are sent server-to-server to the provider configured through LEAD_WEBHOOK_URL: the controller must name that provider here and in its processing records before publication.",
+          "The current code does not contain active Neon or PostHog integrations. If Neon, PostHog or another service is enabled, this notice and cookie preferences must be updated before collection, identifying its role, purpose, data, retention and transfers.",
+          "Data is not sold and is not used for newsletters, promotions or marketing without an additional specific consent.",
+        ],
+      },
+      {
+        heading: "Transfers outside the EEA",
+        body: [
+          "Vercel and the future webhook provider may involve processing outside the European Economic Area. Before publication, the controller must verify actual regions, adequacy decisions, Standard Contractual Clauses or other safeguards and make details available on request. Neon and PostHog are not active; any future activation requires the same assessment.",
+        ],
+      },
+      {
+        heading: "Retention and deletion",
+        body: [
+          "Raw responses are used for market research and undergo a documented necessity review at least every 24 months. If an individual record is no longer necessary, it is erased or converted into genuinely anonymous aggregate data. Irreversibly anonymous statistics may be retained without a fixed end date.",
+          "Email addresses are kept only while needed to communicate service availability or until consent is withdrawn. Necessity is reviewed at least every 24 months; if the purpose is no longer current, the email is erased or renewed consent is requested. The absence of an erasure request does not justify unlimited retention.",
+        ],
+      },
+      {
+        heading: "Rights and withdrawal",
+        body: [
+          "You may request access, rectification, erasure, restriction, objection and, where applicable, portability. You may withdraw contact consent at any time by writing to the controller; withdrawal does not affect processing carried out lawfully before withdrawal.",
+          "You may lodge a complaint with the Italian Data Protection Authority. A fully anonymous response may not be technically linkable to a person and therefore may not always be identifiable for an individual request.",
+        ],
+      },
+      {
+        heading: "Cookies and analytics",
+        body: [
+          "The current code does not install third-party analytics or non-essential cookies. Interface analytics events are local and, without an external integration, do not transmit data. Technical logs necessary for hosting and security may exist. Before PostHog or another non-essential tool is enabled, this notice must be updated and a valid cookie preference collected where required.",
+        ],
+      },
+      {
+        heading: "Updates",
+        body: [
+          "This notice must be updated whenever the controller, contacts, providers, purposes, lawful bases, retention periods or tracking technologies change. Organisational review: August 2026.",
+        ],
+      },
+    ],
+  },];
