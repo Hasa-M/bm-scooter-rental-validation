@@ -76,10 +76,9 @@ function PageVisual({
   if (hero) {
     return (
       <div
-        className={"hero-card" + (image.src ? " has-image" : "")}
-        {...(!image.src ? { role: "img", "aria-label": image.alt } : {})}
+        className={"hero-card" + (image?.src ? " has-image" : "")}
       >
-        {image.src && (
+        {image?.src && (
           <Image
             className="site-image"
             src={image.src}
@@ -95,7 +94,7 @@ function PageVisual({
     );
   }
 
-  if (image.src) {
+  if (image?.src) {
     return (
       <div className="page-image">
         <Image className="site-image" src={image.src} alt={image.alt} fill sizes="(max-width: 820px) 100vw, 38vw" />
@@ -103,13 +102,7 @@ function PageVisual({
     );
   }
 
-  return (
-    <div className="placeholder-photo" role="img" aria-label={image.alt}>
-      {it
-        ? "Bosa, Bosa Marina e la costa: inserisci l’immagine dedicata dal registro centralizzato."
-        : "Bosa, Bosa Marina and the coast: add the dedicated image through the central registry."}
-    </div>
-  );
+  return null;
 }
 function euro(locale: Locale, value: number) {
   return new Intl.NumberFormat(locale === "it" ? "it-IT" : "en-IE", {
@@ -264,6 +257,7 @@ function HomePage({ locale, page }: { locale: Locale; page: PageContent }) {
 function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
   const it = locale === "it";
   const showForm = ["commercial", "contact", "prices"].includes(page.kind);
+  const hasVisual = Boolean(getPageImage(page.slug, locale)?.src);
   return (
     <>
       <section className="page-hero">
@@ -283,7 +277,7 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
       {page.kind === "prices" && <PricingTables locale={locale} />}
 
       <section className="section alt">
-        <div className="container split">
+        <div className={"container" + (hasVisual ? " split" : " content-column")}>
           <article className="prose">
             {page.kind === "guide" && (
               <p><strong>{it ? "A cura di" : "By"} {businessConfig.brandName}</strong></p>
@@ -295,9 +289,6 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
                 {section.bullets && <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}
               </section>
             ))}
-          </article>
-          <aside>
-            <PageVisual locale={locale} page={page} />
             {page.kind === "guide" && (
               <p>
                 <Link href={"/" + locale + "/" + (it ? "noleggio-scooter-bosa" : "scooter-rental-bosa")}>
@@ -305,7 +296,12 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
                 </Link>
               </p>
             )}
-          </aside>
+          </article>
+          {hasVisual && (
+            <aside>
+              <PageVisual locale={locale} page={page} />
+            </aside>
+          )}
         </div>
       </section>
 

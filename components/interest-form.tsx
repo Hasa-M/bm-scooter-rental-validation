@@ -69,11 +69,11 @@ export function InterestForm({ locale }: { locale: Locale }) {
           </div>
           <div className="field">
             <label htmlFor="scooters">{it ? "Numero di scooter" : "Number of scooters"}</label>
-            <input id="scooters" name="scooters" type="number" min="1" max="10" defaultValue="1" required />
+            <input id="scooters" name="scooters" type="number" min="1" max="3" defaultValue="1" required />
           </div>
           <div className="field">
             <label htmlFor="age">{it ? "Età" : "Age"}</label>
-            <input id="age" name="age" type="number" min="14" max="99" inputMode="numeric" required />
+            <input id="age" name="age" type="number" min="18" max="79" inputMode="numeric" required />
           </div>
 
           <fieldset className="field full vehicle-choice">
@@ -112,13 +112,12 @@ export function InterestForm({ locale }: { locale: Locale }) {
             </select>
           </div>
 
-          <div className="field">
-            <label htmlFor="name">{it ? "Nome" : "Name"}</label>
-            <input id="name" name="name" autoComplete="name" required />
-          </div>
-          <div className="field">
-            <label htmlFor="email">Email</label>
-            <input id="email" name="email" type="email" autoComplete="email" required />
+          <div className="field full">
+            <label htmlFor="email">
+              {"Email"}
+              <small className="label-info">{it ? "Facoltativo, ma apprezzato, non verrai ricontattato in ogni caso." : "Optional, but appreciated, you will not be contacted in any case."}</small>
+            </label>
+            <input id="email" name="email" type="email" autoComplete="email" />
           </div>
 
           <div className="field full">
@@ -130,12 +129,9 @@ export function InterestForm({ locale }: { locale: Locale }) {
           </div>
 
           <label className="checkbox field full">
-            <input name="licensedOverFiveYears" type="checkbox" value="yes" />
+            <input name="licensedOverFiveYears" type="checkbox" value="yes" defaultChecked />
             <span>
               {it ? "Ho la patente da oltre 5 anni" : "I have held a driving licence for more than 5 years"}
-              <small className="label-info">
-                {it ? "Lascia deselezionato se non è il tuo caso." : "Leave unchecked if this does not apply to you."}
-              </small>
             </span>
           </label>
 
