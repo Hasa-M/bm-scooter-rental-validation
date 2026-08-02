@@ -30,7 +30,7 @@ export function buildJsonLd(locale: Locale, page: PageContent, crumbs: Crumb[]) 
     { "@type": "BreadcrumbList", itemListElement: crumbs.map((crumb, index) => ({ "@type": "ListItem", position: index + 1, name: crumb.label, item: absolute(crumb.href) })) },
   ];
   if (page.kind === "commercial") graph.push({ "@type": "Service", name: page.h1, description: page.description, provider: { "@id": `${businessConfig.baseUrl}/#business` }, areaServed: businessConfig.serviceArea, url });
-  if (page.kind === "guide") graph.push({ "@type": "Article", headline: page.h1, description: page.description, dateModified: page.updatedAt, datePublished: page.updatedAt, inLanguage: locale, author: { "@type": "Organization", name: businessConfig.brandName }, mainEntityOfPage: url });
+  if (page.kind === "guide") graph.push({ "@type": "Article", headline: page.h1, description: page.description, inLanguage: locale, author: { "@type": "Organization", name: businessConfig.brandName }, mainEntityOfPage: url });
   if (page.faq?.length) graph.push({ "@type": "FAQPage", mainEntity: page.faq.map((item) => ({ "@type": "Question", name: item.question, acceptedAnswer: { "@type": "Answer", text: item.answer } })) });
   return { "@context": "https://schema.org", "@graph": graph };
 }

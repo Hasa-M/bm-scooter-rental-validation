@@ -5,7 +5,7 @@ La mappa assegna un intento e una keyword primaria distinti a ogni URL. Title, H
 | URL | Lingua | Intento | Keyword primaria | Keyword secondarie | CTA | Link interni | Stato |
 |---|---|---|---|---|---|---|---|
 | `/it` | IT | Scoperta | scooter a Bosa | muoversi a Bosa, scooter 125 | Richiedi disponibilità | commerciale, guide | Bozza |
-| `/it/noleggio-scooter-bosa` | IT | Commerciale | noleggio scooter Bosa | affitto scooter Bosa, scooter 125 Bosa | Richiedi disponibilità | prezzi, funzionamento, guide | Prioritaria |
+| `/it/noleggio-scooter-bosa` | IT | Commerciale | noleggio scooter Bosa | affitto scooter Bosa, scooter 50 e 125 Bosa | Richiedi disponibilità | prezzi, funzionamento, guide | Prioritaria |
 | `/it/noleggio-scooter-bosa-marina` | IT | Commerciale locale | noleggio scooter Bosa Marina | affitto scooter Bosa Marina | Richiedi da Bosa Marina | commerciale, spiagge | Bozza |
 | `/it/prezzi` | IT | Prezzo | prezzi noleggio scooter Bosa | costo scooter Bosa, preventivo | Richiedi preventivo | commerciale, FAQ | Bozza |
 | `/it/come-funziona` | IT | Processo | come noleggiare scooter a Bosa | documenti, ritiro scooter | Richiedi disponibilità | commerciale, FAQ | Bozza |
@@ -17,7 +17,7 @@ La mappa assegna un intento e una keyword primaria distinti a ogni URL. Title, H
 | `/it/guide/spiagge-da-raggiungere-in-scooter-da-bosa` | IT | Informativo | spiagge vicino Bosa scooter | costa Bosa in scooter | Verifica uno scooter | commerciale, itinerario | Da revisionare |
 | `/it/guide/itinerario-in-scooter-bosa-alghero` | IT | Informativo | itinerario scooter Bosa Alghero | strada panoramica Bosa Alghero | Verifica uno scooter | commerciale, spiagge | Da revisionare |
 | `/en` | EN | Discovery | scooters in Bosa | getting around Bosa | Check availability | commercial, guides | Draft |
-| `/en/scooter-rental-bosa` | EN | Commercial | scooter rental Bosa | rent 125cc scooter Bosa | Check availability | prices, process, guides | Priority |
+| `/en/scooter-rental-bosa` | EN | Commercial | scooter rental Bosa | rent 50cc or 125cc scooter Bosa | Check availability | prices, process, guides | Priority |
 | `/en/scooter-rental-bosa-marina` | EN | Local commercial | scooter rental Bosa Marina | rent scooter near Bosa Marina | Check availability | commercial, beaches | Draft |
 | `/en/prices` | EN | Price | Bosa scooter rental prices | scooter quote Bosa | Request a quote | commercial, FAQ | Draft |
 | `/en/how-it-works` | EN | Process | how to rent a scooter in Bosa | documents, pickup | Check availability | commercial, FAQ | Draft |

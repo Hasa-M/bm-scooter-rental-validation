@@ -1,23 +1,316 @@
 import type { PageContent } from "@/lib/content/types";
 
-const faq = [
-  { question: "Which licence do I need for a 125cc scooter?", answer: "Requirements depend on your licence, age and the provider’s terms. They must be checked in writing before you confirm." },
-  { question: "Can two people ride the scooter?", answer: "Only when the vehicle is approved for two and the rider meets all applicable requirements. This will be confirmed with the proposed model." },
-  { question: "Where is pickup?", answer: "The pickup point has not been finalised. Add your accommodation to the request and you will receive a transparent proposal." },
-  { question: "Are deposit and insurance included?", answer: "Deposit, coverage, excess and other conditions will be confirmed with the quote. We do not publish terms that are not yet defined." },
+const commonFaq = [
+  {
+    question: "Do I need a driving licence to rent a scooter?",
+    answer: "Yes. The rider and any additional rider must present an original licence that is valid in Italy and appropriate for the selected 50cc or 125cc model, together with a valid passport or identity card. Licence category, age and eligibility are checked before confirmation.",
+  },
+  {
+    question: "Can every scooter carry two people?",
+    answer: "The planned fleet consists of models approved for one rider and one passenger. The provisional equipment includes two helmets, a top box and a lock or disc lock; the model and equipment are confirmed in the quote.",
+  },
+  {
+    question: "Where are pickup and return?",
+    answer: "Pickup from our base in the Viale Alghero area of Bosa is included. Home delivery or collection in Bosa and Bosa Marina is available on request; outside that area we first assess feasibility and then provide a quote.",
+  },
+  {
+    question: "What mileage and deposit apply?",
+    answer: "The minimum rental is 24 hours and includes 150 km, even if you only use the scooter for four hours. The 7-day option includes 900 km. Additional distance costs €0.25/km. A €500 security deposit per scooter is planned; its payment and release terms are confirmed before rental.",
+  },
+  {
+    question: "What cover is included?",
+    answer: "The provisional price includes motor third-party liability for a self-drive rental vehicle, third-party damage, passenger cover within policy limits, rider accident cover, theft and fire, accidental or collision damage, and roadside assistance. The written policy and contract determine limits, exclusions and customer liability.",
+  },
+  {
+    question: "What is the fuel policy?",
+    answer: "The policy is full-to-full: you receive the scooter with a full tank and return it full. The final conditions are summarised before pickup.",
+  },
 ];
 
 export const enPages: PageContent[] = [
-  { slug:"", alternateSlug:"", kind:"home", title:"Scooters in Bosa | Check availability", h1:"See more of Bosa, on your own schedule", description:"Discover a 125cc scooter service being prepared in Bosa. Send a no-obligation availability request.", eyebrow:"Bosa · Western Sardinia", primaryKeyword:"scooters in Bosa", intro:"A straightforward way to connect the old town, Bosa Marina and the coast—without pretending the service is already fully operational.", sections:[{heading:"Why explore Bosa by scooter",body:["A compact scooter can make local travel more flexible. Your enquiry is not an automatic booking: it lets us verify the actual vehicle, price and pickup arrangements."],bullets:["125cc model to be confirmed","No-obligation enquiry","Written quote and conditions"]},{heading:"Plan before you arrive",body:["Share your dates, party size and accommodation. You will receive a clear answer without invented prices or promises."]}], faq:faq.slice(0,3)},
-  { slug:"scooter-rental-bosa", alternateSlug:"noleggio-scooter-bosa", kind:"commercial", title:"Scooter Rental in Bosa | 125cc Scooters", h1:"Scooter rental in Bosa", description:"Rent a scooter in Bosa to reach Bosa Marina and explore western Sardinia. Request availability and a quote.", eyebrow:"Travel at your own pace", primaryKeyword:"scooter rental Bosa", intro:"Explore Bosa, Bosa Marina and Sardinia’s western coast with the freedom of a 125cc scooter. The service is being validated, so every request is checked for real availability, price and pickup.", sections:[{heading:"A 125cc scooter for your stay",body:["The aim is to offer practical vehicles for local journeys, with equipment and conditions communicated before confirmation."],bullets:["Model confirmed in the quote","Safety equipment to be verified","Breakdown procedure supplied in writing"]},{heading:"How it works",body:["Send an enquiry, receive a proposal and confirm only after reading the pickup, coverage and rental conditions."],bullets:["1. Send dates and quantities","2. Receive availability and price","3. Check documents and terms","4. Confirm with the provider"]},{heading:"Documents and requirements",body:["Licence, ID, payment method, deposit and age rules must be checked before confirmation. Conditions will be confirmed in the quote."]},{heading:"From the old town to the marina",body:["A scooter can suit travellers who want to alternate between the centre, Bosa Marina and coastal stops. Always account for weather, road conditions and your riding experience."]}], faq},
-  { slug:"scooter-rental-bosa-marina", alternateSlug:"noleggio-scooter-bosa-marina", kind:"commercial", title:"Scooter Rental in Bosa Marina | Check availability", h1:"Scooter rental in Bosa Marina", description:"Staying in Bosa Marina? Check scooter availability and confirm pickup, possible delivery and conditions.", eyebrow:"For guests staying by the sea", primaryKeyword:"scooter rental Bosa Marina", intro:"Add your accommodation to the enquiry so pickup or possible delivery can be checked. Neither option is guaranteed before the written quote.", sections:[{heading:"Between the marina and old town",body:["A scooter may offer flexibility, but the exact pickup point and logistics must be confirmed."],bullets:["Accommodation field in the form","Delivery is not guaranteed","All details confirmed in writing"]},{heading:"Beaches and nearby places",body:["Check routes, weather, road conditions and parking rules before every journey. Our guides are starting points, not real-time local advice."]}], faq},
-  { slug:"prices", alternateSlug:"prezzi", kind:"prices", title:"Bosa Scooter Rental Prices | Quote required", h1:"Prices and conditions", description:"What shapes scooter rental prices in Bosa: duration, vehicle, season, coverage and logistics.", eyebrow:"A transparent quote", primaryKeyword:"Bosa scooter rental prices", intro:"We will not publish a fictional starting price. During validation, every price must be confirmed with the vehicle, coverage, deposit and pickup method.", sections:[{heading:"What can affect the price",body:["Duration, season, vehicle, insurance options, accessories and logistics can affect the total."],bullets:["Dates and season","Vehicle and equipment","Coverage and excess","Pickup or possible delivery"]},{heading:"What a quote should include",body:["Ask for the total, deposit, fuel policy, mileage, assistance, cancellation terms and extras before you confirm."]}], faq},
-  { slug:"how-it-works", alternateSlug:"come-funziona", kind:"info", title:"How scooter rental works in Bosa", h1:"How it works", description:"From availability request to confirmation: the steps for arranging a scooter in Bosa.", eyebrow:"Four clear steps", primaryKeyword:"how to rent a scooter in Bosa", intro:"This website collects qualified enquiries; it does not process automatic bookings or payments.", sections:[{heading:"1. Send the essentials",body:["Dates, scooters, riders and contact details allow a realistic check."]},{heading:"2. Receive a proposal",body:["Availability, price, model, pickup point and terms should arrive before confirmation."]},{heading:"3. Check documents and coverage",body:["Review licence rules, deposit, insurance, excess and assistance."]},{heading:"4. Confirm knowingly",body:["Submitting the form does not automatically hold a scooter."]}], faq},
-  { slug:"faq", alternateSlug:"domande-frequenti", kind:"info", title:"Bosa scooter rental FAQ", h1:"Frequently asked questions", description:"Licence, documents, passenger, deposit, pickup and support: what to check before renting a scooter in Bosa.", eyebrow:"Before you ride", primaryKeyword:"Bosa scooter rental questions", intro:"The provider’s written proposal will always contain the definitive conditions.", sections:[{heading:"Details that still need confirmation",body:["We do not invent operational rules, prices or coverage. Use these answers as a checklist for your quote."]}], faq},
-  { slug:"contact", alternateSlug:"contatti", kind:"contact", title:"Contact | Scooter Bosa", h1:"Request availability", description:"Send your dates and trip details to check scooter availability in Bosa or Bosa Marina.", eyebrow:"No-obligation enquiry", primaryKeyword:"Bosa scooter contact", intro:"Complete the form to receive availability, price and pickup information. Sending it is not a booking.", sections:[{heading:"Before you send",body:["The more useful context you provide, the more accurate the response can be. Never put ID, licence or payment details in the notes."]}]},
-  { slug:"guides", alternateSlug:"guide", kind:"info", title:"Guides to Bosa and the western coast", h1:"Local guides", description:"Practical guides for planning travel around Bosa, Bosa Marina and western Sardinia.", eyebrow:"Useful travel planning", primaryKeyword:"Bosa travel guides", intro:"Starter content that should be reviewed with local knowledge and current sources before public launch.", sections:[{heading:"Plan with current information",body:["Weather, roads, rules and services change. Always verify actual conditions before leaving."]}]},
-  { slug:"guides/visit-bosa-without-a-car", alternateSlug:"guide/visitare-bosa-senza-auto", kind:"guide", title:"Visit Bosa without a car: practical guide", h1:"How to visit Bosa without a car", description:"Plan a car-free stay in Bosa: old town, marina, transport options and when a scooter may help.", eyebrow:"Local guide", primaryKeyword:"visit Bosa without a car", intro:"A car-free break is realistic when accommodation, arrival and daily travel are planned. A scooter can broaden your options but is not the only answer.", updatedAt:"2026-08-02", sections:[{heading:"Choose where to stay",body:["The centre and marina suit different plans. Check the actual distance from the places you expect to visit."]},{heading:"Walking, public transport or scooter",body:["Walking works for compact areas; public transport must be checked against official timetables; scooters add flexibility for experienced riders."]},{heading:"When a scooter makes sense",body:["It can help connect the centre, marina and nearby stops. Consider weather, luggage and safety."]}], faq:faq.slice(0,2)},
-  { slug:"guides/getting-around-bosa", alternateSlug:"guide/come-muoversi-a-bosa", kind:"guide", title:"Getting around Bosa and Bosa Marina", h1:"Getting around Bosa", description:"Compare walking, public transport, car and scooter options between Bosa and Bosa Marina.", eyebrow:"Local guide", primaryKeyword:"getting around Bosa", intro:"The best option depends on your accommodation, season, itinerary and riding confidence.", updatedAt:"2026-08-02", sections:[{heading:"Short local journeys",body:["The historic centre rewards slow exploration. Check accessibility and walking routes on arrival."]},{heading:"Between Bosa and Bosa Marina",body:["Verify transport frequencies for your dates. A scooter may add flexibility when riding conditions suit you."]},{heading:"Choose for the day",body:["Wind, rain, heat and traffic matter. Keep a sensible alternative."]}], faq:faq.slice(0,2)},
-  { slug:"guides/beaches-near-bosa-by-scooter", alternateSlug:"guide/spiagge-da-raggiungere-in-scooter-da-bosa", kind:"guide", title:"Beaches near Bosa by scooter: planning guide", h1:"Reaching beaches near Bosa by scooter", description:"How to plan a beach day near Bosa by scooter without relying on invented travel times or parking claims.", eyebrow:"Local guide", primaryKeyword:"beaches near Bosa by scooter", intro:"The coast offers many possibilities, but access, parking and road conditions require current checks. This guide provides a safe planning method.", updatedAt:"2026-08-02", sections:[{heading:"Before choosing a beach",body:["Check forecasts, wind, access, services and parking rules using current sources."]},{heading:"Prepare the scooter",body:["Check fuel, helmets, storage and assistance contacts. Do not leave valuables on the vehicle."]},{heading:"Allow time for the return",body:["Plan to return with enough daylight and avoid improvised routes."]}], faq:faq.slice(1,3)},
-  { slug:"guides/bosa-alghero-scooter-route", alternateSlug:"guide/itinerario-in-scooter-bosa-alghero", kind:"guide", title:"Bosa to Alghero by scooter: what to consider", h1:"Bosa–Alghero scooter route", description:"A cautious planning guide for assessing the scenic route between Bosa and Alghero by scooter.", eyebrow:"Local guide", primaryKeyword:"Bosa Alghero scooter route", intro:"Only consider this route with a suitable vehicle, experience and weather. Verify restrictions and conditions on the day.", updatedAt:"2026-08-02", sections:[{heading:"Decide whether it suits you",body:["Consider experience, passenger, range, wind and road conditions. The rental provider must confirm the route is allowed."]},{heading:"Checks before leaving",body:["Verify fuel, tyres, forecast and assistance contacts. Share your plan with someone."]},{heading:"Safety before scenery",body:["Postpone the trip if conditions are unsuitable. This guide does not replace official advice."]}], faq:faq.slice(0,3)},
+  {
+    slug: "",
+    alternateSlug: "",
+    kind: "home",
+    title: "Bosa in Scooter | 50cc and 125cc scooter rental",
+    h1: "Bosa in Scooter",
+    description: "Rent a 50cc or 125cc scooter to travel around Bosa, Bosa Marina and the coast. View indicative rates and let us know if you are interested.",
+    eyebrow: "Visitor mobility · Bosa",
+    primaryKeyword: "scooters in Bosa",
+    intro: "More freedom to explore Bosa, one more service for the local area. Choose a 50cc or 125cc scooter and enjoy the old town, marina and coast on a more flexible schedule.",
+    sections: [
+      {
+        heading: "Move easily and experience more of the area",
+        body: ["Bosa in Scooter is designed to make local journeys simpler for visitors and help them discover more businesses, beaches and places across the area."],
+        bullets: ["50cc and 125cc scooters", "Two-person models", "Direct contact and clear terms"],
+      },
+      {
+        heading: "A rental option for your stay",
+        body: ["Choose 24 hours, 7 days or a longer stay. Tell us about your plans and we will assess the most suitable model, period and terms. Published rates and services are indicative until confirmed in writing."],
+        bullets: ["Pickup near Viale Alghero", "Delivery and collection on request", "Two helmets and equipment included"],
+      },
+    ],
+    faq: commonFaq.slice(0, 4),
+  },
+  {
+    slug: "scooter-rental-bosa",
+    alternateSlug: "noleggio-scooter-bosa",
+    kind: "commercial",
+    title: "Scooter rental in Bosa | Bosa in Scooter",
+    h1: "50cc and 125cc scooter rental in Bosa",
+    description: "Rent a scooter for Bosa, Bosa Marina and the coast. Two-person models, equipment and provisional insurance cover included.",
+    eyebrow: "Bosa at your pace",
+    primaryKeyword: "scooter rental Bosa",
+    intro: "Choose a scooter that suits your experience and route. We help you arrange straightforward travel between the old town, Bosa Marina and stops along the coast.",
+    sections: [
+      {
+        heading: "The fleet",
+        body: ["The planned fleet includes 50cc and 125cc scooters, all approved for one rider and one passenger. We confirm the available model and riding requirements before rental."],
+        bullets: ["Two helmets", "Top box", "Lock or disc lock", "One additional registered rider"],
+      },
+      {
+        heading: "What is included",
+        body: ["VAT, equipment, the full-to-full fuel policy and the listed cover are included in the provisional price. Policy and rental conditions are always provided in writing."],
+        bullets: ["Motor liability and third-party damage", "Passenger and rider accident cover", "Theft, fire and collision cover", "Roadside assistance"],
+      },
+      {
+        heading: "Required documents",
+        body: ["You need an original licence that is valid in Italy and appropriate for the selected scooter, plus a valid identity card or passport. The same documents are required for an additional rider."],
+      },
+      {
+        heading: "From the old town to the marina",
+        body: ["A scooter can make everyday journeys more flexible and spread your visit across neighbourhoods, beaches and local businesses. Choose the model according to your experience, route and conditions on the day."],
+      },
+    ],
+    faq: commonFaq,
+  },
+  {
+    slug: "scooter-rental-bosa-marina",
+    alternateSlug: "noleggio-scooter-bosa-marina",
+    kind: "commercial",
+    title: "Scooter rental in Bosa Marina | Bosa in Scooter",
+    h1: "Scooters for Bosa Marina",
+    description: "Request a 50cc or 125cc scooter in Bosa Marina, with home delivery and collection available on request.",
+    eyebrow: "From the sea to the old town",
+    primaryKeyword: "scooter rental Bosa Marina",
+    intro: "Staying in Bosa Marina? Collect your scooter from our base near Viale Alghero or request delivery and collection at your accommodation.",
+    sections: [
+      {
+        heading: "Delivery arranged around your stay",
+        body: ["One delivery or collection journey in Bosa or Bosa Marina is indicatively €20–25; combined delivery and collection is €35–45. Timing, address and the final amount are confirmed with your request."],
+        bullets: ["Pickup from our base included", "Delivery or collection on request", "Feasibility checked before travel outside the area"],
+      },
+      {
+        heading: "Possible free delivery",
+        body: ["Bookings of at least 10 days, or two scooters for at least 7 days, may qualify for free delivery. Eligibility and availability are assessed and confirmed case by case."],
+      },
+      {
+        heading: "Between the marina, old town and coast",
+        body: ["A scooter lets you combine the sea, historic centre and local businesses without planning every day around a single starting point. Weather, roads and riding ability should always guide the choice."],
+      },
+    ],
+    faq: commonFaq,
+  },
+  {
+    slug: "prices",
+    alternateSlug: "prezzi",
+    kind: "prices",
+    title: "Bosa scooter rental prices | Indicative rates",
+    h1: "Rates and rental options",
+    description: "Indicative Bosa scooter rates for a minimum 24-hour rental and 7 days, including mileage, deposit and delivery costs.",
+    eyebrow: "Transparent pricing",
+    primaryKeyword: "Bosa scooter rental prices",
+    intro: "View our indicative seasonal rates. Availability, model, cover, deposit and services only become final in your written quote and rental agreement.",
+    sections: [
+      {
+        heading: "Included mileage",
+        body: ["The minimum 24-hour rental includes 150 km; the same rate applies even if the scooter is only used for four hours. The 7-day option includes 900 km. Distance above the relevant allowance costs €0.25/km."],
+        bullets: ["Minimum rental: 24 hours", "Rentals of 2–6 days: price on request", "Outside June–October: price on request"],
+      },
+      {
+        heading: "Deposit and inclusions",
+        body: ["The indicative deposit is €500 per scooter. VAT, an additional registered rider, two helmets, top box, security device, full-to-full fuel policy and the listed cover are included in the provisional terms."],
+      },
+      {
+        heading: "Delivery and collection",
+        body: ["Pickup from our base is included. In Bosa and Bosa Marina, one delivery or collection journey is indicatively €20–25 and combined delivery and collection is €35–45. Outside the area, feasibility and cost require a quote."],
+      },
+    ],
+    faq: commonFaq.slice(2),
+  },
+  {
+    slug: "how-it-works",
+    alternateSlug: "come-funziona",
+    kind: "info",
+    title: "How scooter rental works | Bosa in Scooter",
+    h1: "How it works",
+    description: "From enquiry to pickup: how to choose and rent a 50cc or 125cc scooter in Bosa.",
+    eyebrow: "Four simple steps",
+    primaryKeyword: "how to rent a scooter in Bosa",
+    intro: "The website collects expressions of interest; it does not process instant bookings or payments. Every condition is confirmed before rental.",
+    sections: [
+      { heading: "1. Send your request", body: ["Share your dates, number of scooters, preferred model, age, licence experience and where you will be staying."] },
+      { heading: "2. Choose the scooter", body: ["We check 50cc or 125cc availability, licence requirements and the rental option that best matches your plans."] },
+      { heading: "3. Receive the quote", body: ["Price, mileage, deposit, cover, equipment and logistics are set out in writing."] },
+      { heading: "4. Collect or request delivery", body: ["Collect near Viale Alghero or arrange delivery and collection when feasible."] },
+    ],
+    faq: commonFaq,
+  },
+  {
+    slug: "faq",
+    alternateSlug: "domande-frequenti",
+    kind: "info",
+    title: "Bosa scooter rental FAQ | Bosa in Scooter",
+    h1: "Frequently asked questions",
+    description: "Licence, documents, passenger, deposit, insurance, fuel, pickup and delivery for scooter rental in Bosa.",
+    eyebrow: "Before you ride",
+    primaryKeyword: "Bosa scooter rental questions",
+    intro: "These are the conditions currently planned. As provisional terms, they must be confirmed in the quote and rental agreement before pickup.",
+    sections: [
+      {
+        heading: "Clear confirmation before rental",
+        body: ["Do not send identity or payment details through the form. We will request the necessary documents through the agreed channel and provide all conditions in writing."],
+      },
+    ],
+    faq: commonFaq,
+  },
+  {
+    slug: "contact",
+    alternateSlug: "contatti",
+    kind: "contact",
+    title: "Let us know if you are interested | Bosa in Scooter",
+    h1: "Let us know if you are interested",
+    description: "Share your interest in a 50cc or 125cc scooter and help us organise the service across the local area.",
+    eyebrow: "Direct enquiry",
+    primaryKeyword: "Bosa scooter contact",
+    intro: "Tell us which scooter interests you, when you would use it and where you will be staying. We will contact you by email only.",
+    sections: [
+      {
+        heading: "Useful details",
+        body: ["Select where you will be staying and your preferred model. Use the notes only for particular requirements; do not enter identity or payment details."],
+      },
+    ],
+  },
+  {
+    slug: "guides",
+    alternateSlug: "guide",
+    kind: "info",
+    title: "Bosa local guides | Bosa in Scooter",
+    h1: "Local guides",
+    description: "Essential advice for travelling between Bosa, the marina, beaches and coast.",
+    eyebrow: "Explore the area",
+    primaryKeyword: "Bosa local guides",
+    intro: "Four practical guides to choosing how to travel, preparing a beach day and assessing longer routes.",
+    sections: [
+      {
+        heading: "Choose a guide",
+        body: ["Start with the kind of day you are planning: staying in town, moving between Bosa and the marina, reaching a beach or taking the coastal road."],
+        bullets: ["Visit Bosa without a car", "Travel between the old town and marina", "Reach nearby beaches", "Assess the Bosa–Alghero road"],
+      },
+    ],
+  },
+  {
+    slug: "guides/visit-bosa-without-a-car",
+    alternateSlug: "guide/visitare-bosa-senza-auto",
+    kind: "guide",
+    title: "Visit Bosa without a car | Local mobility guide",
+    h1: "Visiting Bosa without a car",
+    description: "How to combine accommodation, walking, transport and scooters during your stay.",
+    eyebrow: "Local guide",
+    primaryKeyword: "visit Bosa without a car",
+    intro: "A car-free stay works best when arrival, luggage and daily journeys are planned separately.",
+    sections: [
+      {
+        heading: "Choose where to stay",
+        body: ["The old town is ideal for walking to restaurants and sights; Bosa Marina is more convenient for the beach. Your base determines which daily journeys need transport."],
+      },
+      {
+        heading: "Manage arrival and luggage",
+        body: ["Use public transport, a transfer or an arranged delivery for arrival. A scooter is useful once bags are at the accommodation, not as a substitute for a luggage transfer."],
+      },
+      {
+        heading: "Use the right option for each journey",
+        body: ["Walk in the historic centre, use a scooter for the marina and nearby coast, and choose a car or transfer for long journeys or large luggage."],
+      },
+    ],
+    faq: commonFaq.slice(0, 3),
+  },
+  {
+    slug: "guides/getting-around-bosa",
+    alternateSlug: "guide/come-muoversi-a-bosa",
+    kind: "guide",
+    title: "Getting around Bosa and Bosa Marina",
+    h1: "Getting around Bosa",
+    description: "When walking works and when to choose a scooter between the old town and marina.",
+    eyebrow: "Local guide",
+    primaryKeyword: "getting around Bosa",
+    intro: "Bosa is compact, but hills, heat and the distance to the marina can make transport useful.",
+    sections: [
+      {
+        heading: "Old town on foot",
+        body: ["Walking is the simplest option among the historic streets, riverfront and central restaurants, where parking can be limited."],
+      },
+      {
+        heading: "Between the old town and Bosa Marina",
+        body: ["A scooter makes repeated trips to the beach or evening returns easier, especially in summer and for accommodation outside the centre."],
+      },
+      {
+        heading: "50cc or 125cc",
+        body: ["A 50cc suits the medieval village and nearby seaside spots. A 125cc is better for nearby villages and more remote coves, subject to licence and rental requirements."],
+      },
+    ],
+    faq: commonFaq.slice(0, 3),
+  },
+  {
+    slug: "guides/beaches-near-bosa-by-scooter",
+    alternateSlug: "guide/spiagge-da-raggiungere-in-scooter-da-bosa",
+    kind: "guide",
+    title: "Beaches near Bosa by scooter",
+    h1: "Reaching beaches by scooter",
+    description: "Route, equipment and return planning for a beach day.",
+    eyebrow: "Local guide",
+    primaryKeyword: "beaches near Bosa by scooter",
+    intro: "Choose the beach according to distance, road conditions and the mileage included in the rental.",
+    sections: [
+      {
+        heading: "Check the route and mileage",
+        body: ["Confirm the round-trip distance before leaving and keep enough range for detours, traffic or a change of beach."],
+      },
+      {
+        heading: "Prepare the scooter",
+        body: ["Bring water and sun protection, store only suitable items in the top case, and secure the scooter with the supplied lock or disc lock."],
+      },
+      {
+        heading: "Plan parking and return",
+        body: ["Use designated areas, avoid sand and unstable ground, and allow time to refuel before the agreed return or collection."],
+      },
+    ],
+    faq: commonFaq.slice(1, 6),
+  },
+  {
+    slug: "guides/bosa-alghero-scooter-route",
+    alternateSlug: "guide/itinerario-in-scooter-bosa-alghero",
+    kind: "guide",
+    title: "Bosa–Alghero scooter route",
+    h1: "Bosa to Alghero by scooter",
+    description: "Vehicle, mileage and conditions to check before the coastal road.",
+    eyebrow: "Local guide",
+    primaryKeyword: "Bosa Alghero scooter route",
+    intro: "The coastal road is scenic but longer and more exposed than local journeys around Bosa.",
+    sections: [
+      {
+        heading: "Check vehicle suitability",
+        body: ["Ask whether the chosen scooter is suitable for the route, your licence and your experience, especially when travelling with a passenger."],
+      },
+      {
+        heading: "Calculate the full journey",
+        body: ["Count the return trip, local travel in Alghero and a safety margin against the mileage included in your rental formula."],
+      },
+      {
+        heading: "Decide based on conditions",
+        body: ["Strong wind, heat, traffic and limited daylight can change the experience. If conditions are poor, choose a shorter route or another form of transport."],
+      },
+    ],
+    faq: commonFaq.slice(0, 5),
+  },
 ];

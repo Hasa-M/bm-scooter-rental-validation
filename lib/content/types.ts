@@ -13,5 +13,4 @@ export type PageContent = {
   primaryKeyword: string;
   sections: Section[];
   faq?: Faq[];
-  updatedAt?: string;
 };

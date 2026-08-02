@@ -1,10 +1,10 @@
-# Affitto Scooter Bosa
+# Bosa in Scooter
 
-Sito SEO locale bilingue per validare la domanda di noleggio scooter 125cc a Bosa. Costruito con Next.js 16, App Router, TypeScript, React Server Components e Tailwind CSS.
+Sito locale bilingue per richiedere scooter 50cc e 125cc a Bosa, con tariffe e condizioni indicative da confermare. Costruito con Next.js 16, App Router, TypeScript, React Server Components e Tailwind CSS.
 
 ## Stato del progetto
 
-Il valore `businessConfig.status` è `validation`: il sito raccoglie richieste senza presentare il servizio come già operativo. Prima del lancio sostituire tutti i placeholder aziendali e collegare il form a un endpoint sicuro.
+Il valore businessConfig.status è active: il sito presenta un servizio attivo con richiesta di disponibilità e condizioni commerciali provvisorie da confermare. Prima del lancio sostituire tutti i placeholder aziendali e collegare il form a un endpoint sicuro.
 
 ## Avvio locale
 
