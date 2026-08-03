@@ -11,18 +11,23 @@ const readMigrations = async () => {
     .then((migrations) => migrations.join("\n"));
 };
 
-test("migration creates only the two application tables with separated contact data", async () => {
+test("migrations keep application contact data separate and add isolated admin auth tables", async () => {
   const migration = await readMigrations();
   const researchTable = migration.match(/CREATE TABLE "research_responses" \(([\s\S]*?)\n\);/)?.[1] ?? "";
   const contactTable = migration.match(/CREATE TABLE "contact_requests" \(([\s\S]*?)\n\);/)?.[1] ?? "";
 
-  assert.equal((migration.match(/CREATE TABLE/g) ?? []).length, 2);
+  assert.equal((migration.match(/CREATE TABLE/g) ?? []).length, 6);
   assert.ok(researchTable);
   assert.ok(contactTable);
   assert.doesNotMatch(researchTable, /"email"|"name"|"phone"|"ip"|"user_agent"|"fingerprint"/);
   assert.match(contactTable, /"research_response_id" uuid NOT NULL/);
   assert.match(contactTable, /"email" varchar\(160\) NOT NULL/);
   assert.match(contactTable, /UNIQUE\("research_response_id"\)/);
+  for (const table of ["admin_user", "admin_session", "admin_account", "admin_verification"]) {
+    assert.match(migration, new RegExp('CREATE TABLE "' + table + '"'));
+  }
+  assert.match(migration, /admin_account_provider_account_unique.*UNIQUE\("provider_id","account_id"\)/);
+  assert.match(migration, /admin_session_token_unique.*UNIQUE\("token"\)/);
 });
 
 test("migration enforces the foreign key, cascade, limits, checks and submitted index", async () => {

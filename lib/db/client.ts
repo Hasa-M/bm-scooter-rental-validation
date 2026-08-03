@@ -13,6 +13,11 @@ export type DatabaseConnection = {
   close: () => Promise<void>;
 };
 
+const databaseGlobal = globalThis as typeof globalThis & {
+  adminDatabase?: DatabaseClient;
+  adminPool?: Pool;
+};
+
 export function createDatabaseConnection(): DatabaseConnection {
   const connectionString = process.env.DATABASE_URL?.trim();
   if (!connectionString) {
@@ -24,4 +29,19 @@ export function createDatabaseConnection(): DatabaseConnection {
     client: createDrizzleClient(pool),
     close: () => pool.end(),
   };
+}
+
+export function getDatabaseClient(): DatabaseClient {
+  if (databaseGlobal.adminDatabase) return databaseGlobal.adminDatabase;
+
+  const connectionString = process.env.DATABASE_URL?.trim();
+  if (!connectionString) {
+    throw new Error("Database is not configured: DATABASE_URL is missing");
+  }
+
+  const pool = new Pool({ connectionString });
+  const client = createDrizzleClient(pool);
+  databaseGlobal.adminPool = pool;
+  databaseGlobal.adminDatabase = client;
+  return client;
 }
