@@ -1,4 +1,6 @@
 import type { AgeBand, OriginArea, ScooterInterest, ServiceLocation } from "./options";
+import { createDatabaseConnection, type DatabaseConnection } from "@/lib/db/client";
+import { contactRequests, researchResponses } from "@/lib/db/schema";
 
 export type ResearchResponse = {
   startDate: string;
@@ -30,30 +32,99 @@ export type SubmissionPayload = {
   contactRequest?: ContactRequest;
 };
 
+export type SaveResult = {
+  researchResponseId: string;
+  contactRequestId?: string;
+};
+
 export interface LeadRepository {
-  save(payload: SubmissionPayload): Promise<void>;
+  save(payload: SubmissionPayload): Promise<SaveResult>;
 }
 
-class WebhookLeadRepository implements LeadRepository {
-  constructor(private readonly endpoint: string) {}
+export function mapResearchResponse(response: ResearchResponse): typeof researchResponses.$inferInsert {
+  return {
+    startDate: response.startDate,
+    endDate: response.endDate,
+    scooters: response.scooters,
+    vehicleType: response.vehicleType,
+    ageBand: response.ageBand,
+    licensedOverFiveYears: response.licensedOverFiveYears,
+    stayLocation: response.stayLocation,
+    originArea: response.originArea,
+    notes: response.notes,
+    language: response.language,
+    submittedAt: response.submittedAt,
+    researchPurpose: response.researchPurpose,
+    reviewAfter: response.reviewAfter,
+    privacyNoticeAcknowledgedAt: response.privacyNoticeAcknowledgedAt,
+  };
+}
 
-  async save(payload: SubmissionPayload) {
-    const response = await fetch(this.endpoint, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(payload),
-      signal: AbortSignal.timeout(8000),
-    });
-    if (!response.ok) throw new Error("Lead provider rejected the request");
+export function mapContactRequest(
+  request: ContactRequest,
+  researchResponseId: string,
+): typeof contactRequests.$inferInsert {
+  return {
+    researchResponseId,
+    email: request.email,
+    consentGrantedAt: request.consentGrantedAt,
+    purpose: request.purpose,
+    reviewAfter: request.reviewAfter,
+  };
+}
+
+type DatabaseConnectionFactory = () => DatabaseConnection;
+
+export class PostgresLeadRepository implements LeadRepository {
+  constructor(
+    private readonly createConnection: DatabaseConnectionFactory = createDatabaseConnection,
+  ) {}
+
+  async save(payload: SubmissionPayload): Promise<SaveResult> {
+    const connection = this.createConnection();
+
+    try {
+      return await connection.client.transaction(async (transaction) => {
+        const [savedResearchResponse] = await transaction
+          .insert(researchResponses)
+          .values(mapResearchResponse(payload.researchResponse))
+          .returning({ id: researchResponses.id });
+
+        if (!savedResearchResponse) {
+          throw new Error("Research response insert did not return an id");
+        }
+
+        if (!payload.contactRequest) {
+          return { researchResponseId: savedResearchResponse.id };
+        }
+
+        const [savedContactRequest] = await transaction
+          .insert(contactRequests)
+          .values(mapContactRequest(payload.contactRequest, savedResearchResponse.id))
+          .returning({ id: contactRequests.id });
+
+        if (!savedContactRequest) {
+          throw new Error("Contact request insert did not return an id");
+        }
+
+        return {
+          researchResponseId: savedResearchResponse.id,
+          contactRequestId: savedContactRequest.id,
+        };
+      });
+    } finally {
+      await connection.close();
+    }
   }
 }
 
-export function isLeadWebhookConfigured(): boolean {
-  return Boolean(process.env.LEAD_WEBHOOK_URL?.trim());
+export function isDatabaseConfigured(): boolean {
+  return Boolean(process.env.DATABASE_URL?.trim());
 }
 
 export function getLeadRepository(): LeadRepository {
-  const endpoint = process.env.LEAD_WEBHOOK_URL?.trim();
-  if (!endpoint) throw new Error("Lead repository is not configured");
-  return new WebhookLeadRepository(endpoint);
+  if (!isDatabaseConfigured()) {
+    throw new Error("Lead repository is not configured");
+  }
+  return new PostgresLeadRepository();
 }

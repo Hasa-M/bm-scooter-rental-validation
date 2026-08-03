@@ -11,7 +11,7 @@ import {
 } from "@/lib/leads/options";
 import {
   getLeadRepository,
-  isLeadWebhookConfigured,
+  isDatabaseConfigured,
   type SubmissionPayload,
 } from "@/lib/leads/repository";
 import {
@@ -21,6 +21,8 @@ import {
 
 const vehicleTypes = ["50cc", "125cc"] as const;
 const originAreaValues = originAreas.map((item) => item.value);
+
+export const runtime = "nodejs";
 
 export async function POST(request: Request) {
   let data: Record<string, unknown>;
@@ -38,7 +40,7 @@ export async function POST(request: Request) {
     "The form is temporarily unavailable. Please try again later.",
   );
 
-  if (!isLeadWebhookConfigured() || !isDataProviderConfigured()) {
+  if (!isDatabaseConfigured() || !isDataProviderConfigured()) {
     return NextResponse.json({ message: unavailableMessage }, { status: 503 });
   }
   if (typeof data.website === "string" && data.website) {

@@ -3,7 +3,7 @@
 ## Prima del lancio
 
 - [ ] Completare soltanto i dati commerciali reali necessari in `lib/config/business.ts`; non pubblicare un indirizzo privato o dati aziendali inesistenti.
-- [ ] Configurare `NEXT_PUBLIC_SITE_URL`, `LEAD_WEBHOOK_URL` e tutti i campi minimi `DATA_PROVIDER_*`; verificare che la configurazione incompleta restituisca `503`.
+- [ ] Configurare `NEXT_PUBLIC_SITE_URL`, `DATABASE_URL` e tutti i campi minimi `DATA_PROVIDER_*`; applicare esplicitamente le migration e verificare che la configurazione incompleta restituisca `503`.
 - [ ] Scegliere e verificare il provider, il luogo del trattamento, il ruolo privacy, l’eventuale accordo e le garanzie effettive; aggiornare /it/privacy e /en/privacy con dati reali.
 - [ ] Verificare HTTPS, canonical, hreflang, metadata, sitemap, robots, favicon e social image.
 - [ ] Sostituire tutti i placeholder con fotografie autentiche, compresse e dotate di alt pertinente.

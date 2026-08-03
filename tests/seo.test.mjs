@@ -224,7 +224,7 @@ test("privacy configuration and pages disclose controller and provider gate", as
   assert.match(page, /mailto:/);
   assert.match(page, /has not yet been selected/);
   assert.match(page, /non è ancora stato selezionato/);
-  assert.match(api, /!isLeadWebhookConfigured\(\) \|\| !isDataProviderConfigured\(\)/);
+  assert.match(api, /!isDatabaseConfigured\(\) \|\| !isDataProviderConfigured\(\)/);
   assert.match(combined, /24 mesi|24 months/);
   assert.match(combined, /Garante|Italian Data Protection Authority/);
   assert.doesNotMatch(it + en, /\[RAGIONE SOCIALE\]|streetAddress|Vercel|Neon|PostHog/);
