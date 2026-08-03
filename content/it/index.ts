@@ -1,5 +1,4 @@
 import type { PageContent } from "@/lib/content/types";
-import { businessConfig } from "@/lib/config/business";
 
 const commonFaq = [
   {
@@ -35,7 +34,7 @@ export const itPages: PageContent[] = [
     kind: "home",
     title: "Bosa in Scooter | Noleggio scooter 50cc e 125cc",
     h1: "Bosa in Scooter",
-    description: "Scooter 50cc e 125cc per muoversi tra Bosa, Bosa Marina e la costa. Consulta le tariffe indicative e facci sapere se sei interessato.",
+    description: "Scooter 50cc e 125cc per muoversi tra Bosa, Bosa Marina e la costa. Consulta le tariffe provvisorie e facci sapere se sei interessato.",
     eyebrow: "Mobilità turistica · Bosa",
     primaryKeyword: "scooter a Bosa",
     intro: "Più libertà per chi visita Bosa, un servizio in più per il territorio. Scegli uno scooter 50cc o 125cc e vivi centro, marina e costa con tempi più flessibili.",
@@ -116,12 +115,12 @@ export const itPages: PageContent[] = [
     slug: "prezzi",
     alternateSlug: "prices",
     kind: "prices",
-    title: "Prezzi noleggio scooter a Bosa | Tariffe indicative",
+    title: "Prezzi noleggio scooter a Bosa | Tariffe provvisorie",
     h1: "Tariffe e formule",
-    description: "Tariffe indicative per scooter a Bosa: noleggio minimo di 24 ore, formula 7 giorni, chilometri inclusi, cauzione e consegna.",
+    description: "Tariffe provvisorie per scooter a Bosa: noleggio minimo di 24 ore, formula 7 giorni, chilometri inclusi, cauzione e consegna.",
     eyebrow: "Prezzi trasparenti",
     primaryKeyword: "prezzi noleggio scooter Bosa",
-    intro: "Consulta le tariffe stagionali indicative. Disponibilità, modello, coperture, cauzione e servizi diventano definitivi soltanto nel preventivo e nel contratto.",
+    intro: "Consulta le tariffe stagionali provvisorie. Disponibilità, modello, coperture, cauzione e servizi diventano definitivi soltanto nel preventivo e nel contratto.",
     sections: [
       {
         heading: "Chilometri inclusi",
@@ -184,7 +183,7 @@ export const itPages: PageContent[] = [
     description: "Condividi il tuo interesse per uno scooter 50cc o 125cc e aiutaci a organizzare il servizio sul territorio.",
     eyebrow: "Contatto diretto",
     primaryKeyword: "contatti scooter Bosa",
-    intro: "Condividi una risposta anonima per aiutarci a validare la domanda. Il ricontatto email è separato e completamente facoltativo.",
+    intro: "Condividi una risposta priva di identificativi diretti per aiutarci a validare la domanda. Il ricontatto email è separato e completamente facoltativo.",
     sections: [
       {
         heading: "Informazioni utili",
@@ -327,9 +326,7 @@ export const itPages: PageContent[] = [
     sections: [
       {
         heading: "Titolare del trattamento",
-        body: [
-          "Contatto privacy: " + businessConfig.email + ". I valori tra parentesi quadre devono essere completati prima della pubblicazione.",
-        ],
+        body: [],
       },
       {
         heading: "Dati, finalità e basi giuridiche",
@@ -342,21 +339,17 @@ export const itPages: PageContent[] = [
       {
         heading: "Dati obbligatori e facoltativi",
         body: [
-          "I campi anonimi e la dichiarazione di lettura dell'informativa sono necessari per inviare la risposta. Le note, il ricontatto, l'email e il relativo consenso sono sempre facoltativi. Senza ricontatto il modulo non mostra né invia alcun indirizzo email.",
+          "I campi privi di identificativi diretti e la dichiarazione di lettura dell'informativa sono necessari per inviare la risposta. Le note, il ricontatto, l'email e il relativo consenso sono sempre facoltativi. Senza ricontatto il modulo non mostra né invia alcun indirizzo email.",
         ],
       },
       {
         heading: "Destinatari e fornitori",
-        body: [
-          "Il sito è previsto su Vercel, che può trattare dati tecnici di hosting e log secondo il servizio configurato. Le risposte vengono inviate server-to-server al fornitore indicato tramite LEAD_WEBHOOK_URL: il titolare deve identificarlo in questa informativa e nel registro dei trattamenti prima della pubblicazione.",
-          "Nel codice attuale non risultano attive integrazioni Neon o PostHog. Se Neon, PostHog o altri servizi vengono attivati, l'informativa e le preferenze cookie devono essere aggiornate prima della raccolta, indicando ruolo, finalità, dati, conservazione e trasferimenti.",
-          "I dati non sono venduti e non vengono usati per newsletter, promozioni o marketing senza un ulteriore consenso specifico.",
-        ],
+        body: [],
       },
       {
         heading: "Trasferimenti fuori dallo SEE",
         body: [
-          "Vercel e l'eventuale fornitore del webhook possono comportare trattamenti fuori dallo Spazio economico europeo. Prima della pubblicazione il titolare deve verificare regioni effettive, decisioni di adeguatezza, clausole contrattuali standard o altre garanzie applicabili e renderle disponibili su richiesta. Neon e PostHog non sono attivi; ogni futura attivazione richiede la stessa verifica.",
+          "Non verranno effettuati trasferimenti internazionali tramite il modulo finché il luogo effettivo del trattamento e le garanzie applicabili non saranno stati verificati e descritti nella sezione precedente. Se il provider tratta dati fuori dallo Spazio economico europeo, questa informativa indicherà le garanzie effettivamente applicabili.",
         ],
       },
       {
@@ -370,13 +363,13 @@ export const itPages: PageContent[] = [
         heading: "Diritti e revoca del consenso",
         body: [
           "Puoi chiedere accesso, rettifica, cancellazione, limitazione, opposizione e, quando applicabile, portabilità. Puoi revocare in qualsiasi momento il consenso al ricontatto scrivendo al titolare; la revoca non pregiudica la liceità del trattamento svolto prima della revoca.",
-          "Puoi presentare reclamo al Garante per la protezione dei dati personali. Le risposte completamente anonime potrebbero non essere tecnicamente riconducibili a una persona e quindi non sempre possono essere individuate per una richiesta individuale.",
+          "Puoi presentare reclamo al Garante per la protezione dei dati personali. Le risposte prive di email non contengono identificativi diretti, ma date, località, timestamp o note possono comunque renderle dati personali. In assenza di elementi sufficienti per individuarle, una richiesta relativa a una singola risposta potrebbe non essere tecnicamente eseguibile.",
         ],
       },
       {
         heading: "Cookie e analytics",
         body: [
-          "Il codice attuale non installa analytics di terze parti né cookie non essenziali. Gli eventi analytics dell'interfaccia sono locali e, senza un'integrazione esterna, non trasmettono dati. Possono esistere log tecnici necessari a hosting e sicurezza. Prima di attivare PostHog o altri strumenti non essenziali sarà necessario aggiornare l'informativa e, quando richiesto, raccogliere una preferenza cookie valida.",
+          "Il sito non installa analytics di terze parti né cookie non essenziali. Possono esistere esclusivamente dati tecnici necessari al funzionamento e alla sicurezza. Prima di introdurre strumenti non essenziali sarà necessario aggiornare questa informativa e, quando richiesto, raccogliere una scelta valida dell'utente.",
         ],
       },
       {

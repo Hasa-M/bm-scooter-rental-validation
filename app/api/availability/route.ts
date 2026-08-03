@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isDataProviderConfigured } from "@/lib/config/privacy";
 import {
   ageBands,
   originAreas,
@@ -8,10 +9,16 @@ import {
   type ScooterInterest,
   type ServiceLocation,
 } from "@/lib/leads/options";
-import { getLeadRepository, type Lead } from "@/lib/leads/repository";
+import {
+  getLeadRepository,
+  isLeadWebhookConfigured,
+  type SubmissionPayload,
+} from "@/lib/leads/repository";
+import {
+  isValidIsoDate,
+  validateContactRequest,
+} from "@/lib/leads/validation.mjs";
 
-const emailPattern = /^[^s@]+@[^s@]+.[^s@]+$/;
-const datePattern = /^d{4}-d{2}-d{2}$/;
 const vehicleTypes = ["50cc", "125cc"] as const;
 const originAreaValues = originAreas.map((item) => item.value);
 
@@ -23,10 +30,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "Richiesta non valida / Invalid request." }, { status: 400 });
   }
 
-  if (typeof data.website === "string" && data.website) return NextResponse.json({ ok: true });
 
   const it = data.language !== "en";
   const localized = (italian: string, english: string) => it ? italian : english;
+  const unavailableMessage = localized(
+    "Il modulo non è momentaneamente disponibile. Riprova più tardi.",
+    "The form is temporarily unavailable. Please try again later.",
+  );
+
+  if (!isLeadWebhookConfigured() || !isDataProviderConfigured()) {
+    return NextResponse.json({ message: unavailableMessage }, { status: 503 });
+  }
+  if (typeof data.website === "string" && data.website) {
+    return NextResponse.json({ ok: true });
+  }
+
   const required = [
     "startDate",
     "endDate",
@@ -54,8 +72,8 @@ export async function POST(request: Request) {
   }
 
   if (
-    !datePattern.test(String(data.startDate)) ||
-    !datePattern.test(String(data.endDate)) ||
+    !isValidIsoDate(data.startDate) ||
+    !isValidIsoDate(data.endDate) ||
     String(data.endDate) < String(data.startDate)
   ) {
     return NextResponse.json(
@@ -107,11 +125,23 @@ export async function POST(request: Request) {
     );
   }
 
-  const contactRequested = data.wantsContact === "yes";
-  if (
-    contactRequested &&
-    (typeof data.email !== "string" || !emailPattern.test(data.email) || data.contactConsent !== "yes")
-  ) {
+  const notes = typeof data.notes === "string" ? data.notes.trim() : "";
+  if (notes.length > 500) {
+    return NextResponse.json(
+      { message: localized("Le note non possono superare 500 caratteri.", "Notes cannot exceed 500 characters.") },
+      { status: 400 },
+    );
+  }
+
+  const submittedAt = new Date();
+  // Operational review deadline only; the storage system must implement and document the outcome.
+  const reviewAfter = new Date(submittedAt);
+  reviewAfter.setUTCFullYear(reviewAfter.getUTCFullYear() + 2);
+  const submittedAtIso = submittedAt.toISOString();
+  const reviewAfterIso = reviewAfter.toISOString();
+
+  const contactValidation = validateContactRequest(data, submittedAtIso, reviewAfterIso);
+  if (!contactValidation.ok) {
     return NextResponse.json(
       {
         message: localized(
@@ -123,64 +153,43 @@ export async function POST(request: Request) {
     );
   }
 
-  const notes = typeof data.notes === "string" ? data.notes.trim() : "";
-  if (notes.length > 500) {
-    return NextResponse.json(
-      { message: localized("Le note non possono superare 500 caratteri.", "Notes cannot exceed 500 characters.") },
-      { status: 400 },
-    );
-  }
-  const submittedAt = new Date();
-  const reviewAfter = new Date(submittedAt);
-  reviewAfter.setUTCFullYear(reviewAfter.getUTCFullYear() + 2);
-
-  const lead: Lead = {
-    startDate: String(data.startDate),
-    endDate: String(data.endDate),
-    scooters,
-    vehicleType: data.vehicleType as ScooterInterest,
-    ageBand: data.ageBand as AgeBand,
-    licensedOverFiveYears: data.licensedOverFiveYears === "yes",
-    stayLocation: data.stayLocation as ServiceLocation,
-    originArea: data.originArea as OriginArea,
-    ...(notes ? { notes: notes.slice(0, 500) } : {}),
-    language: data.language as "it" | "en",
-    contactRequested,
-    ...(contactRequested
-      ? {
-          email: String(data.email).trim().toLowerCase().slice(0, 160),
-          contactConsentGrantedAt: submittedAt.toISOString(),
-        }
+  const payload: SubmissionPayload = {
+    researchResponse: {
+      startDate: String(data.startDate),
+      endDate: String(data.endDate),
+      scooters,
+      vehicleType: data.vehicleType as ScooterInterest,
+      ageBand: data.ageBand as AgeBand,
+      licensedOverFiveYears: data.licensedOverFiveYears === "yes",
+      stayLocation: data.stayLocation as ServiceLocation,
+      originArea: data.originArea as OriginArea,
+      ...(notes ? { notes: notes.slice(0, 500) } : {}),
+      language: data.language as "it" | "en",
+      submittedAt: submittedAtIso,
+      researchPurpose: "market-validation",
+      reviewAfter: reviewAfterIso,
+      privacyNoticeAcknowledgedAt: submittedAtIso,
+    },
+    ...(contactValidation.contactRequest
+      ? { contactRequest: contactValidation.contactRequest }
       : {}),
-    privacyNoticeAcknowledgedAt: submittedAt.toISOString(),
-    submittedAt: submittedAt.toISOString(),
-    researchPurpose: "market-validation",
-    reviewAfter: reviewAfter.toISOString(),
   };
 
   try {
-    await getLeadRepository().save(lead);
+    await getLeadRepository().save(payload);
     return NextResponse.json({
       ok: true,
-      message: contactRequested
+      message: contactValidation.contactRequest
         ? localized(
             "Grazie. Abbiamo registrato la risposta e la richiesta di ricontatto.",
             "Thank you. We recorded your response and contact request.",
           )
         : localized(
-            "Grazie. La tua risposta anonima è stata registrata.",
-            "Thank you. Your anonymous response has been recorded.",
+            "Grazie. La tua risposta priva di identificativi diretti è stata registrata.",
+            "Thank you. Your response without direct identifiers has been recorded.",
           ),
     });
   } catch {
-    return NextResponse.json(
-      {
-        message: localized(
-          "Il modulo non è momentaneamente disponibile. Riprova più tardi.",
-          "The form is temporarily unavailable. Please try again later.",
-        ),
-      },
-      { status: 503 },
-    );
+    return NextResponse.json({ message: unavailableMessage }, { status: 503 });
   }
 }

@@ -1,6 +1,6 @@
 import type { AgeBand, OriginArea, ScooterInterest, ServiceLocation } from "./options";
 
-export type Lead = {
+export type ResearchResponse = {
   startDate: string;
   endDate: string;
   scooters: number;
@@ -11,35 +11,49 @@ export type Lead = {
   originArea: OriginArea;
   notes?: string;
   language: "it" | "en";
-  contactRequested: boolean;
-  email?: string;
-  contactConsentGrantedAt?: string;
-  privacyNoticeAcknowledgedAt: string;
   submittedAt: string;
   researchPurpose: "market-validation";
+  /** Operational review deadline; this field does not trigger automatic deletion. */
+  reviewAfter: string;
+  privacyNoticeAcknowledgedAt: string;
+};
+
+export type ContactRequest = {
+  email: string;
+  consentGrantedAt: string;
+  purpose: "service-availability-contact";
   reviewAfter: string;
 };
 
+export type SubmissionPayload = {
+  researchResponse: ResearchResponse;
+  contactRequest?: ContactRequest;
+};
+
 export interface LeadRepository {
-  save(lead: Lead): Promise<void>;
+  save(payload: SubmissionPayload): Promise<void>;
 }
 
 class WebhookLeadRepository implements LeadRepository {
   constructor(private readonly endpoint: string) {}
 
-  async save(lead: Lead) {
+  async save(payload: SubmissionPayload) {
     const response = await fetch(this.endpoint, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify(lead),
+      body: JSON.stringify(payload),
       signal: AbortSignal.timeout(8000),
     });
     if (!response.ok) throw new Error("Lead provider rejected the request");
   }
 }
 
+export function isLeadWebhookConfigured(): boolean {
+  return Boolean(process.env.LEAD_WEBHOOK_URL?.trim());
+}
+
 export function getLeadRepository(): LeadRepository {
-  const endpoint = process.env.LEAD_WEBHOOK_URL;
-  if (!endpoint) throw new Error("LEAD_WEBHOOK_URL is not configured");
+  const endpoint = process.env.LEAD_WEBHOOK_URL?.trim();
+  if (!endpoint) throw new Error("Lead repository is not configured");
   return new WebhookLeadRepository(endpoint);
 }

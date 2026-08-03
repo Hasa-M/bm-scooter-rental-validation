@@ -48,7 +48,7 @@ export function InterestForm({ locale }: { locale: Locale }) {
     <section className="section alt interest-section">
       <div className="container split">
         <div>
-          <p className="eyebrow">{it ? "Validazione anonima" : "Anonymous validation"}</p>
+          <p className="eyebrow">{it ? "Validazione senza identificativi diretti" : "Validation without direct identifiers"}</p>
           <h2>{it ? "Sei interessato al servizio?" : "Are you interested in the service?"}</h2>
           <p className="lead">
             {it

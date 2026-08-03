@@ -2,13 +2,14 @@
 
 ## Prima del lancio
 
-- [ ] Sostituire dominio, brand, ragione sociale, email, telefono, WhatsApp, indirizzo e luogo di ritiro in `lib/config/business.ts`.
-- [ ] Configurare `NEXT_PUBLIC_SITE_URL` e `LEAD_WEBHOOK_URL`; eseguire una richiesta end-to-end.
-- [ ] Completare e approvare /it/privacy e /en/privacy; indicare provider webhook, regioni, trasferimenti e garanzie effettive.
+- [ ] Completare soltanto i dati commerciali reali necessari in `lib/config/business.ts`; non pubblicare un indirizzo privato o dati aziendali inesistenti.
+- [ ] Configurare `NEXT_PUBLIC_SITE_URL`, `LEAD_WEBHOOK_URL` e tutti i campi minimi `DATA_PROVIDER_*`; verificare che la configurazione incompleta restituisca `503`.
+- [ ] Scegliere e verificare il provider, il luogo del trattamento, il ruolo privacy, l’eventuale accordo e le garanzie effettive; aggiornare /it/privacy e /en/privacy con dati reali.
 - [ ] Verificare HTTPS, canonical, hreflang, metadata, sitemap, robots, favicon e social image.
 - [ ] Sostituire tutti i placeholder con fotografie autentiche, compresse e dotate di alt pertinente.
 - [ ] Verificare prezzi, coperture, cauzione, patente, ritiro, assistenza e contatti.
 - [ ] Revisionare le guide con una persona del posto e fonti aggiornate.
+- [ ] Implementare e provare il processo effettivo di cancellazione, anonimizzazione irreversibile o rinnovo documentato alla scadenza `reviewAfter`.
 - [ ] Testare mobile, link, form, consenso, Lighthouse e Rich Results Test.
 - [ ] Puntare a Performance ≥90, Accessibility ≥95, Best Practices ≥95 e SEO 100 senza degradare l’esperienza.
 

@@ -38,7 +38,7 @@ test("JSON-LD is serialized safely and uses visible FAQ content", async () => {
   assert.match(source, /FAQPage/);
 });
 
-test("shared validation form separates anonymous research from optional contact", async () => {
+test("shared validation form separates research without direct identifiers from optional contact", async () => {
   const source = await read("components/interest-form.tsx");
   assert.match(source, /name="ageBand"/);
   assert.match(source, /name="originArea"/);
@@ -170,33 +170,53 @@ test("service location list contains every supported area", async () => {
   ]) assert.match(source, new RegExp('"' + location + '"'));
 });
 
-test("market research API minimises fields and applies a 24-month review", async () => {
+test("market research API separates payload sections and applies a 24-month review", async () => {
   const api = await read("app/api/availability/route.ts");
   const repository = await read("lib/leads/repository.ts");
+  const validation = await read("lib/leads/validation.mjs");
+  const researchType = repository.match(/export type ResearchResponse = \{([\s\S]*?)\n\};/)?.[1] ?? "";
+  const contactType = repository.match(/export type ContactRequest = \{([\s\S]*?)\n\};/)?.[1] ?? "";
 
   assert.match(api, /ageBands/);
   assert.match(api, /originAreas/);
-  assert.match(api, /contactRequested/);
   assert.match(api + repository, /researchPurpose/);
   assert.match(api + repository, /reviewAfter/);
   assert.match(api, /getUTCFullYear\(\) \+ 2/);
+  assert.match(api, /researchResponse:/);
+  assert.match(api, /contactRequest:/);
+  assert.match(repository, /type SubmissionPayload/);
+  assert.match(contactType, /email: string/);
+  assert.doesNotMatch(researchType, /email|consentGrantedAt/);
   assert.match(api + repository, /notes\?: string/);
   assert.match(api, /notes\.length > 500/);
+  assert.match(validation, /\^\[\^\\s@\]\+@\[\^\\s@\]\+\\\.\[\^\\s@\]\+\$/);
+  assert.match(validation, /\^\\d\{4\}-\\d\{2\}-\\d\{2\}\$/);
   assert.doesNotMatch(api + repository, /name: string|age: number|deleteAfter/);
-  assert.doesNotMatch(api + repository, /people|phone|accommodation|marketingConsent/);
+  assert.doesNotMatch(api + repository, /people|phone|accommodation|marketingConsent|userAgent|fingerprint/);
+  assert.doesNotMatch(api + repository, /console\.(log|info|debug)/);
 });
 
-test("privacy pages disclose providers, rights and research retention", async () => {
+test("privacy configuration and pages disclose controller and provider gate", async () => {
   const it = await read("content/it/index.ts");
   const en = await read("content/en/index.ts");
-  const combined = it + en;
+  const page = await read("app/[locale]/[[...slug]]/page.tsx");
+  const config = await read("lib/config/privacy.ts");
+  const api = await read("app/api/availability/route.ts");
+  const combined = it + en + page + config;
 
   assert.match(it, /slug: "privacy"/);
   assert.match(en, /slug: "privacy"/);
-  assert.match(combined, /Vercel/);
-  assert.match(combined, /Neon/);
-  assert.match(combined, /PostHog/);
+  assert.match(config, /controllerName: "Salvatore Fadda"/);
+  assert.match(config, /DATA_PROVIDER_NAME/);
+  assert.match(config, /DATA_PROVIDER_ROLE/);
+  assert.match(config, /DATA_PROVIDER_REGION/);
+  assert.match(config, /DATA_PROVIDER_TRANSFER_SAFEGUARDS/);
+  assert.match(config, /isDataProviderConfigured/);
+  assert.match(page, /mailto:/);
+  assert.match(page, /has not yet been selected/);
+  assert.match(page, /non è ancora stato selezionato/);
+  assert.match(api, /!isLeadWebhookConfigured\(\) \|\| !isDataProviderConfigured\(\)/);
   assert.match(combined, /24 mesi|24 months/);
-  assert.match(combined, /aggregate|aggregate data/);
   assert.match(combined, /Garante|Italian Data Protection Authority/);
+  assert.doesNotMatch(it + en, /\[RAGIONE SOCIALE\]|streetAddress|Vercel|Neon|PostHog/);
 });

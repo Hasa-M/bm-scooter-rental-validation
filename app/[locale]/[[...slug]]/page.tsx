@@ -7,6 +7,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { businessConfig } from "@/lib/config/business";
+import { isDataProviderConfigured, privacyConfig } from "@/lib/config/privacy";
 import { getPageImage } from "@/lib/config/images";
 import { getBreadcrumbs } from "@/lib/seo/breadcrumbs";
 import { buildJsonLd, JsonLd } from "@/lib/seo/json-ld";
@@ -135,8 +136,8 @@ function PricingTables({ locale }: { locale: Locale }) {
           <h2>{it ? "Prezzi per scooter" : "Prices per scooter"}</h2>
           <p className="lead">
             {it
-              ? "Importi provvisori, calcolati per 125cc, IVA inclusa e assicurazione completa, da confermare con disponibilità e condizioni."
-              : "Provisional prices including VAT calculated and full insurance for 125cc, subject to availability and confirmation of terms."}
+              ? "Importi provvisori, calcolati per 125cc, IVA inclusa e assicurazione completa."
+              : "Provisional prices including VAT calculated and full insurance for 125cc."}
           </p>
           <div className="table-scroll">
             <table className="rate-table">
@@ -262,6 +263,52 @@ function HomePage({ locale, page }: { locale: Locale; page: PageContent }) {
   );
 }
 
+function PrivacyControllerDetails({ locale }: { locale: Locale }) {
+  const it = locale === "it";
+  return (
+    <p>
+      {it ? "Il titolare del trattamento è " : "The data controller is "}
+      {privacyConfig.controllerName}, {privacyConfig.controllerRole[locale]}.{" "}
+      {it ? "Contatto privacy: " : "Privacy contact: "}
+      <a href={`mailto:${privacyConfig.contactEmail}`}>{privacyConfig.contactEmail}</a>.
+    </p>
+  );
+}
+
+function PrivacyProviderDetails({ locale }: { locale: Locale }) {
+  const it = locale === "it";
+  const provider = privacyConfig.dataProvider;
+
+  if (!isDataProviderConfigured()) {
+    return (
+      <p>
+        {it
+          ? "Il fornitore incaricato di ricevere e conservare le risposte non è ancora stato selezionato. Il modulo non sarà attivato in produzione finché il fornitore, il luogo del trattamento, il ruolo privacy e le eventuali garanzie per trasferimenti internazionali non saranno stati verificati e riportati in questa informativa."
+          : "The provider responsible for receiving and storing responses has not yet been selected. The form will not be enabled in production until the provider, processing location, privacy role and any safeguards for international transfers have been verified and included in this notice."}
+      </p>
+    );
+  }
+
+  return (
+    <>
+      <p>
+        {it ? "Fornitore: " : "Provider: "}<strong>{provider.name}</strong>.{" "}
+        {it ? "Ruolo privacy: " : "Privacy role: "}{provider.role}.{" "}
+        {it ? "Regione del trattamento: " : "Processing region: "}{provider.region}.
+        {provider.transferSafeguards && (
+          <> {it ? "Garanzie per i trasferimenti: " : "Transfer safeguards: "}{provider.transferSafeguards}.</>
+        )}
+      </p>
+      {provider.privacyPolicyUrl && (
+        <p>
+          <a href={provider.privacyPolicyUrl} target="_blank" rel="noreferrer">
+            {it ? "Informativa privacy del fornitore" : "Provider privacy policy"}
+          </a>
+        </p>
+      )}
+    </>
+  );
+}
 function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
   const it = locale === "it";
   const showForm = ["commercial", "contact", "prices"].includes(page.kind);
@@ -293,6 +340,12 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
             {page.sections.map((section) => (
               <section key={section.heading}>
                 <h2>{section.heading}</h2>
+                {page.slug === "privacy" && section.heading === (it ? "Titolare del trattamento" : "Data controller") && (
+                  <PrivacyControllerDetails locale={locale} />
+                )}
+                {page.slug === "privacy" && section.heading === (it ? "Destinatari e fornitori" : "Recipients and providers") && (
+                  <PrivacyProviderDetails locale={locale} />
+                )}
                 {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                 {section.bullets && <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}
               </section>

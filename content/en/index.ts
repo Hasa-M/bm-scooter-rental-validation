@@ -1,5 +1,4 @@
 import type { PageContent } from "@/lib/content/types";
-import { businessConfig } from "@/lib/config/business";
 
 const commonFaq = [
   {
@@ -35,7 +34,7 @@ export const enPages: PageContent[] = [
     kind: "home",
     title: "Bosa in Scooter | 50cc and 125cc scooter rental",
     h1: "Bosa in Scooter",
-    description: "Rent a 50cc or 125cc scooter to travel around Bosa, Bosa Marina and the coast. View indicative rates and let us know if you are interested.",
+    description: "Rent a 50cc or 125cc scooter to travel around Bosa, Bosa Marina and the coast. View provisional rates and let us know if you are interested.",
     eyebrow: "Visitor mobility · Bosa",
     primaryKeyword: "scooters in Bosa",
     intro: "More freedom to explore Bosa, one more service for the local area. Choose a 50cc or 125cc scooter and enjoy the old town, marina and coast on a more flexible schedule.",
@@ -116,12 +115,12 @@ export const enPages: PageContent[] = [
     slug: "prices",
     alternateSlug: "prezzi",
     kind: "prices",
-    title: "Bosa scooter rental prices | Indicative rates",
+    title: "Bosa scooter rental prices | Provisional rates",
     h1: "Rates and rental options",
-    description: "Indicative Bosa scooter rates for a minimum 24-hour rental and 7 days, including mileage, deposit and delivery costs.",
+    description: "Provisional Bosa scooter rates for a minimum 24-hour rental and 7 days, including mileage, deposit and delivery costs.",
     eyebrow: "Transparent pricing",
     primaryKeyword: "Bosa scooter rental prices",
-    intro: "View our indicative seasonal rates. Availability, model, cover, deposit and services only become final in your written quote and rental agreement.",
+    intro: "View our provisional seasonal rates. Availability, model, cover, deposit and services only become final in your written quote and rental agreement.",
     sections: [
       {
         heading: "Included mileage",
@@ -184,7 +183,7 @@ export const enPages: PageContent[] = [
     description: "Share your interest in a 50cc or 125cc scooter and help us organise the service across the local area.",
     eyebrow: "Direct enquiry",
     primaryKeyword: "Bosa scooter contact",
-    intro: "Share an anonymous response to help validate demand. Email contact is separate and entirely optional.",
+    intro: "Share a response without direct identifiers to help validate demand. Email contact is separate and entirely optional.",
     sections: [
       {
         heading: "Useful details",
@@ -327,9 +326,7 @@ export const enPages: PageContent[] = [
     sections: [
       {
         heading: "Data controller",
-        body: [
-          "The controller is " + businessConfig.legalName + ", trading as " + businessConfig.brandName + ", at " + businessConfig.address.streetAddress + ", " + businessConfig.address.postalCode + " " + businessConfig.address.city + " (" + businessConfig.address.province + "), Italy. Privacy contact: " + businessConfig.email + ". Values still shown in square brackets must be completed before publication.",
-        ],
+        body: [],
       },
       {
         heading: "Data, purposes and lawful bases",
@@ -342,21 +339,17 @@ export const enPages: PageContent[] = [
       {
         heading: "Required and optional data",
         body: [
-          "The anonymous fields and confirmation that the notice was read are required to submit a response. Notes, contact, email and related consent are always optional. Without contact, the form does not display or submit an email address.",
+          "The fields without direct identifiers and confirmation that the notice was read are required to submit a response. Notes, contact, email and related consent are always optional. Without contact, the form does not display or submit an email address.",
         ],
       },
       {
         heading: "Recipients and providers",
-        body: [
-          "The site is intended to be hosted on Vercel, which may process technical hosting and log data according to the configured service. Responses are sent server-to-server to the provider configured through LEAD_WEBHOOK_URL: the controller must name that provider here and in its processing records before publication.",
-          "The current code does not contain active Neon or PostHog integrations. If Neon, PostHog or another service is enabled, this notice and cookie preferences must be updated before collection, identifying its role, purpose, data, retention and transfers.",
-          "Data is not sold and is not used for newsletters, promotions or marketing without an additional specific consent.",
-        ],
+        body: [],
       },
       {
         heading: "Transfers outside the EEA",
         body: [
-          "Vercel and the future webhook provider may involve processing outside the European Economic Area. Before publication, the controller must verify actual regions, adequacy decisions, Standard Contractual Clauses or other safeguards and make details available on request. Neon and PostHog are not active; any future activation requires the same assessment.",
+          "No international transfers through the form will take place until the actual processing location and applicable safeguards have been verified and described in the preceding section. If the provider processes data outside the European Economic Area, this notice will state the safeguards that actually apply.",
         ],
       },
       {
@@ -370,13 +363,13 @@ export const enPages: PageContent[] = [
         heading: "Rights and withdrawal",
         body: [
           "You may request access, rectification, erasure, restriction, objection and, where applicable, portability. You may withdraw contact consent at any time by writing to the controller; withdrawal does not affect processing carried out lawfully before withdrawal.",
-          "You may lodge a complaint with the Italian Data Protection Authority. A fully anonymous response may not be technically linkable to a person and therefore may not always be identifiable for an individual request.",
+          "You may lodge a complaint with the Italian Data Protection Authority. Responses without an email do not contain direct identifiers, but dates, locations, timestamps or notes may still make them personal data. If there is not enough information to locate one, a request concerning an individual response may not be technically actionable.",
         ],
       },
       {
         heading: "Cookies and analytics",
         body: [
-          "The current code does not install third-party analytics or non-essential cookies. Interface analytics events are local and, without an external integration, do not transmit data. Technical logs necessary for hosting and security may exist. Before PostHog or another non-essential tool is enabled, this notice must be updated and a valid cookie preference collected where required.",
+          "The site does not install third-party analytics or non-essential cookies. Only technical data necessary for operation and security may exist. Before any non-essential tool is introduced, this notice must be updated and a valid user choice collected where required.",
         ],
       },
       {
