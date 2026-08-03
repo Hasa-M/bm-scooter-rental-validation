@@ -188,7 +188,7 @@ export function InterestForm({ locale }: { locale: Locale }) {
 
           <div className="field full">
             <label htmlFor="notes">
-              {it ? "Note" : "Notes"}
+              {it ? "Note e suggerimenti" : "Notes and suggestions"}
               <small className="label-info">{it ? "Facoltative · massimo 500 caratteri" : "Optional · maximum 500 characters"}</small>
             </label>
             <textarea id="notes" name="notes" maxLength={500} />

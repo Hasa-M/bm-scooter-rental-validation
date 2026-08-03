@@ -29,13 +29,13 @@ export const businessConfig = {
     seasonalRates: [
       {
         period: { it: "Bassa stagione (maggio, giugno, ottobre)", en: "Low season (May, June, October)" },
-        fullDay: 66,
-        sevenDays: 399,
+        fullDay: 55,
+        sevenDays: 360,
       },
       {
         period: { it: "Alta stagione (luglio, agosto, settembre)", en: "High season (July, August, September)" },
-        fullDay: 74,
-        sevenDays: 449,
+        fullDay: 65,
+        sevenDays: 425,
       },
     ],
     delivery: {
