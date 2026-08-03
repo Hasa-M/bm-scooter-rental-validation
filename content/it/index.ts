@@ -125,7 +125,7 @@ export const itPages: PageContent[] = [
       {
         heading: "Chilometri inclusi",
         body: ["Il noleggio minimo di 24 ore comprende 150 km; la stessa tariffa si applica anche quando lo scooter viene utilizzato soltanto per quattro ore. La formula 7 giorni comprende 900 km. I chilometri oltre la soglia prevista costano 0,25 €/km."],
-        bullets: ["Durata minima: 24 ore", "Durate da 2 a 6 giorni: prezzo su richiesta", "Fuori giugno–ottobre: prezzo su richiesta"],
+        bullets: ["Durata minima: 24 ore", "Durate da 2 a 6 giorni: prezzo su richiesta", "Fuori maggio–ottobre: prezzo su richiesta"],
       },
       {
         heading: "Cauzione e servizi inclusi",

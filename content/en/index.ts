@@ -125,7 +125,7 @@ export const enPages: PageContent[] = [
       {
         heading: "Included mileage",
         body: ["The minimum 24-hour rental includes 150 km; the same rate applies even if the scooter is only used for four hours. The 7-day option includes 900 km. Distance above the relevant allowance costs €0.25/km."],
-        bullets: ["Minimum rental: 24 hours", "Rentals of 2–6 days: price on request", "Outside June–October: price on request"],
+        bullets: ["Minimum rental: 24 hours", "Rentals of 2–6 days: price on request", "Outside May–October: price on request"],
       },
       {
         heading: "Deposit and inclusions",

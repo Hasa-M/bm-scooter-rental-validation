@@ -27,10 +27,16 @@ export const businessConfig = {
     mileage: { fullDay: 150, sevenDays: 900, extraPerKm: 0.25 },
 
     seasonalRates: [
-      { period: { it: "Giugno e settembre", en: "June and September" }, fullDay: 59, sevenDays: 349 },
-      { period: { it: "Luglio", en: "July" }, fullDay: 66, sevenDays: 399 },
-      { period: { it: "Agosto", en: "August" }, fullDay: 74, sevenDays: 449 },
-      { period: { it: "Ottobre", en: "October" }, fullDay: 49, sevenDays: 289 },
+      {
+        period: { it: "Bassa stagione (maggio, giugno, ottobre)", en: "Low season (May, June, October)" },
+        fullDay: 66,
+        sevenDays: 399,
+      },
+      {
+        period: { it: "Alta stagione (luglio, agosto, settembre)", en: "High season (July, August, September)" },
+        fullDay: 74,
+        sevenDays: 449,
+      },
     ],
     delivery: {
       oneWay: { min: 20, max: 25 },

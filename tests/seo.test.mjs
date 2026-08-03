@@ -79,10 +79,12 @@ test("provisional pricing, mileage and delivery terms are centralized and render
   const page = await read("app/[locale]/[[...slug]]/page.tsx");
 
   for (const rate of [
-    /fullDay: 59, sevenDays: 349/,
-    /fullDay: 66, sevenDays: 399/,
-    /fullDay: 74, sevenDays: 449/,
-    /fullDay: 49, sevenDays: 289/,
+    /it: "Bassa stagione \(maggio, giugno, ottobre\)"/,
+    /it: "Alta stagione \(luglio, agosto, settembre\)"/,
+    /fullDay: 66/,
+    /sevenDays: 399/,
+    /fullDay: 74/,
+    /sevenDays: 449/,
   ]) assert.match(config, rate);
 
   assert.match(config, /fullDay: 150, sevenDays: 900, extraPerKm: 0\.25/);
@@ -150,24 +152,31 @@ test("minimum rental is 24 hours with no half-day option", async () => {
   assert.match(combined, /quattro ore/);
   assert.match(combined, /four hours/);
 });
-test("service location list contains every supported area", async () => {
+test("service locations sort mapped places alphabetically and end with the fallback", async () => {
   const source = await read("lib/leads/options.ts");
-  for (const location of [
+  const block = source.match(/export const serviceLocations = \[([\s\S]*?)\] as const;/)?.[1] ?? "";
+  const locations = [...block.matchAll(/"([^"]+)"/g)].map((match) => match[1]);
+
+  assert.deepEqual(locations, [
+    "Alghero",
     "Bosa",
     "Bosa Marina",
-    "Suni",
-    "Magomadas",
-    "Tresnuraghes",
-    "Porto Alabe",
-    "Turas",
-    "Santa Maria del Mare",
-    "Sagama",
-    "Tinnura",
     "Flussio",
-    "Montresta",
+    "Macomer",
+    "Magomadas",
     "Modolo",
+    "Montresta",
+    "Porto Alabe",
     "Sabba Drucche",
-  ]) assert.match(source, new RegExp('"' + location + '"'));
+    "Sagama",
+    "Santa Maria del Mare",
+    "Sindia",
+    "Suni",
+    "Tinnura",
+    "Tresnuraghes",
+    "Turas",
+    "Altre località (non elencate)",
+  ]);
 });
 
 test("market research API separates payload sections and applies a 24-month review", async () => {
