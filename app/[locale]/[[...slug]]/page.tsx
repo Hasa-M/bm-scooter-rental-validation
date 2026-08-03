@@ -38,7 +38,7 @@ function Cta({ locale }: { locale: Locale }) {
   return (
     <div className="actions">
       <a className="button" href="#interest-form">
-        {it ? "Facci sapere se voi prenotare" : "Let us know if you are interested"}
+        {it ? "Facci sapere se sei interessato" : "Let us know if you are interested"}
       </a>
       <a className="button secondary" href="#interest-form">
         {it ? "Chiedi informazioni" : "Ask for details"}
@@ -154,8 +154,8 @@ function PricingTables({ locale }: { locale: Locale }) {
                   <tr key={rate.period.it}>
                     <th scope="row">{rate.period[locale]}</th>
 
-                    <td>{euro(locale, rate.fullDay)}</td>
-                    <td>{euro(locale, rate.sevenDays)}</td>
+                    <td data-label={it ? "24 ore" : "24 hours"}>{euro(locale, rate.fullDay)}</td>
+                    <td data-label={it ? "7 giorni" : "7 days"}>{euro(locale, rate.sevenDays)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -182,19 +182,19 @@ function PricingTables({ locale }: { locale: Locale }) {
               <tbody>
                 <tr>
                   <th scope="row">{it ? "Ritiro in sede" : "Pickup from our base"}</th>
-                  <td>{it ? "Incluso" : "Included"}</td>
+                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{it ? "Incluso" : "Included"}</td>
                 </tr>
                 <tr>
                   <th scope="row">{it ? "Consegna oppure ritiro a Bosa/Bosa Marina" : "Delivery or collection in Bosa/Bosa Marina"}</th>
-                  <td>{oneWay}</td>
+                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{oneWay}</td>
                 </tr>
                 <tr>
                   <th scope="row">{it ? "Consegna e ritiro a Bosa/Bosa Marina" : "Delivery and collection in Bosa/Bosa Marina"}</th>
-                  <td>{roundTrip}</td>
+                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{roundTrip}</td>
                 </tr>
                 <tr>
                   <th scope="row">{it ? "Fuori Bosa/Bosa Marina" : "Outside Bosa/Bosa Marina"}</th>
-                  <td>{it ? "Fattibilità e prezzo su richiesta" : "Feasibility and price on request"}</td>
+                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{it ? "Fattibilità e prezzo su richiesta" : "Feasibility and price on request"}</td>
                 </tr>
               </tbody>
             </table>
