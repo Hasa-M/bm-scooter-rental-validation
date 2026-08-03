@@ -20,14 +20,41 @@ Aprire `http://localhost:3000`; la root reindirizza a `/it`.
 Copiare `.env.example` in un file d’ambiente locale non versionato e valorizzare soltanto dati reali:
 
 - `NEXT_PUBLIC_SITE_URL`: dominio canonico definitivo;
-- `LEAD_WEBHOOK_URL`: endpoint server-to-server che riceve il payload;
+- `DATABASE_URL`: connection string PostgreSQL fornita da Neon, usata soltanto lato server;
 - `DATA_PROVIDER_NAME`: nome reale del fornitore che riceve e conserva le risposte;
 - `DATA_PROVIDER_ROLE`: ruolo privacy verificato del fornitore;
 - `DATA_PROVIDER_REGION`: luogo o regione effettiva del trattamento;
 - `DATA_PROVIDER_TRANSFER_SAFEGUARDS`: garanzie effettivamente applicabili agli eventuali trasferimenti;
 - `DATA_PROVIDER_PRIVACY_POLICY_URL`: link reale all’informativa del fornitore, se disponibile.
 
-`LEAD_WEBHOOK_URL`, nome, ruolo e regione del provider sono controllati lato server. Le garanzie di trasferimento e il link alla policy devono essere valorizzati quando effettivamente applicabili. Se mancano, l’API restituisce `503` con un messaggio generico e non invia alcun dato. Non inserire segreti nel repository.
+`DATABASE_URL`, nome, ruolo e regione del provider sono controllati lato server. Le garanzie di trasferimento e il link alla policy devono essere valorizzati quando effettivamente applicabili. Se manca la configurazione minima, l’API restituisce `503` con un messaggio generico e non salva alcun dato. Non inserire segreti nel repository.
+
+## Configurazione Neon e migration
+
+1. Creare un database Neon o collegarne uno dedicato al progetto.
+2. Copiare `.env.example` in `.env.local` e impostare `DATABASE_URL` con la connection string del database di sviluppo. `.env.local` contiene segreti, è ignorato da Git e non deve essere committato.
+3. Impostare `DATABASE_URL` nelle variabili d’ambiente Vercel per l’ambiente interessato, senza inserirla nel codice. Preview e Production dovrebbero usare database o branch Neon separati.
+4. Generare una migration versionata dopo ogni modifica allo schema:
+
+   ```bash
+   npm run db:generate
+   ```
+
+5. Applicare esplicitamente le migration al database selezionato:
+
+   ```bash
+   npm run db:migrate
+   ```
+
+   Le migration non vengono eseguite automaticamente da `dev`, `build`, `start` o `check`.
+
+6. Avviare l’applicazione:
+
+   ```bash
+   npm run dev
+   ```
+
+La persistenza usa due tabelle. `research_responses` contiene il questionario e non contiene email; l’eventuale email è salvata in `contact_requests`. Le due tabelle restano collegabili tramite la foreign key interna `research_response_id`, e i due inserimenti avvengono nella stessa transazione. Gli UUID non vengono restituiti al browser. L’invio di notifiche email non fa parte di questa implementazione.
 
 ## Blocco prima della produzione
 
@@ -54,7 +81,7 @@ Le pagine sono generate staticamente da `content/it` e `content/en`; metadata, c
 
 ## Pubblicazione
 
-Non effettuare il deploy del modulo finché la checklist privacy precedente non è completata. Dopo la configurazione, verificare in un ambiente di prova il blocco `503`, il payload server-to-server, il timeout, `/robots.txt`, `/sitemap.xml`, canonical e invio form sul dominio reale.
+Non effettuare il deploy del modulo finché la checklist privacy precedente non è completata. Dopo la configurazione, verificare in un ambiente di prova il blocco `503`, la persistenza transazionale su un database Neon non produttivo, `/robots.txt`, `/sitemap.xml`, canonical e invio form sul dominio reale.
 
 ## Local SEO esterna
 

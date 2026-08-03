@@ -1,0 +1,256 @@
+{
+  "id": "75bf22a5-ebfd-451e-8df6-c692b92ae4e4",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.contact_requests": {
+      "name": "contact_requests",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "research_response_id": {
+          "name": "research_response_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(160)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "consent_granted_at": {
+          "name": "consent_granted_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "purpose": {
+          "name": "purpose",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "review_after": {
+          "name": "review_after",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "contact_requests_research_response_id_research_responses_id_fk": {
+          "name": "contact_requests_research_response_id_research_responses_id_fk",
+          "tableFrom": "contact_requests",
+          "tableTo": "research_responses",
+          "columnsFrom": [
+            "research_response_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "contact_requests_research_response_id_unique": {
+          "name": "contact_requests_research_response_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "research_response_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {
+        "contact_requests_purpose_check": {
+          "name": "contact_requests_purpose_check",
+          "value": "\"contact_requests\".\"purpose\" = 'service-availability-contact'"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.research_responses": {
+      "name": "research_responses",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "start_date": {
+          "name": "start_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "end_date": {
+          "name": "end_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "scooters": {
+          "name": "scooters",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vehicle_type": {
+          "name": "vehicle_type",
+          "type": "varchar(5)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "age_band": {
+          "name": "age_band",
+          "type": "varchar(5)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "licensed_over_five_years": {
+          "name": "licensed_over_five_years",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "stay_location": {
+          "name": "stay_location",
+          "type": "varchar(80)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "origin_area": {
+          "name": "origin_area",
+          "type": "varchar(32)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "notes": {
+          "name": "notes",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "language": {
+          "name": "language",
+          "type": "varchar(2)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "submitted_at": {
+          "name": "submitted_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "research_purpose": {
+          "name": "research_purpose",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "review_after": {
+          "name": "review_after",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "privacy_notice_acknowledged_at": {
+          "name": "privacy_notice_acknowledged_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "research_responses_submitted_at_idx": {
+          "name": "research_responses_submitted_at_idx",
+          "columns": [
+            {
+              "expression": "submitted_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "research_responses_date_range_check": {
+          "name": "research_responses_date_range_check",
+          "value": "\"research_responses\".\"end_date\" >= \"research_responses\".\"start_date\""
+        },
+        "research_responses_scooters_check": {
+          "name": "research_responses_scooters_check",
+          "value": "\"research_responses\".\"scooters\" between 1 and 3"
+        },
+        "research_responses_vehicle_type_check": {
+          "name": "research_responses_vehicle_type_check",
+          "value": "\"research_responses\".\"vehicle_type\" in ('50cc', '125cc')"
+        },
+        "research_responses_age_band_check": {
+          "name": "research_responses_age_band_check",
+          "value": "\"research_responses\".\"age_band\" in ('18-24', '25-34', '35-44', '45-54', '55-64', '65+')"
+        },
+        "research_responses_stay_location_check": {
+          "name": "research_responses_stay_location_check",
+          "value": "\"research_responses\".\"stay_location\" in ('Alghero', 'Bosa', 'Bosa Marina', 'Flussio', 'Macomer', 'Magomadas', 'Modolo', 'Montresta', 'Porto Alabe', 'Sabba Drucche', 'Sagama', 'Santa Maria del Mare', 'Sindia', 'Suni', 'Tinnura', 'Tresnuraghes', 'Turas', 'Altre località (non elencate)')"
+        },
+        "research_responses_origin_area_check": {
+          "name": "research_responses_origin_area_check",
+          "value": "\"research_responses\".\"origin_area\" in ('sardinia', 'italy', 'eu', 'europe-non-eu', 'north-america', 'other')"
+        },
+        "research_responses_language_check": {
+          "name": "research_responses_language_check",
+          "value": "\"research_responses\".\"language\" in ('it', 'en')"
+        },
+        "research_responses_purpose_check": {
+          "name": "research_responses_purpose_check",
+          "value": "\"research_responses\".\"research_purpose\" = 'market-validation'"
+        }
+      },
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
