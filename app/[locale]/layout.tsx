@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Manrope, Source_Serif_4 } from "next/font/google";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/lib/content";
@@ -30,5 +32,5 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
-  return <html lang={locale}><body className={manrope.variable + " " + sourceSerif.variable}>{children}</body></html>;
+  return <html lang={locale}><body className={manrope.variable + " " + sourceSerif.variable}>{children}<Analytics /><SpeedInsights /></body></html>;
 }

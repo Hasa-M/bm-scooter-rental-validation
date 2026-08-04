@@ -81,10 +81,10 @@ test("provisional pricing, mileage and delivery terms are centralized and render
   for (const rate of [
     /it: "Bassa stagione \(maggio, giugno, ottobre\)"/,
     /it: "Alta stagione \(luglio, agosto, settembre\)"/,
-    /fullDay: 66/,
-    /sevenDays: 399/,
-    /fullDay: 74/,
-    /sevenDays: 449/,
+    /fullDay: 55/,
+    /sevenDays: 360/,
+    /fullDay: 65/,
+    /sevenDays: 425/,
   ]) assert.match(config, rate);
 
   assert.match(config, /fullDay: 150, sevenDays: 900, extraPerKm: 0\.25/);
