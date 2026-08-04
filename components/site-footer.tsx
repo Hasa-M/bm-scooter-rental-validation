@@ -15,7 +15,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
       <div className="container footer-grid">
         <div>
           <p className="brand"><Image className="brand-logo" src={siteImagePaths.logo} alt="" width={44} height={44} />{businessConfig.brandName}</p>
-          <p>{it ? "Mobilità per chi visita Bosa, un servizio per il territorio." : "Visitor mobility and a service for the local area."}</p>
+          <p>{it ? "Il modo più libero di vivere Bosa, la marina e la costa." : "A freer way to experience Bosa, the marina and the coast."}</p>
           <small>© {new Date().getFullYear()} {businessConfig.brandName}</small>
         </div>
         <div>
@@ -31,7 +31,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           {!hasEmail && !hasPhone && (
             <p><Link href={contactPath}>{it ? "Invia una richiesta" : "Send an enquiry"}</Link></p>
           )}
-          <small>{it ? "Ipotesi di ritiro a Bosa." : "Proposed pickup in Bosa."}</small>
+          <small>{it ? "Ritiro previsto a Bosa · servizio in fase di lancio." : "Planned pickup in Bosa · service launching soon."}</small>
         </div>
       </div>
     </footer>
