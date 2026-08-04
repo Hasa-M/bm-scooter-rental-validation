@@ -19,6 +19,9 @@ test("metadata creates canonical, hreflang, descriptions and indexable robots", 
   const hreflang = await read("lib/seo/hreflang.ts");
   assert.match(metadata, /description:\s*page\.description/);
   assert.match(metadata, /index:\s*true/);
+  assert.match(metadata, /absolute\("\/opengraph-image"\)/);
+  assert.match(metadata, /publishedTime:\s*page\.publishedAt/);
+  assert.match(metadata, /modifiedTime:\s*page\.lastModified/);
   assert.match(hreflang, /"it-IT"/);
   assert.match(hreflang, /"en"/);
   assert.match(hreflang, /"x-default"/);
@@ -28,6 +31,8 @@ test("metadata creates canonical, hreflang, descriptions and indexable robots", 
 test("sitemap contains localized pages and excludes API routes", async () => {
   const source = await read("app/sitemap.ts");
   assert.match(source, /pagesByLocale/);
+  assert.match(source, /new Date\(page\.lastModified\)/);
+  assert.doesNotMatch(source, /changeFrequency|priority/);
   assert.doesNotMatch(source, /api\/availability/);
 });
 
@@ -36,6 +41,30 @@ test("JSON-LD is serialized safely and uses visible FAQ content", async () => {
   assert.match(source, /JSON\.stringify\(data\)/);
   assert.match(source, /page\.faq/);
   assert.match(source, /FAQPage/);
+  assert.match(source, /if \(!page\.slug\)/);
+  assert.match(source, /businessConfig\.status === "active"/);
+  assert.match(source, /page\.kind === "commercial" && businessConfig\.status === "active"/);
+  assert.match(source, /datePublished:\s*page\.publishedAt/);
+  assert.match(source, /dateModified:\s*page\.lastModified/);
+});
+
+test("validation SEO exposes honest content dates, permanent locale redirect and illustrative images", async () => {
+  const types = await read("lib/content/types.ts");
+  const proxy = await read("proxy.ts");
+  const page = await read("app/[locale]/[[...slug]]/page.tsx");
+  const images = await read("lib/config/images.ts");
+  const it = await read("content/it/index.ts");
+  const en = await read("content/en/index.ts");
+
+  assert.match(types, /publishedAt: string/);
+  assert.match(types, /lastModified: string/);
+  assert.match(types, /reviewedAt\?: string/);
+  assert.match(proxy, /NextResponse\.redirect\(new URL\("\/it", request\.url\), 308\)/);
+  assert.match(page, /Immagine illustrativa/);
+  assert.match(page, /Verificata localmente il/);
+  assert.match(images, /Illustrazione del progetto/);
+  assert.match(it, /Progetto in validazione/);
+  assert.match(en, /Validation project/);
 });
 
 test("shared validation form separates research without direct identifiers from optional contact", async () => {
@@ -60,7 +89,7 @@ test("brand and active fleet are consistent across customer surfaces", async () 
     "content/en/index.ts",
     "lib/config/business.ts",
     "app/manifest.ts",
-    "app/opengraph-image.tsx",
+    "app/opengraph-image/route.tsx",
     "app/[locale]/layout.tsx",
     "app/[locale]/[[...slug]]/page.tsx",
     "components/site-footer.tsx",

@@ -111,4 +111,16 @@ Non effettuare il deploy del modulo finché la checklist privacy precedente non 
 
 Il codice non può sostituire il lavoro locale. Dopo aver definito davvero attività e sede, completare soltanto dati commerciali reali e coerenti. Non pubblicare indirizzi privati, non creare schede aziendali fittizie e non comprare recensioni o link.
 
+## Monitoraggio SEO della validazione
+
+Il sito è in modalità `validation`: Search Console e Bing Webmaster Tools misurano interesse e scoperta organica, ma non dimostrano da soli la sostenibilità economica del business. Non introdurre analytics, cookie o identificatori aggiuntivi per questa fase.
+
+1. Subito dopo un aggiornamento significativo, inviare una sola volta `/sitemap.xml` a Google e Bing. Non ripetere l'invio ogni giorno.
+2. Dopo 3–7 giorni, verificare che la sitemap sia stata letta e controllare con Ispezione URL le homepage e le landing Bosa/Bosa Marina in entrambe le lingue.
+3. Dopo 14 giorni, registrare pagine indicizzate ed escluse, motivazioni, query, impression, clic, CTR, posizione media e problemi di scansione.
+4. Per le prime 8 settimane, aggiornare una baseline settimanale per pagina, paese e dispositivo; leggere separatamente Bosa e Bosa Marina e confrontare i segnali con periodo e località raccolti dal modulo.
+5. Controllare Core Web Vitals e PageSpeed mobile/desktop. Obiettivi: Performance ≥90, Accessibility ≥95, Best Practices ≥95 e SEO 100, senza peggiorare l'esperienza.
+6. Non implementare IndexNow finché il sito resta piccolo e statico; rivalutarlo solo con aggiornamenti frequenti o ritardi persistenti di Bing.
+7. Non creare un Profilo dell'attività Google finché sede, area di servizio, apertura e modello operativo non sono reali e conformi ai requisiti della piattaforma.
+
 Vedi anche `docs/seo-keyword-map.md`, `docs/seo-launch-checklist.md`, `docs/local-seo-launch-plan.md`, `docs/content-plan.md` e `docs/privacy-data-operations.md`.

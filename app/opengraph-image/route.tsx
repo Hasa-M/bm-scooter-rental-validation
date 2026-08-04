@@ -1,10 +1,8 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Bosa in Scooter — 50cc and 125cc scooters for exploring Bosa";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+export const dynamic = "force-static";
 
-export default function Image() {
+export function GET() {
   return new ImageResponse(
     <div
       style={{
@@ -26,6 +24,12 @@ export default function Image() {
       </div>
       <div style={{ fontSize: 22 }}>Scooter 50cc e 125cc · Condizioni indicative</div>
     </div>,
-    size,
+    {
+      width: 1200,
+      height: 630,
+      headers: {
+        "Content-Disposition": 'inline; filename="bosa-in-scooter.png"',
+      },
+    },
   );
 }

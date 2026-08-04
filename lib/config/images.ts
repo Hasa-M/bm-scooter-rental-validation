@@ -39,24 +39,24 @@ const pageImageKeys: Record<string, ContentImageKey> = {
 
 const imageAlts: Record<ContentImageKey, Record<Locale, string>> = {
   homeHero: {
-    it: "Scooter per scoprire Bosa e il suo territorio",
-    en: "Scooters for exploring Bosa and the surrounding area",
+    it: "Illustrazione di scooter per scoprire Bosa e il territorio",
+    en: "Illustration of scooters for exploring Bosa and the surrounding area",
   },
   rentalBosa: {
-    it: "Scooter 50cc e 125cc disponibili a Bosa",
-    en: "50cc and 125cc scooters available in Bosa",
+    it: "Illustrazione del progetto di scooter 50cc e 125cc a Bosa",
+    en: "Illustration of the planned 50cc and 125cc scooter service in Bosa",
   },
   guides: {
-    it: "Panorama di Bosa e del territorio circostante",
-    en: "View of Bosa and the surrounding area",
+    it: "Illustrazione panoramica di Bosa e del territorio circostante",
+    en: "Illustrated view of Bosa and the surrounding area",
   },
   beachesNearBosa: {
-    it: "Costa e spiagge nei dintorni di Bosa",
-    en: "Coast and beaches near Bosa",
+    it: "Illustrazione della costa e delle spiagge nei dintorni di Bosa",
+    en: "Illustration of the coast and beaches near Bosa",
   },
   bosaAlgheroRoute: {
-    it: "Strada costiera panoramica tra Bosa e Alghero",
-    en: "Scenic coastal road between Bosa and Alghero",
+    it: "Illustrazione della strada costiera panoramica tra Bosa e Alghero",
+    en: "Illustration of the scenic coastal road between Bosa and Alghero",
   },
 };
 

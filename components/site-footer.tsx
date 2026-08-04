@@ -31,7 +31,7 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           {!hasEmail && !hasPhone && (
             <p><Link href={contactPath}>{it ? "Invia una richiesta" : "Send an enquiry"}</Link></p>
           )}
-          <small>{it ? "Ritiro a Bosa." : "Pickup in Bosa."}</small>
+          <small>{it ? "Ipotesi di ritiro a Bosa." : "Proposed pickup in Bosa."}</small>
         </div>
       </div>
     </footer>
