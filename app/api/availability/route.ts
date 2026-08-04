@@ -183,12 +183,12 @@ export async function POST(request: Request) {
       ok: true,
       message: contactValidation.contactRequest
         ? localized(
-            "Grazie. Abbiamo registrato la risposta e la richiesta di ricontatto.",
-            "Thank you. We recorded your response and contact request.",
+            "Richiesta ricevuta. Ti avviseremo via email quando il servizio sarà disponibile.",
+            "Request received. We will email you when the service becomes available.",
           )
         : localized(
-            "Grazie. La tua risposta priva di identificativi diretti è stata registrata.",
-            "Thank you. Your response without direct identifiers has been recorded.",
+            "Richiesta ricevuta. Grazie: ci aiuterà a costruire un servizio più adatto al tuo soggiorno.",
+            "Request received. Thank you: it will help us build a service that better fits your stay.",
           ),
     });
   } catch {

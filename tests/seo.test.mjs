@@ -63,8 +63,8 @@ test("validation SEO exposes honest content dates, permanent locale redirect and
   assert.match(page, /Immagine illustrativa/);
   assert.match(page, /Verificata localmente il/);
   assert.match(images, /Illustrazione del progetto/);
-  assert.match(it, /Progetto in validazione/);
-  assert.match(en, /Validation project/);
+  assert.match(it, /fase di validazione/i);
+  assert.match(en, /being validated/i);
 });
 
 test("shared validation form separates research without direct identifiers from optional contact", async () => {

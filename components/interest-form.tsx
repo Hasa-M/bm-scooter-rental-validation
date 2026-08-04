@@ -48,17 +48,17 @@ export function InterestForm({ locale }: { locale: Locale }) {
     <section className="section alt interest-section">
       <div className="container split">
         <div>
-          <p className="eyebrow">{it ? "Validazione senza identificativi diretti" : "Validation without direct identifiers"}</p>
-          <h2>{it ? "Sei interessato al servizio?" : "Are you interested in the service?"}</h2>
+          <p className="eyebrow">{it ? "Richieste aperte" : "Requests open"}</p>
+          <h2>{it ? "Quando vuoi vivere Bosa in scooter?" : "When would you like to explore Bosa by scooter?"}</h2>
           <p className="lead">
             {it
-              ? "Raccogliamo dati utili a valutare periodo, prodotto e area di domanda."
-              : "We collect only what is useful to assess timing, product and demand area."}
+              ? "Indicaci date, scooter e zona del soggiorno: bastano pochi minuti per farci capire di cosa hai bisogno."
+              : "Share your dates, preferred scooter and stay location: it only takes a few minutes to tell us what you need."}
           </p>
           <p className="form-note">
             {it
-              ? "Se vuoi essere avvisato quando il servizio sarà disponibile, puoi attivare separatamente il ricontatto facoltativo."
-              : "If you want an update when the service becomes available, you can separately enable the optional contact path."}
+              ? "Bosa in Scooter è in fase di lancio. La richiesta non è una prenotazione e non richiede pagamenti; puoi lasciare l'email, separatamente e in modo facoltativo, per sapere quando apriranno le prenotazioni."
+              : "Bosa in Scooter is preparing to launch. Your request is not a booking and requires no payment; you can separately and optionally leave your email to hear when bookings open."}
           </p>
         </div>
 
@@ -150,7 +150,7 @@ export function InterestForm({ locale }: { locale: Locale }) {
           </fieldset>
 
           <fieldset className="field full contact-panel">
-            <legend>{it ? "Ricontatto facoltativo" : "Optional contact"}</legend>
+            <legend>{it ? "Ricevi l'apertura delle prenotazioni" : "Hear when bookings open"}</legend>
             <label className="checkbox">
               <input
                 name="wantsContact"
@@ -163,8 +163,8 @@ export function InterestForm({ locale }: { locale: Locale }) {
               />
               <span>
                 {it
-                  ? "Desidero essere ricontattato via email quando il servizio sarà disponibile"
-                  : "I would like to be contacted by email when the service becomes available"}
+                  ? "Avvisami via email appena il servizio sarà disponibile"
+                  : "Email me as soon as the service becomes available"}
               </span>
             </label>
 
@@ -178,8 +178,8 @@ export function InterestForm({ locale }: { locale: Locale }) {
                   <input name="contactConsent" type="checkbox" value="yes" required />
                   <span>
                     {it
-                      ? "Acconsento al ricontatto via email per essere avvisato sulla disponibilità del servizio. Posso revocare il consenso in qualsiasi momento tramite email."
-                      : "I consent to being contacted by email about service availability. I may withdraw consent at any time by emailing the controller."}
+                      ? "Acconsento a ricevere via email aggiornamenti sulla disponibilità del servizio. Posso revocare il consenso in qualsiasi momento tramite email."
+                      : "I consent to receiving email updates about service availability. I may withdraw consent at any time by emailing the controller."}
                   </span>
                 </label>
               </div>
@@ -188,14 +188,14 @@ export function InterestForm({ locale }: { locale: Locale }) {
 
           <div className="field full">
             <label htmlFor="notes">
-              {it ? "Note e suggerimenti" : "Notes and suggestions"}
+              {it ? "Raccontaci il tuo programma" : "Tell us about your plans"}
               <small className="label-info">{it ? "Facoltative · massimo 500 caratteri" : "Optional · maximum 500 characters"}</small>
             </label>
             <textarea id="notes" name="notes" maxLength={500} />
             <small className="label-info">
               {it
-                ? "Non inserire documenti, dati sanitari o altre informazioni sensibili."
-                : "Do not enter documents, health data or other sensitive information."}
+                ? "Facoltativo: indicaci itinerari, esigenze o domande. Non inserire documenti o informazioni sensibili."
+                : "Optional: share routes, needs or questions. Do not enter documents or sensitive information."}
             </small>
           </div>
           <input type="hidden" name="language" value={locale} />
@@ -218,7 +218,7 @@ export function InterestForm({ locale }: { locale: Locale }) {
             <button className="button" disabled={state === "loading"}>
               {state === "loading"
                 ? (it ? "Invio…" : "Sending…")
-                : (it ? "Invia la risposta" : "Submit response")}
+                : (it ? "Invia la richiesta" : "Send my request")}
             </button>
           </div>
 

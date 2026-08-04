@@ -40,7 +40,7 @@ export function SiteHeader({ locale, page }: { locale: Locale; page: PageContent
             {isIt ? "EN" : "IT"}
           </Link>
           <Link className="button" href={contact + "#interest-form"}>
-            {isIt ? "Sono interessato" : "I am interested"}
+            {isIt ? "Richiedi disponibilità" : "Request availability"}
           </Link>
         </nav>
         <MobileNavigation
@@ -51,7 +51,7 @@ export function SiteHeader({ locale, page }: { locale: Locale; page: PageContent
           closeLabel={isIt ? "Chiudi il menu" : "Close menu"}
           navigationLabel="Menu"
           items={navigationItems}
-          action={{ href: contact + "#interest-form", label: isIt ? "Sono interessato" : "I am interested" }}
+          action={{ href: contact + "#interest-form", label: isIt ? "Richiedi disponibilità" : "Request availability" }}
         />
       </div>
     </header>

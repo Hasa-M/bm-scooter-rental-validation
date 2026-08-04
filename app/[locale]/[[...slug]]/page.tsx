@@ -35,14 +35,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 function Cta({ locale }: { locale: Locale }) {
   const it = locale === "it";
+  const pricesPath = "/" + locale + "/" + (it ? "prezzi" : "prices");
   return (
     <div className="actions">
       <a className="button" href="#interest-form">
-        {it ? "Facci sapere se sei interessato" : "Let us know if you are interested"}
+        {it ? "Richiedi disponibilità" : "Request availability"}
       </a>
-      <a className="button secondary" href="#interest-form">
-        {it ? "Chiedi informazioni" : "Ask for details"}
-      </a>
+      <Link className="button secondary" href={pricesPath}>
+        {it ? "Scopri le tariffe" : "View rates"}
+      </Link>
     </div>
   );
 }
@@ -140,8 +141,8 @@ function PricingTables({ locale }: { locale: Locale }) {
           <h2>{it ? "Prezzi per scooter" : "Prices per scooter"}</h2>
           <p className="lead">
             {it
-              ? "Importi provvisori per scooter 125cc, con IVA e coperture indicate incluse."
-              : "Provisional 125cc rates including VAT and the listed insurance cover."}
+              ? "Le tariffe di lancio previste per gli scooter 125cc, con IVA e coperture indicate incluse."
+              : "Planned launch rates for 125cc scooters, including VAT and the listed insurance cover."}
           </p>
           <div className="table-scroll">
             <table className="rate-table">
@@ -180,33 +181,33 @@ function PricingTables({ locale }: { locale: Locale }) {
               <thead>
                 <tr>
                   <th scope="col">{it ? "Servizio" : "Service"}</th>
-                  <th scope="col">{it ? "Prezzo indicativo" : "Indicative price"}</th>
+                  <th scope="col">{it ? "Tariffa prevista" : "Planned rate"}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">{it ? "Ipotesi di ritiro presso una base" : "Proposed pickup from a base"}</th>
-                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{it ? "Previsto incluso" : "Planned as included"}</td>
+                  <th scope="row">{it ? "Ritiro presso la base di Bosa" : "Pickup from the Bosa base"}</th>
+                  <td data-label={it ? "Tariffa prevista" : "Planned rate"}>{it ? "Incluso" : "Included"}</td>
                 </tr>
                 <tr>
                   <th scope="row">{it ? "Consegna oppure ritiro a Bosa/Bosa Marina" : "Delivery or collection in Bosa/Bosa Marina"}</th>
-                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{oneWay}</td>
+                  <td data-label={it ? "Tariffa prevista" : "Planned rate"}>{oneWay}</td>
                 </tr>
                 <tr>
                   <th scope="row">{it ? "Consegna e ritiro a Bosa/Bosa Marina" : "Delivery and collection in Bosa/Bosa Marina"}</th>
-                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{roundTrip}</td>
+                  <td data-label={it ? "Tariffa prevista" : "Planned rate"}>{roundTrip}</td>
                 </tr>
                 <tr>
                   <th scope="row">{it ? "Fuori Bosa/Bosa Marina" : "Outside Bosa/Bosa Marina"}</th>
-                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{it ? "Fattibilità e prezzo su richiesta" : "Feasibility and price on request"}</td>
+                  <td data-label={it ? "Tariffa prevista" : "Planned rate"}>{it ? "Disponibilità e prezzo su richiesta" : "Availability and price on request"}</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p className="table-note">
             {it
-              ? "Ipotesi in validazione: consegna inclusa per almeno 10 giorni, oppure per due scooter per almeno 7 giorni."
-              : "Validation hypothesis: included delivery for at least 10 days, or two scooters for at least 7 days."}
+              ? "Stiamo valutando la consegna inclusa per soggiorni di almeno 10 giorni, oppure per due scooter noleggiati almeno 7 giorni. Indica le tue date per aiutarci a confermare questa formula."
+              : "We are assessing included delivery for stays of at least 10 days, or two scooters rented for at least 7 days. Share your dates to help us confirm this option."}
           </p>
         </div>
       </div>
@@ -227,7 +228,7 @@ function HomePage({ locale, page }: { locale: Locale; page: PageContent }) {
             <Cta locale={locale} />
             <div className="trust">
               <span>{it ? "Scooter 50cc e 125cc" : "50cc and 125cc scooters"}</span>
-              <span>{it ? "Progetto in validazione" : "Validation project"}</span>
+              <span>{it ? "In fase di lancio · richieste aperte" : "Launching soon · requests open"}</span>
             </div>
           </div>
           <PageVisual locale={locale} page={page} hero />
@@ -338,8 +339,8 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
           {showValidationNotice && (
             <div className="notice">
               {it
-                ? "Questo è un progetto in validazione. Tariffe, dotazioni, coperture e servizi sono indicativi e diventeranno effettivi soltanto se l'attività verrà avviata."
-                : "This is a validation project. Rates, equipment, cover and services are indicative and will only become effective if the business launches."}
+                ? "Il servizio è in fase di validazione e le richieste sono aperte. Inviare il modulo non crea una prenotazione né richiede pagamenti: tariffe, dotazioni e disponibilità saranno confermate prima dell'eventuale noleggio."
+                : "The service is currently being validated and requests are open. Submitting the form does not create a booking or require payment: rates, equipment and availability will be confirmed before any rental."}
             </div>
           )}
         </div>
@@ -410,7 +411,7 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
             )}            {page.kind === "guide" && (
               <p>
                 <Link href={"/" + locale + "/" + (it ? "noleggio-scooter-bosa" : "scooter-rental-bosa")}>
-                  {it ? "Scopri l'ipotesi di servizio a Bosa" : "Explore the proposed service in Bosa"}
+                  {it ? "Scopri gli scooter e richiedi disponibilità" : "Explore the scooters and request availability"}
                 </Link>
               </p>
             )}
