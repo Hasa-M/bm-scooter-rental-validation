@@ -1,4 +1,4 @@
-import type { PageContent } from "@/lib/content/types";
+import { definePages } from "@/lib/content/types";
 
 const commonFaq = [
   {
@@ -11,7 +11,7 @@ const commonFaq = [
   },
   {
     question: "Dove avvengono ritiro e riconsegna?",
-    answer: "Il ritiro presso la sede in zona Viale Alghero a Bosa è incluso. Consegna o ritiro a domicilio a Bosa e Bosa Marina sono disponibili su richiesta; fuori zona verifichiamo prima la fattibilità e prepariamo un preventivo.",
+    answer: "Il progetto prevede il ritiro presso una base in zona Viale Alghero a Bosa. Consegna o ritiro a domicilio a Bosa e Bosa Marina sono ipotesi da validare; fuori zona valuteremo fattibilità e costi soltanto se il servizio verrà avviato.",
   },
   {
     question: "Quali sono chilometraggio e cauzione?",
@@ -27,17 +27,17 @@ const commonFaq = [
   },
 ];
 
-export const itPages: PageContent[] = [
+export const itPages = definePages([
   {
     slug: "",
     alternateSlug: "",
     kind: "home",
     title: "Bosa in Scooter | Noleggio scooter 50cc e 125cc",
     h1: "Bosa in Scooter",
-    description: "Scooter 50cc e 125cc per muoversi tra Bosa, Bosa Marina e la costa. Consulta le tariffe provvisorie e facci sapere se sei interessato.",
+    description: "Progetto di scooter 50cc e 125cc tra Bosa, Bosa Marina e la costa. Consulta le ipotesi di servizio e aiutaci a validare la domanda.",
     eyebrow: "Mobilità turistica · Bosa",
     primaryKeyword: "scooter a Bosa",
-    intro: "Più libertà per chi visita Bosa, un servizio in più per il territorio. Scegli uno scooter 50cc o 125cc e vivi centro, marina e costa con tempi più flessibili.",
+    intro: "Stiamo valutando un servizio di scooter 50cc e 125cc per chi visita Bosa. Consulta l'ipotesi e aiutaci a capire se può migliorare gli spostamenti tra centro, marina e costa.",
     sections: [
       {
         heading: "Muoversi meglio, vivere di più il territorio",
@@ -47,7 +47,7 @@ export const itPages: PageContent[] = [
       {
         heading: "Una formula adatta al tuo soggiorno",
         body: ["Da 24 ore a 7 giorni o più: raccontaci il tuo programma e valuteremo modello, periodo e condizioni più adatti. Tariffe e servizi pubblicati sono indicativi e diventano definitivi soltanto nel preventivo."],
-        bullets: ["Ritiro in zona Viale Alghero", "Consegna e ritiro su richiesta", "Due caschi e dotazioni incluse"],
+        bullets: ["Ipotesi di ritiro in zona Viale Alghero", "Consegna e ritiro da validare", "Due caschi e dotazioni previsti"],
       },
     ],
     faq: commonFaq.slice(0, 4),
@@ -56,12 +56,12 @@ export const itPages: PageContent[] = [
     slug: "noleggio-scooter-bosa",
     alternateSlug: "scooter-rental-bosa",
     kind: "commercial",
-    title: "Noleggio scooter a Bosa | Bosa in Scooter",
+    title: "Noleggio scooter a Bosa | Progetto in validazione",
     h1: "Noleggio scooter 50cc e 125cc a Bosa",
-    description: "Noleggia uno scooter a Bosa per il centro, Bosa Marina e la costa. Mezzi per due persone, coperture e dotazioni incluse.",
+    description: "Progetto di noleggio scooter a Bosa con mezzi 50cc e 125cc. Consulta condizioni indicative ed esprimi il tuo interesse senza prenotare.",
     eyebrow: "Bosa al tuo ritmo",
     primaryKeyword: "noleggio scooter Bosa",
-    intro: "Scegli il mezzo più adatto alla tua esperienza e al tuo itinerario. Ti aiutiamo a organizzare una mobilità semplice tra il centro storico, Bosa Marina e le tappe della costa.",
+    intro: "Stiamo verificando la domanda per un possibile servizio tra centro storico, Bosa Marina e costa. Indicaci mezzo, periodo e itinerario che sarebbero utili al tuo soggiorno.",
     sections: [
       {
         heading: "La flotta",
@@ -88,21 +88,21 @@ export const itPages: PageContent[] = [
     slug: "noleggio-scooter-bosa-marina",
     alternateSlug: "scooter-rental-bosa-marina",
     kind: "commercial",
-    title: "Noleggio scooter a Bosa Marina | Bosa in Scooter",
+    title: "Noleggio scooter a Bosa Marina | Progetto in validazione",
     h1: "Scooter per Bosa Marina",
-    description: "Richiedi uno scooter 50cc o 125cc a Bosa Marina, con consegna e ritiro a domicilio disponibili su richiesta.",
+    description: "Aiutaci a validare un possibile noleggio scooter a Bosa Marina, inclusa l'ipotesi di consegna e ritiro presso l'alloggio.",
     eyebrow: "Dal mare al centro",
     primaryKeyword: "noleggio scooter Bosa Marina",
-    intro: "Soggiorni a Bosa Marina? Puoi ritirare lo scooter presso la sede in zona Viale Alghero oppure chiedere consegna e ritiro direttamente al tuo alloggio.",
+    intro: "Soggiorni a Bosa Marina? Stiamo valutando se convenga un punto di ritiro, la consegna presso l'alloggio o un modello misto. La tua risposta ci aiuta a misurare questa esigenza separatamente da Bosa.",
     sections: [
       {
         heading: "Consegna pensata per il soggiorno",
-        body: ["Una sola tratta a Bosa o Bosa Marina ha un costo indicativo di 20–25 €; consegna e ritiro insieme 35–45 €. Tempi, indirizzo e importo definitivo vengono confermati con la richiesta."],
-        bullets: ["Ritiro in sede incluso", "Consegna o ritiro su richiesta", "Fuori zona previa verifica di fattibilità"],
+        body: ["L'ipotesi da validare prevede una sola tratta a Bosa o Bosa Marina a 20–25 € e consegna più ritiro a 35–45 €. Questi importi servono a misurare l'interesse e non costituiscono ancora un'offerta."],
+        bullets: ["Punto di ritiro da definire", "Consegna oppure ritiro da validare", "Località di soggiorno raccolta nel modulo"],
       },
       {
-        heading: "Possibile consegna gratuita",
-        body: ["Le prenotazioni di almeno 10 giorni o di due scooter per almeno 7 giorni possono beneficiare della consegna gratuita. La disponibilità dell’agevolazione viene valutata e confermata caso per caso."],
+        heading: "Ipotesi di consegna gratuita",
+        body: ["Stiamo testando anche l'interesse per la consegna inclusa con almeno 10 giorni, oppure con due scooter per almeno 7 giorni. La regola potrà esistere soltanto se il modello economico e logistico risulterà sostenibile."],
       },
       {
         heading: "Tra marina, centro e dintorni",
@@ -133,7 +133,7 @@ export const itPages: PageContent[] = [
       },
       {
         heading: "Consegna e ritiro",
-        body: ["Il ritiro in sede è incluso. Per Bosa e Bosa Marina è previsto indicativamente un costo di 20–25 € per una sola tratta e 35–45 € per consegna e ritiro. Fuori zona, fattibilità e costo sono su preventivo."],
+        body: ["Nel modello ipotizzato, il ritiro presso una base sarebbe incluso. Per Bosa e Bosa Marina stiamo testando 20–25 € per una sola tratta e 35–45 € per consegna più ritiro. Fuori zona, fattibilità e costo resterebbero da valutare."],
       },
     ],
     faq: commonFaq.slice(2),
@@ -144,14 +144,14 @@ export const itPages: PageContent[] = [
     kind: "info",
     title: "Come funziona il noleggio | Bosa in Scooter",
     h1: "Come funziona",
-    description: "Dalla richiesta al ritiro: come scegliere e noleggiare uno scooter 50cc o 125cc a Bosa.",
+    description: "Come partecipare alla validazione del possibile noleggio scooter 50cc e 125cc a Bosa, senza prenotazione o pagamento.",
     eyebrow: "Quattro passaggi semplici",
     primaryKeyword: "come noleggiare scooter a Bosa",
     intro: "Il sito raccoglie manifestazioni di interesse: non effettua prenotazioni o pagamenti automatici. Ogni condizione viene confermata prima del noleggio.",
     sections: [
       { heading: "1. Invia una risposta", body: ["Indica date, numero di scooter, modello preferito, fascia d'età, esperienza di patente, località del soggiorno e macroarea di provenienza. Il ricontatto email è separato e facoltativo."] },
-      { heading: "2. Scegli il mezzo", body: ["Verifichiamo disponibilità di 50cc o 125cc, requisiti della patente e formula più adatta al tuo programma."] },
-      { heading: "3. Ricevi il preventivo", body: ["Prezzo, chilometri, cauzione, coperture, dotazioni e logistica vengono riepilogati per iscritto."] },
+      { heading: "2. Indica il mezzo", body: ["La preferenza tra 50cc e 125cc, insieme a patente e programma, ci aiuta a misurare quale flotta potrebbe essere sostenibile."] },
+      { heading: "3. Lascia un contatto facoltativo", body: ["Se il servizio verrà avviato, chi ha scelto il ricontatto potrà ricevere un aggiornamento; il modulo non genera preventivi o prenotazioni."] },
       { heading: "4. Ritira o richiedi la consegna", body: ["Puoi ritirare in zona Viale Alghero oppure concordare consegna e raccolta, se fattibili."] },
     ],
     faq: commonFaq,
@@ -215,7 +215,7 @@ export const itPages: PageContent[] = [
     kind: "guide",
     title: "Visitare Bosa senza auto | Guida alla mobilità",
     h1: "Visitare Bosa senza auto",
-    description: "Come combinare alloggio, camminate, trasporti e scooter durante il soggiorno.",
+    description: "Come organizzare arrivo, bagagli e spostamenti tra centro, Bosa Marina e costa durante una vacanza a Bosa senza auto.",
     eyebrow: "Guida locale",
     primaryKeyword: "visitare Bosa senza auto",
     intro: "Una vacanza senza macchina funziona meglio se arrivo, bagagli e spostamenti quotidiani vengono organizzati separatamente.",
@@ -231,6 +231,7 @@ export const itPages: PageContent[] = [
       {
         heading: "Usa il mezzo giusto per ogni tratta",
         body: ["Cammina nelle aree compatte, verifica i trasporti sulle date effettive e valuta uno scooter per marina, spiagge e dintorni. La scelta tra 50cc e 125cc dipende da patente, esperienza e percorso."],
+        sources: [{ label: "Orari e linee ARST", href: "https://www.arstspa.info/" }],
       },
     ],
     faq: commonFaq.slice(0, 3),
@@ -241,14 +242,15 @@ export const itPages: PageContent[] = [
     kind: "guide",
     title: "Come muoversi a Bosa e Bosa Marina",
     h1: "Come muoversi a Bosa",
-    description: "Quando conviene camminare e quando scegliere uno scooter tra centro e marina.",
+    description: "Confronto pratico tra spostamenti a piedi, trasporto pubblico e scooter nel centro di Bosa e verso Bosa Marina.",
     eyebrow: "Guida locale",
     primaryKeyword: "come muoversi a Bosa",
     intro: "Distanza, bagagli e frequenza degli spostamenti aiutano a scegliere il mezzo senza complicare la giornata.",
     sections: [
       {
         heading: "Centro storico a piedi",
-        body: ["Per una giornata concentrata nel centro, camminare evita il problema del parcheggio e permette di fermarsi con libertà. Valuta soltanto pendenze, caldo e distanza dall’alloggio."],
+        body: ["Per una giornata concentrata nel centro, camminare evita la ricerca del parcheggio e permette di fermarsi con libertà. Valuta pendenze, caldo e distanza dall'alloggio; dal 2026 il Comune indica stalli a pagamento in varie strade centrali e, in stagione, anche a Bosa Marina."],
+        sources: [{ label: "Parcheggi — Comune di Bosa", href: "https://comune.bosa.or.it/argomento/parcheggi/" }],
       },
       {
         heading: "Centro e Bosa Marina",
@@ -265,16 +267,20 @@ export const itPages: PageContent[] = [
     slug: "guide/spiagge-da-raggiungere-in-scooter-da-bosa",
     alternateSlug: "guides/beaches-near-bosa-by-scooter",
     kind: "guide",
-    title: "Spiagge vicino a Bosa in scooter",
-    h1: "Raggiungere le spiagge in scooter",
-    description: "Percorso, dotazioni e rientro: cosa preparare per una giornata al mare.",
+    title: "Spiagge vicino a Bosa in scooter | Guida locale",
+    h1: "Spiagge vicino a Bosa in scooter",
+    description: "Come valutare Bosa Marina, s'Abba Druche, Portu Managu, Turas e Compoltitu in base a strada, parcheggio e condizioni.",
     eyebrow: "Guida locale",
     primaryKeyword: "spiagge vicino Bosa scooter",
     intro: "La destinazione conta quanto il viaggio: distanza, strada e ciò che porti determinano il modello e l’organizzazione della giornata.",
     sections: [
       {
-        heading: "Valuta percorso e chilometri",
-        body: ["Controlla distanza, tipo di strada, vento, accesso e parcheggio. Confronta l’intero tragitto con i 150 km inclusi nelle 24 ore e considera comfort e spazio se viaggi in due."],
+        heading: "Scegli la costa in base alla giornata",
+        body: ["Bosa Marina è la soluzione più semplice per restare vicino ai servizi; s'Abba Druche, Portu Managu, Turas e Compoltitu richiedono invece di valutare accesso, tipo di strada e parcheggio. Controlla sempre indicazioni e condizioni sul posto: accessi e servizi possono cambiare con la stagione."],
+        sources: [
+          { label: "Bosa — SardegnaTurismo", href: "https://www.sardegnaturismo.it/it/luoghi/nord-ovest/bosa" },
+          { label: "Parcheggi — Comune di Bosa", href: "https://comune.bosa.or.it/argomento/parcheggi/" },
+        ],
       },
       {
         heading: "Prepara il mezzo",
@@ -291,9 +297,9 @@ export const itPages: PageContent[] = [
     slug: "guide/itinerario-in-scooter-bosa-alghero",
     alternateSlug: "guides/bosa-alghero-scooter-route",
     kind: "guide",
-    title: "Itinerario Bosa–Alghero in scooter",
+    title: "Bosa–Alghero in scooter | Guida alla strada costiera",
     h1: "Da Bosa ad Alghero in scooter",
-    description: "Mezzo, chilometri e condizioni da verificare prima della strada costiera.",
+    description: "Come valutare la strada costiera SP 49 tra Bosa e Alghero: mezzo, esperienza, vento, chilometri e margine per il rientro.",
     eyebrow: "Guida locale",
     primaryKeyword: "itinerario scooter Bosa Alghero",
     intro: "La strada costiera richiede esperienza e una valutazione completa del viaggio di andata e ritorno.",
@@ -308,7 +314,11 @@ export const itPages: PageContent[] = [
       },
       {
         heading: "Decidi in base alle condizioni",
-        body: ["Vento, visibilità e traffico possono cambiare lungo la costa. Accorcia o rimanda l’itinerario se non puoi completarlo con margine e in sicurezza."],
+        body: ["La SP 49 attraversa un tratto costiero esposto e ricco di curve, passando nell'area di Capo Marrargiu. Vento, visibilità e traffico possono cambiare lungo il percorso: accorcia o rimanda l'itinerario se non puoi completarlo con margine e in sicurezza."],
+        sources: [
+          { label: "In moto lungo la costa — SardegnaTurismo", href: "https://www.sardegnaturismo.it/it/moto-lungo-la-costa" },
+          { label: "Capo Marrargiu — SardegnaTurismo", href: "https://www.sardegnaturismo.it/it/esplora/capo-marrargiu" },
+        ],
       },
     ],
     faq: commonFaq.slice(0, 5),
@@ -332,24 +342,30 @@ export const itPages: PageContent[] = [
         heading: "Dati, finalità e basi giuridiche",
         body: [
           "Per la validazione raccogliamo periodo richiesto, numero di scooter, fascia d'età, preferenza 50cc/125cc, località di soggiorno, macroarea di provenienza e indicazione sulla patente oltre cinque anni. Non chiediamo nome, età esatta, indirizzo o documenti. È disponibile un campo note facoltativo di massimo 500 caratteri, nel quale non devono essere inseriti dati sensibili.",
-          "Le risposte sono progettate per non identificare direttamente la persona e servono a misurare domanda, stagionalità e prodotto. Gli eventuali dati tecnici strettamente necessari a sicurezza e funzionamento sono trattati sulla base del legittimo interesse del titolare, articolo 6(1)(f) GDPR, previa valutazione di necessità e bilanciamento.",
+          "Le risposte sono progettate per non identificare direttamente la persona e servono a misurare domanda, stagionalità e interesse verso il servizio. Questi dati e i metadati tecnici necessari a erogazione, sicurezza e prevenzione degli abusi sono trattati sulla base del legittimo interesse del titolare, articolo 6(1)(f) GDPR, previa valutazione di necessità e bilanciamento.",
+          "Come fornitore di hosting, Vercel può trattare per ogni visitatore indirizzo IP, localizzazione approssimativa derivata dall'IP, URL e parametri della richiesta, data e ora, stato della risposta, regione di esecuzione e user-agent. Questi dati non vengono aggiunti alla risposta di ricerca né usati dal titolare per profilazione o pubblicità.",
           "Se chiedi volontariamente di essere ricontattato, raccogliamo l'email sulla base del consenso, articolo 6(1)(a). Il consenso è separato, facoltativo e revocabile. Per una successiva richiesta specifica di disponibilità o informazioni, i dati necessari possono essere trattati per misure precontrattuali richieste dall'interessato, articolo 6(1)(b).",
+          "L'area amministrativa è riservata a un unico account GitHub autorizzato. Per autenticazione, controllo degli accessi e sicurezza vengono trattati ID GitHub, nome, email, stato di verifica dell'email, immagine profilo, scope e token OAuth cifrati, token e date della sessione, indirizzo IP e user-agent. La base giuridica è il legittimo interesse del titolare a proteggere e amministrare il servizio, articolo 6(1)(f) GDPR.",
         ],
       },
       {
         heading: "Dati obbligatori e facoltativi",
         body: [
           "I campi privi di identificativi diretti e la dichiarazione di lettura dell'informativa sono necessari per inviare la risposta. Le note, il ricontatto, l'email e il relativo consenso sono sempre facoltativi. Senza ricontatto il modulo non mostra né invia alcun indirizzo email.",
+          "I dati OAuth e di sessione sono necessari soltanto per l'amministratore che sceglie di accedere all'area riservata; il sito pubblico non richiede un account GitHub.",
         ],
       },
       {
         heading: "Destinatari e fornitori",
-        body: [],
+        body: [
+          "Le risposte e i contatti sono consultabili esclusivamente dal titolare attraverso una dashboard protetta e non vengono ceduti o usati per pubblicità. I fornitori tecnici possono trattare soltanto i dati necessari a fornire database, hosting, sicurezza e autenticazione, secondo i rispettivi ruoli e accordi descritti di seguito.",
+        ],
       },
       {
         heading: "Trasferimenti fuori dallo SEE",
         body: [
-          "Non verranno effettuati trasferimenti internazionali tramite il modulo finché il luogo effettivo del trattamento e le garanzie applicabili non saranno stati verificati e descritti nella sezione precedente. Se il provider tratta dati fuori dallo Spazio economico europeo, questa informativa indicherà le garanzie effettivamente applicabili.",
+          "Il database è configurato nella regione dichiarata nella sezione precedente. Vercel utilizza una rete edge globale e GitHub tratta dati anche negli Stati Uniti e in altri Paesi. Per i trasferimenti soggetti al GDPR si applicano, secondo il servizio e l'accordo vigente, decisioni di adeguatezza come il Data Privacy Framework UE-USA e/o le Clausole contrattuali standard della Commissione europea.",
+          "Il modulo resta disattivato se non sono state configurate le garanzie effettivamente verificate per il provider del database.",
         ],
       },
       {
@@ -357,6 +373,8 @@ export const itPages: PageContent[] = [
         body: [
           "Le risposte grezze sono usate per ricerca di mercato e sottoposte a una verifica documentata di necessità almeno ogni 24 mesi. Se un record individuale non è più necessario, viene cancellato oppure trasformato in dato realmente anonimo e aggregato. Le statistiche irreversibilmente anonime possono essere conservate senza un termine fisso.",
           "Le email sono conservate solo finché serve per comunicare la disponibilità del servizio o fino alla revoca del consenso. La necessità viene rivalutata almeno ogni 24 mesi; se la finalità non è più attuale, l'email viene cancellata oppure viene richiesto un nuovo consenso. La sola mancata richiesta di cancellazione non giustifica una conservazione illimitata.",
+          "Le sessioni amministrative hanno una scadenza di otto ore, aggiornabile durante l'uso, e vengono eliminate al logout o, dopo la scadenza, al successivo accesso amministrativo o OAuth. I record di verifica OAuth scaduti sono eliminati allo stesso modo. Profilo GitHub, collegamento dell'account e token OAuth cifrati sono conservati finché l'accesso amministrativo rimane autorizzato e necessario.",
+          "I log tecnici di Vercel seguono la conservazione nativa del piano attivo e non vengono esportati tramite Log Drain. Un eventuale cambio di piano, retention o destinazione dei log richiede una nuova verifica e l'aggiornamento di questa informativa.",
         ],
       },
       {
@@ -369,14 +387,16 @@ export const itPages: PageContent[] = [
       {
         heading: "Cookie e analytics",
         body: [
-          "Il sito non installa analytics di terze parti né cookie non essenziali. Possono esistere esclusivamente dati tecnici necessari al funzionamento e alla sicurezza. Prima di introdurre strumenti non essenziali sarà necessario aggiornare questa informativa e, quando richiesto, raccogliere una scelta valida dell'utente.",
+          "Il sito non installa analytics di terze parti né cookie non essenziali. L'area amministrativa usa un cookie di sessione proprietario, HttpOnly, Secure in produzione e SameSite=Lax, con scadenza di otto ore, oltre a un cookie transitorio per proteggere il flusso OAuth. Sono cookie strettamente necessari e non sono usati per profilazione o pubblicità.",
+          "Prima di introdurre strumenti non essenziali, analytics o altri tracciamenti sarà necessario aggiornare questa informativa e, quando richiesto, raccogliere una scelta valida dell'utente.",
         ],
       },
       {
         heading: "Aggiornamenti",
         body: [
-          "Questa informativa deve essere aggiornata quando cambiano titolare, contatti, fornitori, finalità, basi giuridiche, tempi di conservazione o tecnologie di tracciamento. Revisione organizzativa: agosto 2026.",
+          "Questa informativa deve essere aggiornata quando cambiano titolare, contatti, fornitori, finalità, basi giuridiche, tempi di conservazione o tecnologie di tracciamento. Ultima revisione organizzativa: 4 agosto 2026.",
         ],
       },
     ],
-  },];
+  },
+], { publishedAt: "2026-08-02", lastModified: "2026-08-04" });

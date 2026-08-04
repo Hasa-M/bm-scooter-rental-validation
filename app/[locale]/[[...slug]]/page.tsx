@@ -80,15 +80,18 @@ function PageVisual({
         className={"hero-card" + (image?.src ? " has-image" : "")}
       >
         {image?.src && (
-          <Image
-            className="site-image"
-            style={{ objectPosition: image.position }}
-            src={image.src}
-            alt={image.alt}
-            fill
-            priority
-            sizes="(max-width: 820px) 100vw, 42vw"
-          />
+          <>
+            <Image
+              className="site-image"
+              style={{ objectPosition: image.position }}
+              src={image.src}
+              alt={image.alt}
+              fill
+              priority
+              sizes="(max-width: 820px) 100vw, 42vw"
+            />
+            <span className="image-disclosure">{it ? "Immagine illustrativa" : "Illustrative image"}</span>
+          </>
         )}
         <span className="status">{businessConfig.brandName}</span>
         <strong>{it ? "Più libertà. Più Bosa." : "More freedom. More of Bosa."}</strong>
@@ -107,6 +110,7 @@ function PageVisual({
           fill
           sizes="(max-width: 820px) 100vw, 38vw"
         />
+        <span className="image-disclosure">{it ? "Immagine illustrativa" : "Illustrative image"}</span>
       </div>
     );
   }
@@ -136,8 +140,8 @@ function PricingTables({ locale }: { locale: Locale }) {
           <h2>{it ? "Prezzi per scooter" : "Prices per scooter"}</h2>
           <p className="lead">
             {it
-              ? "Importi provvisori, calcolati per 125cc, IVA inclusa e assicurazione completa."
-              : "Provisional prices including VAT calculated and full insurance for 125cc."}
+              ? "Importi provvisori per scooter 125cc, con IVA e coperture indicate incluse."
+              : "Provisional 125cc rates including VAT and the listed insurance cover."}
           </p>
           <div className="table-scroll">
             <table className="rate-table">
@@ -181,8 +185,8 @@ function PricingTables({ locale }: { locale: Locale }) {
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">{it ? "Ritiro in sede" : "Pickup from our base"}</th>
-                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{it ? "Incluso" : "Included"}</td>
+                  <th scope="row">{it ? "Ipotesi di ritiro presso una base" : "Proposed pickup from a base"}</th>
+                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{it ? "Previsto incluso" : "Planned as included"}</td>
                 </tr>
                 <tr>
                   <th scope="row">{it ? "Consegna oppure ritiro a Bosa/Bosa Marina" : "Delivery or collection in Bosa/Bosa Marina"}</th>
@@ -201,8 +205,8 @@ function PricingTables({ locale }: { locale: Locale }) {
           </div>
           <p className="table-note">
             {it
-              ? "Possibile consegna gratuita per almeno 10 giorni, oppure per due scooter noleggiati almeno 7 giorni. Da confermare caso per caso."
-              : "Free delivery may be available for bookings of at least 10 days, or two scooters for at least 7 days. Confirmed case by case."}
+              ? "Ipotesi in validazione: consegna inclusa per almeno 10 giorni, oppure per due scooter per almeno 7 giorni."
+              : "Validation hypothesis: included delivery for at least 10 days, or two scooters for at least 7 days."}
           </p>
         </div>
       </div>
@@ -223,7 +227,7 @@ function HomePage({ locale, page }: { locale: Locale; page: PageContent }) {
             <Cta locale={locale} />
             <div className="trust">
               <span>{it ? "Scooter 50cc e 125cc" : "50cc and 125cc scooters"}</span>
-              <span>{it ? "Condizioni confermate prima del noleggio" : "Terms confirmed before rental"}</span>
+              <span>{it ? "Progetto in validazione" : "Validation project"}</span>
             </div>
           </div>
           <PageVisual locale={locale} page={page} hero />
@@ -279,39 +283,49 @@ function PrivacyProviderDetails({ locale }: { locale: Locale }) {
   const it = locale === "it";
   const provider = privacyConfig.dataProvider;
 
-  if (!isDataProviderConfigured()) {
-    return (
-      <p>
-        {it
-          ? "Il fornitore incaricato di ricevere e conservare le risposte non è ancora stato selezionato. Il modulo non sarà attivato in produzione finché il fornitore, il luogo del trattamento, il ruolo privacy e le eventuali garanzie per trasferimenti internazionali non saranno stati verificati e riportati in questa informativa."
-          : "The provider responsible for receiving and storing responses has not yet been selected. The form will not be enabled in production until the provider, processing location, privacy role and any safeguards for international transfers have been verified and included in this notice."}
-      </p>
-    );
-  }
-
   return (
     <>
-      <p>
-        {it ? "Fornitore: " : "Provider: "}<strong>{provider.name}</strong>.{" "}
-        {it ? "Ruolo privacy: " : "Privacy role: "}{provider.role}.{" "}
-        {it ? "Regione del trattamento: " : "Processing region: "}{provider.region}.
-        {provider.transferSafeguards && (
-          <> {it ? "Garanzie per i trasferimenti: " : "Transfer safeguards: "}{provider.transferSafeguards}.</>
-        )}
-      </p>
-      {provider.privacyPolicyUrl && (
+      {!isDataProviderConfigured() ? (
         <p>
-          <a href={provider.privacyPolicyUrl} target="_blank" rel="noreferrer">
-            {it ? "Informativa privacy del fornitore" : "Provider privacy policy"}
-          </a>
+          {it
+            ? "Il provider del database non è configurato in modo completo. Il modulo resta disattivato finché nome, ruolo, regione, garanzie di trasferimento e informativa del provider non sono stati verificati e pubblicati."
+            : "The database provider configuration is incomplete. The form remains disabled until its name, role, region, transfer safeguards and privacy notice have been verified and published."}
         </p>
+      ) : (
+        <div>
+          <p>
+            Database: <strong>{provider.name}</strong>.{" "}
+            {it ? "Ruolo: " : "Role: "}{provider.role}.{" "}
+            {it ? "Regione: " : "Region: "}{provider.region}.{" "}
+            {it ? "Garanzie per i trasferimenti: " : "Transfer safeguards: "}{provider.transferSafeguards}.
+          </p>
+          <p>
+            <a href={provider.privacyPolicyUrl} target="_blank" rel="noreferrer">
+              {it ? "Informativa del provider del database" : "Database provider privacy notice"}
+            </a>
+          </p>
+        </div>
       )}
+      <ul>
+        {privacyConfig.serviceProviders.map((serviceProvider) => (
+          <li key={serviceProvider.name}>
+            <strong>{serviceProvider.name}</strong>: {serviceProvider.role[locale]}.{" "}
+            {it ? "Luogo del trattamento: " : "Processing location: "}{serviceProvider.region[locale]}.{" "}
+            {it ? "Garanzie per i trasferimenti: " : "Transfer safeguards: "}
+            {serviceProvider.transferSafeguards[locale]}.{" "}
+            <a href={serviceProvider.privacyPolicyUrl} target="_blank" rel="noreferrer">
+              {it ? "Informativa del fornitore" : "Provider privacy notice"}
+            </a>
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
 function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
   const it = locale === "it";
   const showForm = ["commercial", "contact", "prices"].includes(page.kind);
+  const showValidationNotice = ["commercial", "contact", "prices"].includes(page.kind);
   const hasVisual = Boolean(getPageImage(page.slug, locale)?.src);
   return (
     <>
@@ -321,11 +335,13 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
           <h1>{page.h1}</h1>
           <p className="lead">{page.intro}</p>
           {page.kind === "commercial" && <Cta locale={locale} />}
-          <div className="notice">
-            {it
-              ? "Tariffe, dotazioni, coperture e servizi sono provvisori: difenteranno effettivi solo all'apertura del business."
-              : "Rates, equipment, cover and services are provisional and only become final upon business opening."}
-          </div>
+          {showValidationNotice && (
+            <div className="notice">
+              {it
+                ? "Questo è un progetto in validazione. Tariffe, dotazioni, coperture e servizi sono indicativi e diventeranno effettivi soltanto se l'attività verrà avviata."
+                : "This is a validation project. Rates, equipment, cover and services are indicative and will only become effective if the business launches."}
+            </div>
+          )}
         </div>
       </section>
 
@@ -335,7 +351,16 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
         <div className={"container" + (hasVisual ? " split" : " content-column")}>
           <article className="prose">
             {page.kind === "guide" && (
-              <p><strong>{it ? "A cura di" : "By"} {businessConfig.brandName}</strong></p>
+              <p className="editorial-note">
+                <strong>{it ? "A cura di" : "By"} {businessConfig.brandName}</strong>
+                {page.reviewedAt && (
+                  <> · {it ? "Verificata localmente il" : "Locally reviewed on"}{" "}
+                    <time dateTime={page.reviewedAt}>
+                      {new Intl.DateTimeFormat(it ? "it-IT" : "en-GB", { dateStyle: "long", timeZone: "UTC" }).format(new Date(page.reviewedAt))}
+                    </time>
+                  </>
+                )}
+              </p>
             )}
             {page.sections.map((section) => (
               <section key={section.heading}>
@@ -348,6 +373,17 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
                 )}
                 {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                 {section.bullets && <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}
+                {section.sources?.length ? (
+                  <p className="source-links">
+                    <strong>{it ? "Fonti:" : "Sources:"}</strong>{" "}
+                    {section.sources.map((source, index) => (
+                      <span key={source.href}>
+                        {index > 0 && " · "}
+                        <a href={source.href} target="_blank" rel="noreferrer">{source.label}</a>
+                      </span>
+                    ))}
+                  </p>
+                ) : null}
               </section>
             ))}
             {page.slug === "privacy" && (
@@ -374,7 +410,7 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
             )}            {page.kind === "guide" && (
               <p>
                 <Link href={"/" + locale + "/" + (it ? "noleggio-scooter-bosa" : "scooter-rental-bosa")}>
-                  {it ? "Scopri gli scooter disponibili a Bosa" : "Explore available scooters in Bosa"}
+                  {it ? "Scopri l'ipotesi di servizio a Bosa" : "Explore the proposed service in Bosa"}
                 </Link>
               </p>
             )}
