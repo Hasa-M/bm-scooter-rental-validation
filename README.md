@@ -1,99 +1,149 @@
 # Bosa in Scooter
 
-Sito locale bilingue per validare l’interesse verso un possibile servizio di scooter 50cc e 125cc a Bosa, con tariffe e condizioni indicative da confermare. Costruito con Next.js 16, App Router, TypeScript e React.
+A bilingual market-validation platform for a potential 50cc and 125cc scooter rental service in Bosa, Sardinia.
 
-## Stato del progetto
+The project was built as an end-to-end software engineering case study: it combines a content-driven public website, a privacy-conscious research funnel, transactional persistence, and a protected analytics dashboard. It is intentionally **not** a booking system and does not represent an operational rental business. Prices, availability, vehicles, and service conditions are hypotheses to be validated.
 
-Il progetto è un esperimento di ricerca di mercato, non un sistema di prenotazione, un CRM o un’attività di noleggio già operativa. Il percorso principale raccoglie una risposta senza identificativi diretti; il ricontatto email è separato, facoltativo e basato su consenso specifico. Questa implementazione non costituisce una certificazione legale o una dichiarazione di piena conformità GDPR.
+## Project goals
 
-## Avvio locale
+The application is designed to answer a concrete business question: is there enough demand to justify launching a local scooter rental service?
+
+It supports that goal by:
+
+- presenting the service hypothesis in Italian and English;
+- publishing locally focused commercial and informational content;
+- collecting structured demand signals such as dates, vehicle type, party size, and visitor origin;
+- keeping optional contact details separate from research answers;
+- providing a private dashboard for reviewing aggregate demand and consent-based contact requests;
+- establishing an SEO measurement baseline before introducing behavioural analytics.
+
+## Engineering highlights
+
+- **Privacy by design:** the main questionnaire does not request direct identifiers. Email collection is optional, requires explicit consent, and is stored in a separate table.
+- **Transactional consistency:** research and contact records are written in a single database transaction, with foreign keys, uniqueness rules, length limits, and domain checks enforced by PostgreSQL.
+- **Fail-closed configuration:** submissions return a generic `503` response and persist nothing when the database or required privacy-provider metadata is incomplete.
+- **Defence-in-depth admin access:** the dashboard is feature-gated and restricted to one configured GitHub account. Better Auth sessions are database-backed, OAuth tokens are encrypted, and protected data repositories repeat the authorization check.
+- **Server-first architecture:** public content is statically generated where possible, while form submission, authentication, and administrative queries remain server-side.
+- **International SEO:** canonical URLs, `hreflang`, metadata, JSON-LD, sitemap, robots directives, breadcrumbs, and social previews are generated centrally for both locales.
+- **Operationally explicit data lifecycle:** records include a 24-month review date. This is an operational review deadline, not an automatic deletion claim.
+
+## Architecture
+
+```text
+Public visitor
+    |
+    +-- Next.js App Router -- statically generated IT/EN pages
+    |
+    +-- POST /api/availability
+            |
+            +-- server-side validation and configuration checks
+            +-- atomic Drizzle transaction
+                    |
+                    +-- research_responses (no email)
+                    +-- contact_requests (optional email + consent)
+
+Administrator
+    |
+    +-- GitHub OAuth -- Better Auth -- allowlisted GitHub user ID
+            |
+            +-- read-only dashboard repositories -- PostgreSQL / Neon
+```
+
+## Technology choices
+
+| Technology | Role | Rationale |
+| --- | --- | --- |
+| Next.js 16 App Router | Full-stack web framework | Supports static content, server components, route handlers, metadata APIs, and deployment as one cohesive application. |
+| React 19 + TypeScript 5 | UI and application language | Provides typed component contracts and compile-time safety across content, forms, configuration, and persistence. |
+| Tailwind CSS 4 | Styling toolchain | Keeps the visual system close to the components while producing an optimized production stylesheet. |
+| PostgreSQL on Neon | Relational persistence | Transactions and database constraints fit consent-sensitive, related records better than an eventually consistent document model. |
+| Drizzle ORM + Drizzle Kit | Typed data access and migrations | Keeps the relational schema explicit, versioned, and aligned with TypeScript. Migrations are generated and applied deliberately. |
+| Better Auth + GitHub OAuth | Administrative authentication | Avoids a custom password flow and restricts access using the stable numeric ID of a single configured GitHub account. |
+| Node.js test runner + ESLint | Verification | Provides fast tests for validation, schema invariants, access policy, privacy boundaries, and SEO output with minimal tooling overhead. |
+| Vercel | Hosting | Fits the Next.js runtime and allows server functions to be pinned to Frankfurt (`fra1`), close to the selected EU database region. |
+
+## Data and privacy model
+
+The public flow separates two purposes:
+
+1. `research_responses` stores the market-research answer without email, name, phone number, IP address, user agent, or browser fingerprint.
+2. `contact_requests` is created only when a visitor asks to be contacted, provides a valid email address, and grants specific consent. It references the related research response through an internal UUID that is never returned to the browser.
+
+The two writes are committed atomically. The admin interface also keeps research-response views separate from contact views: response queries never expose email addresses, and contact views never expose free-text notes.
+
+This implementation demonstrates privacy-aware engineering decisions, but it is not legal advice or a claim of complete GDPR compliance. The actual providers, agreements, retention operations, deployment settings, and privacy notices must be verified before production use.
+
+## Getting started
+
+### Prerequisites
+
+- Node.js 22.13 or newer;
+- npm;
+- a PostgreSQL database (Neon is the intended provider);
+- a GitHub OAuth App if the admin dashboard is enabled.
+
+### Installation
 
 ```bash
+git clone <repository-url>
+cd bm-scooter-rental-validation
 npm install
+```
+
+Copy `.env.example` to `.env.local`, configure the required values, and apply the migrations:
+
+```bash
+npm run db:migrate
 npm run dev
 ```
 
-Aprire `http://localhost:3000`; la root reindirizza a `/it`.
+Open `http://localhost:3000`. The root URL permanently redirects to `/it`.
 
-## Configurazione
+## Environment variables
 
-Copiare `.env.example` in un file d’ambiente locale non versionato e valorizzare soltanto dati reali:
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_SITE_URL` | Canonical public origin. |
+| `DATABASE_URL` | Server-only PostgreSQL connection string. |
+| `BETTER_AUTH_SECRET` | High-entropy authentication secret of at least 32 characters. |
+| `BETTER_AUTH_URL` | Exact public application origin, without a trailing slash. |
+| `GITHUB_CLIENT_ID` | Client ID of the dedicated GitHub OAuth App. |
+| `GITHUB_CLIENT_SECRET` | Client secret of the dedicated GitHub OAuth App. |
+| `ADMIN_GITHUB_USER_ID` | Numeric ID of the only GitHub account allowed into the dashboard. |
+| `ADMIN_DASHBOARD_ENABLED` | Feature gate; only the exact value `true` enables the admin area. |
+| `DATA_PROVIDER_NAME` | Verified name of the provider storing research data. |
+| `DATA_PROVIDER_ROLE` | Verified privacy role of that provider. |
+| `DATA_PROVIDER_REGION` | Actual processing or storage region. |
+| `DATA_PROVIDER_TRANSFER_SAFEGUARDS` | Applicable safeguards for international transfers. |
+| `DATA_PROVIDER_PRIVACY_POLICY_URL` | Public privacy notice for the data provider. |
 
-- `NEXT_PUBLIC_SITE_URL`: dominio canonico definitivo;
-- `DATABASE_URL`: connection string PostgreSQL fornita da Neon, usata soltanto lato server;
-- `BETTER_AUTH_SECRET`: segreto casuale ad alta entropia, lungo almeno 32 caratteri, usato per firma e cifratura;
-- `BETTER_AUTH_URL`: origine pubblica esatta dell'applicazione, senza slash finale;
-- `GITHUB_CLIENT_ID` e `GITHUB_CLIENT_SECRET`: credenziali dell'OAuth App GitHub dedicata;
-- `ADMIN_GITHUB_USER_ID`: ID numerico dell'unico account GitHub autorizzato;
-- `ADMIN_DASHBOARD_ENABLED`: deve essere esattamente `true` per esporre l'area admin;
-- `DATA_PROVIDER_NAME`: nome reale del fornitore che riceve e conserva le risposte;
-- `DATA_PROVIDER_ROLE`: ruolo privacy verificato del fornitore;
-- `DATA_PROVIDER_REGION`: luogo o regione effettiva del trattamento;
-- `DATA_PROVIDER_TRANSFER_SAFEGUARDS`: garanzie effettivamente applicabili agli eventuali trasferimenti;
-- `DATA_PROVIDER_PRIVACY_POLICY_URL`: link reale all'informativa del fornitore, obbligatorio per attivare il modulo.
+Never commit real secrets. `DATABASE_URL` and all `DATA_PROVIDER_*` values are checked server-side; missing values disable persistence.
 
-`DATABASE_URL` e tutti i campi `DATA_PROVIDER_*` sono controllati lato server. Se ne manca uno, l'API restituisce `503` con un messaggio generico e non salva alcun dato. Non inserire segreti nel repository.
+## Database workflow
 
-## Configurazione GitHub OAuth e dashboard
+Schema changes are managed through versioned Drizzle migrations:
 
-1. Creare o aprire l'OAuth App da GitHub, **Settings → Developer settings → OAuth Apps**.
-2. Usare `https://www.bosainscooter.it` come Homepage URL e `https://www.bosainscooter.it/api/auth/callback/github` come Authorization callback URL.
-3. Copiare Client ID e un nuovo Client Secret nelle variabili protette dell'ambiente interessato. GitHub mostra il secret soltanto al momento della generazione.
-4. Generare `BETTER_AUTH_SECRET` con `npx auth@latest secret` oppure `openssl rand -base64 32`; non riutilizzarlo tra ambienti che hanno database separati.
-5. Recuperare l'ID GitHub numerico dell'amministratore dalla risposta autenticata `GET https://api.github.com/user` o dal profilo API pubblico e impostarlo come `ADMIN_GITHUB_USER_ID`.
-6. Abilitare `ADMIN_DASHBOARD_ENABLED=true` soltanto dopo aver configurato tutte le variabili precedenti e applicato le migration.
+```bash
+npm run db:generate
+npm run db:migrate
+npm run db:studio
+```
 
-Better Auth richiede per GitHub gli scope `read:user` e `user:email`. Conserva il profilo amministrativo, i token OAuth cifrati e i metadati di sessione previsti dallo schema. Le sessioni scadono dopo otto ore e i record di sessione/verifica scaduti vengono rimossi al successivo accesso admin o OAuth.
+Migrations are intentionally not executed by `dev`, `build`, `start`, or `check`. Preview and Production should use separate Neon databases or branches and separate credentials.
 
-## Configurazione Neon e migration
+## Admin dashboard
 
-1. Creare un database Neon o collegarne uno dedicato al progetto.
-2. Copiare `.env.example` in `.env.local` e impostare `DATABASE_URL` con la connection string del database di sviluppo. `.env.local` contiene segreti, è ignorato da Git e non deve essere committato.
-3. Impostare `DATABASE_URL` nelle variabili d’ambiente Vercel per l’ambiente interessato, senza inserirla nel codice. Preview e Production dovrebbero usare database o branch Neon separati.
-4. Generare una migration versionata dopo ogni modifica allo schema:
+To enable the dashboard:
 
-   ```bash
-   npm run db:generate
-   ```
+1. Create a dedicated GitHub OAuth App.
+2. Set its homepage to the deployed origin and its callback to `<origin>/api/auth/callback/github`.
+3. Configure the GitHub client credentials, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, and the administrator's numeric GitHub user ID.
+4. Apply all database migrations.
+5. Set `ADMIN_DASHBOARD_ENABLED=true` only after verifying the complete configuration.
 
-5. Applicare esplicitamente le migration al database selezionato:
+The integration requests GitHub's `read:user` and `user:email` scopes. Sessions expire after eight hours. Expired session and verification records are pruned on subsequent admin or OAuth access.
 
-   ```bash
-   npm run db:migrate
-   ```
-
-   Le migration non vengono eseguite automaticamente da `dev`, `build`, `start` o `check`.
-
-6. Avviare l’applicazione:
-
-   ```bash
-   npm run dev
-   ```
-
-La persistenza usa due tabelle. `research_responses` contiene il questionario e non contiene email; l'eventuale email è salvata in `contact_requests`. Le due tabelle restano collegabili tramite la foreign key interna `research_response_id`, e i due inserimenti avvengono nella stessa transazione. Gli UUID non vengono restituiti al browser. L'invio di notifiche email non fa parte di questa implementazione.
-
-## Hosting Vercel
-
-`vercel.json` fissa le funzioni server nella regione `fra1` di Francoforte, vicina al database Neon in `eu-central-1`. Gli asset statici restano distribuiti tramite la rete edge globale di Vercel. Il progetto assume che non sia configurato alcun Log Drain: prima di abilitarne uno occorre documentare fornitore, dati esportati, retention, ruolo privacy e trasferimenti.
-
-Verificare nel progetto Vercel che tutte le variabili siano presenti nel corretto ambiente. Preview e Production devono avere credenziali e database separati quando vengono entrambi abilitati. Controllare il piano Vercel attivo per registrare la retention effettiva dei Runtime Logs.
-
-## Blocco prima della produzione
-
-Il modulo non può essere attivato in produzione finché:
-
-1. il provider non è stato scelto;
-2. è stato verificato il luogo di conservazione e trattamento;
-3. è stato chiarito e documentato il suo ruolo privacy;
-4. sono stati verificati o sottoscritti i DPA applicabili di Neon e Vercel, inclusi sub-responsabili e trasferimenti;
-5. `DATA_PROVIDER_TRANSFER_SAFEGUARDS` descrive soltanto garanzie realmente applicabili;
-6. la configurazione OAuth GitHub, gli scope e l'account autorizzato sono stati verificati;
-7. `/it/privacy` e `/en/privacy` riportano dati reali e coerenti con il deploy;
-8. è stato definito e implementato un processo effettivo di cancellazione, anonimizzazione irreversibile o rinnovo documentato della necessità.
-
-`reviewAfter` è una scadenza operativa di revisione fissata a 24 mesi, non una cancellazione automatica. Il sistema di storage definitivo deve eseguire e documentare l’esito della revisione.
-
-## Qualità
+## Quality checks
 
 ```bash
 npm run lint
@@ -101,26 +151,75 @@ npm test
 npm run build
 ```
 
-Le pagine sono generate staticamente da `content/it` e `content/en`; metadata, canonical, hreflang, JSON-LD, sitemap e breadcrumb sono centralizzati in `lib/seo`.
+Run the complete local verification pipeline with:
 
-## Pubblicazione
+```bash
+npm run check
+```
 
-Non effettuare il deploy del modulo finché la checklist privacy precedente non è completata. Dopo la configurazione, verificare in un ambiente di prova il blocco `503`, la persistenza transazionale su un database Neon non produttivo, `/robots.txt`, `/sitemap.xml`, canonical e invio form sul dominio reale.
+The test suite covers input validation, database constraints and transactional behaviour, admin authorization, data separation, SEO metadata, localized content invariants, and failure behaviour.
 
-## Local SEO esterna
+## Project structure
 
-Il codice non può sostituire il lavoro locale. Dopo aver definito davvero attività e sede, completare soltanto dati commerciali reali e coerenti. Non pubblicare indirizzi privati, non creare schede aziendali fittizie e non comprare recensioni o link.
+```text
+app/          Next.js routes, API handlers, metadata, and admin pages
+components/   Public and administrative React components
+content/      Typed Italian and English page content
+docs/         SEO, content, launch, and privacy operations notes
+drizzle/      Versioned PostgreSQL migrations
+lib/          Domain logic, configuration, persistence, auth, and SEO utilities
+public/       Static images and web assets
+scripts/      Local development helpers
+tests/        Node.js test suite
+```
 
-## Monitoraggio SEO della validazione
+## Production readiness checklist
 
-Il sito è in modalità `validation`: Search Console e Bing Webmaster Tools misurano interesse e scoperta organica, ma non dimostrano da soli la sostenibilità economica del business. Non introdurre analytics, cookie o identificatori aggiuntivi per questa fase.
+Before accepting real submissions:
 
-1. Subito dopo un aggiornamento significativo, inviare una sola volta `/sitemap.xml` a Google e Bing. Non ripetere l'invio ogni giorno.
-2. Dopo 3–7 giorni, verificare che la sitemap sia stata letta e controllare con Ispezione URL le homepage e le landing Bosa/Bosa Marina in entrambe le lingue.
-3. Dopo 14 giorni, registrare pagine indicizzate ed escluse, motivazioni, query, impression, clic, CTR, posizione media e problemi di scansione.
-4. Per le prime 8 settimane, aggiornare una baseline settimanale per pagina, paese e dispositivo; leggere separatamente Bosa e Bosa Marina e confrontare i segnali con periodo e località raccolti dal modulo.
-5. Controllare Core Web Vitals e PageSpeed mobile/desktop. Obiettivi: Performance ≥90, Accessibility ≥95, Best Practices ≥95 e SEO 100, senza peggiorare l'esperienza.
-6. Non implementare IndexNow finché il sito resta piccolo e statico; rivalutarlo solo con aggiornamenti frequenti o ritardi persistenti di Bing.
-7. Non creare un Profilo dell'attività Google finché sede, area di servizio, apertura e modello operativo non sono reali e conformi ai requisiti della piattaforma.
+- select and verify the database provider, processing region, privacy role, subprocessors, DPA, and transfer safeguards;
+- replace every placeholder provider value with accurate deployment information;
+- keep Preview and Production databases, OAuth credentials, and secrets isolated;
+- verify the GitHub OAuth callback, scopes, allowlisted account, session behaviour, and feature gate;
+- update `/it/privacy` and `/en/privacy` so they match the deployed infrastructure;
+- define and implement an auditable process for deletion, irreversible anonymization, or a documented renewal of necessity at the review deadline;
+- verify the generic `503` failure path and transactional persistence against a non-production database;
+- check `/robots.txt`, `/sitemap.xml`, canonical URLs, `hreflang`, structured data, and the complete form flow on the real domain;
+- document any Vercel log retention and do not add a Log Drain without assessing the additional provider and data flow.
 
-Vedi anche `docs/seo-keyword-map.md`, `docs/seo-launch-checklist.md`, `docs/local-seo-launch-plan.md`, `docs/content-plan.md` e `docs/privacy-data-operations.md`.
+## TODO
+
+### Analytics with PostHog
+
+Consider integrating PostHog in the future to measure the website funnel, including page views, CTA clicks, form opens, submissions, successes, and errors.
+
+The integration must remain minimal and use cookieless mode, with autocapture, user identification, and session replay disabled. Email addresses, notes, questionnaire data, database identifiers, and any other personal information must never be sent.
+
+The aim is to avoid cookies or non-essential storage and reduce the likelihood that a cookie banner is required. Before activation, the effective PostHog configuration must still be verified, the privacy notice must be updated, and the project must confirm that no other website technology requires prior consent.
+
+Planned configuration:
+
+- PostHog Cloud EU;
+- `cookieless_mode: "always"`;
+- `autocapture: false`;
+- session replay disabled;
+- no calls to `identify`;
+- explicit custom events only;
+- a strict allowlist for transmitted properties;
+- separate PostHog projects for Preview and Production.
+
+### Additional work
+
+- Implement and document the operational retention-review workflow.
+- Add end-to-end tests for the public submission flow and GitHub-authenticated admin access.
+- Add accessibility regression checks and monitor Core Web Vitals in deployed environments.
+- Replace illustrative imagery with authentic, optimized photography if the business becomes operational.
+- Complete the launch and local SEO checklists with verified business information.
+
+## Supporting documentation
+
+- [`docs/privacy-data-operations.md`](docs/privacy-data-operations.md)
+- [`docs/seo-launch-checklist.md`](docs/seo-launch-checklist.md)
+- [`docs/seo-keyword-map.md`](docs/seo-keyword-map.md)
+- [`docs/local-seo-launch-plan.md`](docs/local-seo-launch-plan.md)
+- [`docs/content-plan.md`](docs/content-plan.md)
