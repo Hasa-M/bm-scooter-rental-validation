@@ -8,6 +8,7 @@ import { getAdminGithubUserId, isAdminDashboardEnabled } from "@/lib/admin/confi
 import { evaluateAdminAccess } from "@/lib/admin/policy.mjs";
 import { getDatabaseClient } from "@/lib/db/client";
 import { adminAccount } from "@/lib/db/schema";
+import { pruneExpiredAdminAuthRecords } from "@/lib/admin/retention";
 
 export type AdminAccess =
   | { status: "disabled" | "unauthenticated" | "denied" }
@@ -16,6 +17,7 @@ export type AdminAccess =
 export async function getAdminAccess(requestHeaders: Headers): Promise<AdminAccess> {
   if (!isAdminDashboardEnabled()) return { status: "disabled" };
 
+  await pruneExpiredAdminAuthRecords();
   const session = await getAdminAuth().api.getSession({ headers: requestHeaders });
   if (!session?.user.id) return { status: "unauthenticated" };
 

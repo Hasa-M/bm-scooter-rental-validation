@@ -2,6 +2,7 @@ import { toNextJsHandler } from "better-auth/next-js";
 import { NextResponse } from "next/server";
 import { getAdminAuth } from "@/lib/admin/auth";
 import { isAdminDashboardEnabled } from "@/lib/admin/config";
+import { pruneExpiredAdminAuthRecords } from "@/lib/admin/retention";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,6 +12,7 @@ async function handle(request: Request, method: "GET" | "POST") {
     return new NextResponse(null, { status: 404 });
   }
 
+  await pruneExpiredAdminAuthRecords();
   const handler = toNextJsHandler(getAdminAuth())[method];
   const response = await handler(request);
   response.headers.set("Cache-Control", "private, no-store, max-age=0");

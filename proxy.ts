@@ -9,7 +9,7 @@ const noStoreHeaders = {
 };
 
 export async function proxy(request: NextRequest) {
-  if (request.nextUrl.pathname === "/") return NextResponse.redirect(new URL("/it", request.url));
+  if (request.nextUrl.pathname === "/") return NextResponse.redirect(new URL("/it", request.url), 308);
 
   if (request.nextUrl.pathname.startsWith("/admin")) {
     if (!isAdminDashboardEnabled()) {

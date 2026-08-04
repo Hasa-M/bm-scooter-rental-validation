@@ -35,14 +35,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 function Cta({ locale }: { locale: Locale }) {
   const it = locale === "it";
+  const pricesPath = "/" + locale + "/" + (it ? "prezzi" : "prices");
   return (
     <div className="actions">
       <a className="button" href="#interest-form">
-        {it ? "Facci sapere se sei interessato" : "Let us know if you are interested"}
+        {it ? "Richiedi disponibilità" : "Request availability"}
       </a>
-      <a className="button secondary" href="#interest-form">
-        {it ? "Chiedi informazioni" : "Ask for details"}
-      </a>
+      <Link className="button secondary" href={pricesPath}>
+        {it ? "Scopri le tariffe" : "View rates"}
+      </Link>
     </div>
   );
 }
@@ -80,15 +81,18 @@ function PageVisual({
         className={"hero-card" + (image?.src ? " has-image" : "")}
       >
         {image?.src && (
-          <Image
-            className="site-image"
-            style={{ objectPosition: image.position }}
-            src={image.src}
-            alt={image.alt}
-            fill
-            priority
-            sizes="(max-width: 820px) 100vw, 42vw"
-          />
+          <>
+            <Image
+              className="site-image"
+              style={{ objectPosition: image.position }}
+              src={image.src}
+              alt={image.alt}
+              fill
+              priority
+              sizes="(max-width: 820px) 100vw, 42vw"
+            />
+            <span className="image-disclosure">{it ? "Immagine illustrativa" : "Illustrative image"}</span>
+          </>
         )}
         <span className="status">{businessConfig.brandName}</span>
         <strong>{it ? "Più libertà. Più Bosa." : "More freedom. More of Bosa."}</strong>
@@ -107,6 +111,7 @@ function PageVisual({
           fill
           sizes="(max-width: 820px) 100vw, 38vw"
         />
+        <span className="image-disclosure">{it ? "Immagine illustrativa" : "Illustrative image"}</span>
       </div>
     );
   }
@@ -136,8 +141,8 @@ function PricingTables({ locale }: { locale: Locale }) {
           <h2>{it ? "Prezzi per scooter" : "Prices per scooter"}</h2>
           <p className="lead">
             {it
-              ? "Importi provvisori, calcolati per 125cc, IVA inclusa e assicurazione completa."
-              : "Provisional prices including VAT calculated and full insurance for 125cc."}
+              ? "Le tariffe di lancio previste per gli scooter 125cc, con IVA e coperture indicate incluse."
+              : "Planned launch rates for 125cc scooters, including VAT and the listed insurance cover."}
           </p>
           <div className="table-scroll">
             <table className="rate-table">
@@ -176,33 +181,33 @@ function PricingTables({ locale }: { locale: Locale }) {
               <thead>
                 <tr>
                   <th scope="col">{it ? "Servizio" : "Service"}</th>
-                  <th scope="col">{it ? "Prezzo indicativo" : "Indicative price"}</th>
+                  <th scope="col">{it ? "Tariffa prevista" : "Planned rate"}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">{it ? "Ritiro in sede" : "Pickup from our base"}</th>
-                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{it ? "Incluso" : "Included"}</td>
+                  <th scope="row">{it ? "Ritiro presso la base di Bosa" : "Pickup from the Bosa base"}</th>
+                  <td data-label={it ? "Tariffa prevista" : "Planned rate"}>{it ? "Incluso" : "Included"}</td>
                 </tr>
                 <tr>
                   <th scope="row">{it ? "Consegna oppure ritiro a Bosa/Bosa Marina" : "Delivery or collection in Bosa/Bosa Marina"}</th>
-                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{oneWay}</td>
+                  <td data-label={it ? "Tariffa prevista" : "Planned rate"}>{oneWay}</td>
                 </tr>
                 <tr>
                   <th scope="row">{it ? "Consegna e ritiro a Bosa/Bosa Marina" : "Delivery and collection in Bosa/Bosa Marina"}</th>
-                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{roundTrip}</td>
+                  <td data-label={it ? "Tariffa prevista" : "Planned rate"}>{roundTrip}</td>
                 </tr>
                 <tr>
                   <th scope="row">{it ? "Fuori Bosa/Bosa Marina" : "Outside Bosa/Bosa Marina"}</th>
-                  <td data-label={it ? "Prezzo indicativo" : "Indicative price"}>{it ? "Fattibilità e prezzo su richiesta" : "Feasibility and price on request"}</td>
+                  <td data-label={it ? "Tariffa prevista" : "Planned rate"}>{it ? "Disponibilità e prezzo su richiesta" : "Availability and price on request"}</td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p className="table-note">
             {it
-              ? "Possibile consegna gratuita per almeno 10 giorni, oppure per due scooter noleggiati almeno 7 giorni. Da confermare caso per caso."
-              : "Free delivery may be available for bookings of at least 10 days, or two scooters for at least 7 days. Confirmed case by case."}
+              ? "Stiamo valutando la consegna inclusa per soggiorni di almeno 10 giorni, oppure per due scooter noleggiati almeno 7 giorni. Indica le tue date per aiutarci a confermare questa formula."
+              : "We are assessing included delivery for stays of at least 10 days, or two scooters rented for at least 7 days. Share your dates to help us confirm this option."}
           </p>
         </div>
       </div>
@@ -223,7 +228,7 @@ function HomePage({ locale, page }: { locale: Locale; page: PageContent }) {
             <Cta locale={locale} />
             <div className="trust">
               <span>{it ? "Scooter 50cc e 125cc" : "50cc and 125cc scooters"}</span>
-              <span>{it ? "Condizioni confermate prima del noleggio" : "Terms confirmed before rental"}</span>
+              <span>{it ? "In fase di lancio · richieste aperte" : "Launching soon · requests open"}</span>
             </div>
           </div>
           <PageVisual locale={locale} page={page} hero />
@@ -279,39 +284,49 @@ function PrivacyProviderDetails({ locale }: { locale: Locale }) {
   const it = locale === "it";
   const provider = privacyConfig.dataProvider;
 
-  if (!isDataProviderConfigured()) {
-    return (
-      <p>
-        {it
-          ? "Il fornitore incaricato di ricevere e conservare le risposte non è ancora stato selezionato. Il modulo non sarà attivato in produzione finché il fornitore, il luogo del trattamento, il ruolo privacy e le eventuali garanzie per trasferimenti internazionali non saranno stati verificati e riportati in questa informativa."
-          : "The provider responsible for receiving and storing responses has not yet been selected. The form will not be enabled in production until the provider, processing location, privacy role and any safeguards for international transfers have been verified and included in this notice."}
-      </p>
-    );
-  }
-
   return (
     <>
-      <p>
-        {it ? "Fornitore: " : "Provider: "}<strong>{provider.name}</strong>.{" "}
-        {it ? "Ruolo privacy: " : "Privacy role: "}{provider.role}.{" "}
-        {it ? "Regione del trattamento: " : "Processing region: "}{provider.region}.
-        {provider.transferSafeguards && (
-          <> {it ? "Garanzie per i trasferimenti: " : "Transfer safeguards: "}{provider.transferSafeguards}.</>
-        )}
-      </p>
-      {provider.privacyPolicyUrl && (
+      {!isDataProviderConfigured() ? (
         <p>
-          <a href={provider.privacyPolicyUrl} target="_blank" rel="noreferrer">
-            {it ? "Informativa privacy del fornitore" : "Provider privacy policy"}
-          </a>
+          {it
+            ? "Il provider del database non è configurato in modo completo. Il modulo resta disattivato finché nome, ruolo, regione, garanzie di trasferimento e informativa del provider non sono stati verificati e pubblicati."
+            : "The database provider configuration is incomplete. The form remains disabled until its name, role, region, transfer safeguards and privacy notice have been verified and published."}
         </p>
+      ) : (
+        <div>
+          <p>
+            Database: <strong>{provider.name}</strong>.{" "}
+            {it ? "Ruolo: " : "Role: "}{provider.role}.{" "}
+            {it ? "Regione: " : "Region: "}{provider.region}.{" "}
+            {it ? "Garanzie per i trasferimenti: " : "Transfer safeguards: "}{provider.transferSafeguards}.
+          </p>
+          <p>
+            <a href={provider.privacyPolicyUrl} target="_blank" rel="noreferrer">
+              {it ? "Informativa del provider del database" : "Database provider privacy notice"}
+            </a>
+          </p>
+        </div>
       )}
+      <ul>
+        {privacyConfig.serviceProviders.map((serviceProvider) => (
+          <li key={serviceProvider.name}>
+            <strong>{serviceProvider.name}</strong>: {serviceProvider.role[locale]}.{" "}
+            {it ? "Luogo del trattamento: " : "Processing location: "}{serviceProvider.region[locale]}.{" "}
+            {it ? "Garanzie per i trasferimenti: " : "Transfer safeguards: "}
+            {serviceProvider.transferSafeguards[locale]}.{" "}
+            <a href={serviceProvider.privacyPolicyUrl} target="_blank" rel="noreferrer">
+              {it ? "Informativa del fornitore" : "Provider privacy notice"}
+            </a>
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
 function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
   const it = locale === "it";
   const showForm = ["commercial", "contact", "prices"].includes(page.kind);
+  const showValidationNotice = ["commercial", "contact", "prices"].includes(page.kind);
   const hasVisual = Boolean(getPageImage(page.slug, locale)?.src);
   return (
     <>
@@ -321,11 +336,13 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
           <h1>{page.h1}</h1>
           <p className="lead">{page.intro}</p>
           {page.kind === "commercial" && <Cta locale={locale} />}
-          <div className="notice">
-            {it
-              ? "Tariffe, dotazioni, coperture e servizi sono provvisori: difenteranno effettivi solo all'apertura del business."
-              : "Rates, equipment, cover and services are provisional and only become final upon business opening."}
-          </div>
+          {showValidationNotice && (
+            <div className="notice">
+              {it
+                ? "Il servizio è in fase di validazione e le richieste sono aperte. Inviare il modulo non crea una prenotazione né richiede pagamenti: tariffe, dotazioni e disponibilità saranno confermate prima dell'eventuale noleggio."
+                : "The service is currently being validated and requests are open. Submitting the form does not create a booking or require payment: rates, equipment and availability will be confirmed before any rental."}
+            </div>
+          )}
         </div>
       </section>
 
@@ -335,7 +352,16 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
         <div className={"container" + (hasVisual ? " split" : " content-column")}>
           <article className="prose">
             {page.kind === "guide" && (
-              <p><strong>{it ? "A cura di" : "By"} {businessConfig.brandName}</strong></p>
+              <p className="editorial-note">
+                <strong>{it ? "A cura di" : "By"} {businessConfig.brandName}</strong>
+                {page.reviewedAt && (
+                  <> · {it ? "Verificata localmente il" : "Locally reviewed on"}{" "}
+                    <time dateTime={page.reviewedAt}>
+                      {new Intl.DateTimeFormat(it ? "it-IT" : "en-GB", { dateStyle: "long", timeZone: "UTC" }).format(new Date(page.reviewedAt))}
+                    </time>
+                  </>
+                )}
+              </p>
             )}
             {page.sections.map((section) => (
               <section key={section.heading}>
@@ -348,6 +374,17 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
                 )}
                 {section.body.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                 {section.bullets && <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}
+                {section.sources?.length ? (
+                  <p className="source-links">
+                    <strong>{it ? "Fonti:" : "Sources:"}</strong>{" "}
+                    {section.sources.map((source, index) => (
+                      <span key={source.href}>
+                        {index > 0 && " · "}
+                        <a href={source.href} target="_blank" rel="noreferrer">{source.label}</a>
+                      </span>
+                    ))}
+                  </p>
+                ) : null}
               </section>
             ))}
             {page.slug === "privacy" && (
@@ -374,7 +411,7 @@ function StandardPage({ locale, page }: { locale: Locale; page: PageContent }) {
             )}            {page.kind === "guide" && (
               <p>
                 <Link href={"/" + locale + "/" + (it ? "noleggio-scooter-bosa" : "scooter-rental-bosa")}>
-                  {it ? "Scopri gli scooter disponibili a Bosa" : "Explore available scooters in Bosa"}
+                  {it ? "Scopri gli scooter e richiedi disponibilità" : "Explore the scooters and request availability"}
                 </Link>
               </p>
             )}
