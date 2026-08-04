@@ -97,6 +97,21 @@ test("Better Auth validates a database session and the persisted GitHub account"
   assert.match(proxy, /status: 404/);
 });
 
+test("expired auth records are pruned and admin login links the privacy notice", async () => {
+  const retention = await read("lib/admin/retention.ts");
+  const access = await read("lib/admin/access.ts");
+  const authRoute = await read("app/api/auth/[...all]/route.ts");
+  const login = await read("app/admin/login/page.tsx");
+  const vercel = JSON.parse(await read("vercel.json"));
+
+  assert.match(retention, /delete\(adminSession\).*lt\(adminSession\.expiresAt, now\)/s);
+  assert.match(retention, /delete\(adminVerification\).*lt\(adminVerification\.expiresAt, now\)/s);
+  assert.match(access, /await pruneExpiredAdminAuthRecords\(\)/);
+  assert.match(authRoute, /await pruneExpiredAdminAuthRecords\(\)/);
+  assert.match(login, /href="\/it\/privacy"/);
+  assert.deepEqual(vercel.regions, ["fra1"]);
+});
+
 test("response query and page never expose contact email while contacts do", async () => {
   const responses = await Promise.all([
     read("lib/admin/responses-repository.ts"),

@@ -81,10 +81,10 @@ test("provisional pricing, mileage and delivery terms are centralized and render
   for (const rate of [
     /it: "Bassa stagione \(maggio, giugno, ottobre\)"/,
     /it: "Alta stagione \(luglio, agosto, settembre\)"/,
-    /fullDay: 66/,
-    /sevenDays: 399/,
-    /fullDay: 74/,
-    /sevenDays: 449/,
+    /fullDay: 55/,
+    /sevenDays: 360/,
+    /fullDay: 65/,
+    /sevenDays: 425/,
   ]) assert.match(config, rate);
 
   assert.match(config, /fullDay: 150, sevenDays: 900, extraPerKm: 0\.25/);
@@ -220,12 +220,22 @@ test("privacy configuration and pages disclose controller and provider gate", as
   assert.match(config, /DATA_PROVIDER_ROLE/);
   assert.match(config, /DATA_PROVIDER_REGION/);
   assert.match(config, /DATA_PROVIDER_TRANSFER_SAFEGUARDS/);
+  assert.match(config, /DATA_PROVIDER_PRIVACY_POLICY_URL/);
   assert.match(config, /isDataProviderConfigured/);
+  assert.match(config, /provider\.transferSafeguards/);
+  assert.match(config, /provider\.privacyPolicyUrl/);
+  assert.match(config, /Vercel, Inc\./);
+  assert.match(config, /GitHub, Inc\./);
   assert.match(page, /mailto:/);
-  assert.match(page, /has not yet been selected/);
-  assert.match(page, /non è ancora stato selezionato/);
+  assert.match(page, /database provider configuration is incomplete/);
+  assert.match(page, /provider del database non è configurato/);
   assert.match(api, /!isDatabaseConfigured\(\) \|\| !isDataProviderConfigured\(\)/);
   assert.match(combined, /24 mesi|24 months/);
+  assert.match(combined, /otto ore|eight-hour/);
+  assert.match(combined, /token OAuth cifrati|encrypted OAuth/);
+  assert.match(combined, /IP address|indirizzo IP/);
+  assert.match(combined, /Vercel/);
+  assert.match(combined, /GitHub/);
   assert.match(combined, /Garante|Italian Data Protection Authority/);
-  assert.doesNotMatch(it + en, /\[RAGIONE SOCIALE\]|streetAddress|Vercel|Neon|PostHog/);
+  assert.doesNotMatch(it + en, /\[RAGIONE SOCIALE\]|streetAddress|PostHog/);
 });

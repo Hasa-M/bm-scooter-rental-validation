@@ -332,24 +332,30 @@ export const itPages: PageContent[] = [
         heading: "Dati, finalità e basi giuridiche",
         body: [
           "Per la validazione raccogliamo periodo richiesto, numero di scooter, fascia d'età, preferenza 50cc/125cc, località di soggiorno, macroarea di provenienza e indicazione sulla patente oltre cinque anni. Non chiediamo nome, età esatta, indirizzo o documenti. È disponibile un campo note facoltativo di massimo 500 caratteri, nel quale non devono essere inseriti dati sensibili.",
-          "Le risposte sono progettate per non identificare direttamente la persona e servono a misurare domanda, stagionalità e prodotto. Gli eventuali dati tecnici strettamente necessari a sicurezza e funzionamento sono trattati sulla base del legittimo interesse del titolare, articolo 6(1)(f) GDPR, previa valutazione di necessità e bilanciamento.",
+          "Le risposte sono progettate per non identificare direttamente la persona e servono a misurare domanda, stagionalità e interesse verso il servizio. Questi dati e i metadati tecnici necessari a erogazione, sicurezza e prevenzione degli abusi sono trattati sulla base del legittimo interesse del titolare, articolo 6(1)(f) GDPR, previa valutazione di necessità e bilanciamento.",
+          "Come fornitore di hosting, Vercel può trattare per ogni visitatore indirizzo IP, localizzazione approssimativa derivata dall'IP, URL e parametri della richiesta, data e ora, stato della risposta, regione di esecuzione e user-agent. Questi dati non vengono aggiunti alla risposta di ricerca né usati dal titolare per profilazione o pubblicità.",
           "Se chiedi volontariamente di essere ricontattato, raccogliamo l'email sulla base del consenso, articolo 6(1)(a). Il consenso è separato, facoltativo e revocabile. Per una successiva richiesta specifica di disponibilità o informazioni, i dati necessari possono essere trattati per misure precontrattuali richieste dall'interessato, articolo 6(1)(b).",
+          "L'area amministrativa è riservata a un unico account GitHub autorizzato. Per autenticazione, controllo degli accessi e sicurezza vengono trattati ID GitHub, nome, email, stato di verifica dell'email, immagine profilo, scope e token OAuth cifrati, token e date della sessione, indirizzo IP e user-agent. La base giuridica è il legittimo interesse del titolare a proteggere e amministrare il servizio, articolo 6(1)(f) GDPR.",
         ],
       },
       {
         heading: "Dati obbligatori e facoltativi",
         body: [
           "I campi privi di identificativi diretti e la dichiarazione di lettura dell'informativa sono necessari per inviare la risposta. Le note, il ricontatto, l'email e il relativo consenso sono sempre facoltativi. Senza ricontatto il modulo non mostra né invia alcun indirizzo email.",
+          "I dati OAuth e di sessione sono necessari soltanto per l'amministratore che sceglie di accedere all'area riservata; il sito pubblico non richiede un account GitHub.",
         ],
       },
       {
         heading: "Destinatari e fornitori",
-        body: [],
+        body: [
+          "Le risposte e i contatti sono consultabili esclusivamente dal titolare attraverso una dashboard protetta e non vengono ceduti o usati per pubblicità. I fornitori tecnici possono trattare soltanto i dati necessari a fornire database, hosting, sicurezza e autenticazione, secondo i rispettivi ruoli e accordi descritti di seguito.",
+        ],
       },
       {
         heading: "Trasferimenti fuori dallo SEE",
         body: [
-          "Non verranno effettuati trasferimenti internazionali tramite il modulo finché il luogo effettivo del trattamento e le garanzie applicabili non saranno stati verificati e descritti nella sezione precedente. Se il provider tratta dati fuori dallo Spazio economico europeo, questa informativa indicherà le garanzie effettivamente applicabili.",
+          "Il database è configurato nella regione dichiarata nella sezione precedente. Vercel utilizza una rete edge globale e GitHub tratta dati anche negli Stati Uniti e in altri Paesi. Per i trasferimenti soggetti al GDPR si applicano, secondo il servizio e l'accordo vigente, decisioni di adeguatezza come il Data Privacy Framework UE-USA e/o le Clausole contrattuali standard della Commissione europea.",
+          "Il modulo resta disattivato se non sono state configurate le garanzie effettivamente verificate per il provider del database.",
         ],
       },
       {
@@ -357,6 +363,8 @@ export const itPages: PageContent[] = [
         body: [
           "Le risposte grezze sono usate per ricerca di mercato e sottoposte a una verifica documentata di necessità almeno ogni 24 mesi. Se un record individuale non è più necessario, viene cancellato oppure trasformato in dato realmente anonimo e aggregato. Le statistiche irreversibilmente anonime possono essere conservate senza un termine fisso.",
           "Le email sono conservate solo finché serve per comunicare la disponibilità del servizio o fino alla revoca del consenso. La necessità viene rivalutata almeno ogni 24 mesi; se la finalità non è più attuale, l'email viene cancellata oppure viene richiesto un nuovo consenso. La sola mancata richiesta di cancellazione non giustifica una conservazione illimitata.",
+          "Le sessioni amministrative hanno una scadenza di otto ore, aggiornabile durante l'uso, e vengono eliminate al logout o, dopo la scadenza, al successivo accesso amministrativo o OAuth. I record di verifica OAuth scaduti sono eliminati allo stesso modo. Profilo GitHub, collegamento dell'account e token OAuth cifrati sono conservati finché l'accesso amministrativo rimane autorizzato e necessario.",
+          "I log tecnici di Vercel seguono la conservazione nativa del piano attivo e non vengono esportati tramite Log Drain. Un eventuale cambio di piano, retention o destinazione dei log richiede una nuova verifica e l'aggiornamento di questa informativa.",
         ],
       },
       {
@@ -369,13 +377,14 @@ export const itPages: PageContent[] = [
       {
         heading: "Cookie e analytics",
         body: [
-          "Il sito non installa analytics di terze parti né cookie non essenziali. Possono esistere esclusivamente dati tecnici necessari al funzionamento e alla sicurezza. Prima di introdurre strumenti non essenziali sarà necessario aggiornare questa informativa e, quando richiesto, raccogliere una scelta valida dell'utente.",
+          "Il sito non installa analytics di terze parti né cookie non essenziali. L'area amministrativa usa un cookie di sessione proprietario, HttpOnly, Secure in produzione e SameSite=Lax, con scadenza di otto ore, oltre a un cookie transitorio per proteggere il flusso OAuth. Sono cookie strettamente necessari e non sono usati per profilazione o pubblicità.",
+          "Prima di introdurre strumenti non essenziali, analytics o altri tracciamenti sarà necessario aggiornare questa informativa e, quando richiesto, raccogliere una scelta valida dell'utente.",
         ],
       },
       {
         heading: "Aggiornamenti",
         body: [
-          "Questa informativa deve essere aggiornata quando cambiano titolare, contatti, fornitori, finalità, basi giuridiche, tempi di conservazione o tecnologie di tracciamento. Revisione organizzativa: agosto 2026.",
+          "Questa informativa deve essere aggiornata quando cambiano titolare, contatti, fornitori, finalità, basi giuridiche, tempi di conservazione o tecnologie di tracciamento. Ultima revisione organizzativa: 4 agosto 2026.",
         ],
       },
     ],

@@ -279,33 +279,42 @@ function PrivacyProviderDetails({ locale }: { locale: Locale }) {
   const it = locale === "it";
   const provider = privacyConfig.dataProvider;
 
-  if (!isDataProviderConfigured()) {
-    return (
-      <p>
-        {it
-          ? "Il fornitore incaricato di ricevere e conservare le risposte non è ancora stato selezionato. Il modulo non sarà attivato in produzione finché il fornitore, il luogo del trattamento, il ruolo privacy e le eventuali garanzie per trasferimenti internazionali non saranno stati verificati e riportati in questa informativa."
-          : "The provider responsible for receiving and storing responses has not yet been selected. The form will not be enabled in production until the provider, processing location, privacy role and any safeguards for international transfers have been verified and included in this notice."}
-      </p>
-    );
-  }
-
   return (
     <>
-      <p>
-        {it ? "Fornitore: " : "Provider: "}<strong>{provider.name}</strong>.{" "}
-        {it ? "Ruolo privacy: " : "Privacy role: "}{provider.role}.{" "}
-        {it ? "Regione del trattamento: " : "Processing region: "}{provider.region}.
-        {provider.transferSafeguards && (
-          <> {it ? "Garanzie per i trasferimenti: " : "Transfer safeguards: "}{provider.transferSafeguards}.</>
-        )}
-      </p>
-      {provider.privacyPolicyUrl && (
+      {!isDataProviderConfigured() ? (
         <p>
-          <a href={provider.privacyPolicyUrl} target="_blank" rel="noreferrer">
-            {it ? "Informativa privacy del fornitore" : "Provider privacy policy"}
-          </a>
+          {it
+            ? "Il provider del database non è configurato in modo completo. Il modulo resta disattivato finché nome, ruolo, regione, garanzie di trasferimento e informativa del provider non sono stati verificati e pubblicati."
+            : "The database provider configuration is incomplete. The form remains disabled until its name, role, region, transfer safeguards and privacy notice have been verified and published."}
         </p>
+      ) : (
+        <div>
+          <p>
+            Database: <strong>{provider.name}</strong>.{" "}
+            {it ? "Ruolo: " : "Role: "}{provider.role}.{" "}
+            {it ? "Regione: " : "Region: "}{provider.region}.{" "}
+            {it ? "Garanzie per i trasferimenti: " : "Transfer safeguards: "}{provider.transferSafeguards}.
+          </p>
+          <p>
+            <a href={provider.privacyPolicyUrl} target="_blank" rel="noreferrer">
+              {it ? "Informativa del provider del database" : "Database provider privacy notice"}
+            </a>
+          </p>
+        </div>
       )}
+      <ul>
+        {privacyConfig.serviceProviders.map((serviceProvider) => (
+          <li key={serviceProvider.name}>
+            <strong>{serviceProvider.name}</strong>: {serviceProvider.role[locale]}.{" "}
+            {it ? "Luogo del trattamento: " : "Processing location: "}{serviceProvider.region[locale]}.{" "}
+            {it ? "Garanzie per i trasferimenti: " : "Transfer safeguards: "}
+            {serviceProvider.transferSafeguards[locale]}.{" "}
+            <a href={serviceProvider.privacyPolicyUrl} target="_blank" rel="noreferrer">
+              {it ? "Informativa del fornitore" : "Provider privacy notice"}
+            </a>
+          </li>
+        ))}
+      </ul>
     </>
   );
 }

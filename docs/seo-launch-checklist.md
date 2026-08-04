@@ -3,8 +3,10 @@
 ## Prima del lancio
 
 - [ ] Completare soltanto i dati commerciali reali necessari in `lib/config/business.ts`; non pubblicare un indirizzo privato o dati aziendali inesistenti.
-- [ ] Configurare `NEXT_PUBLIC_SITE_URL`, `DATABASE_URL` e tutti i campi minimi `DATA_PROVIDER_*`; applicare esplicitamente le migration e verificare che la configurazione incompleta restituisca `503`.
-- [ ] Scegliere e verificare il provider, il luogo del trattamento, il ruolo privacy, l’eventuale accordo e le garanzie effettive; aggiornare /it/privacy e /en/privacy con dati reali.
+- [ ] Configurare `NEXT_PUBLIC_SITE_URL`, `DATABASE_URL` e tutti i campi `DATA_PROVIDER_*`; applicare esplicitamente le migration e verificare che qualsiasi campo privacy mancante restituisca `503`.
+- [ ] Configurare Better Auth e GitHub OAuth, verificare callback e ID numerico autorizzato, quindi abilitare la dashboard soltanto nell'ambiente previsto.
+- [ ] Scegliere e verificare il provider, il luogo del trattamento, il ruolo privacy, l'eventuale accordo e le garanzie effettive; aggiornare /it/privacy e /en/privacy con dati reali.
+- [ ] Verificare DPA e sub-responsabili Neon/Vercel, regione Vercel `fra1`, piano e retention dei Runtime Logs; confermare che non esista alcun Log Drain.
 - [ ] Verificare HTTPS, canonical, hreflang, metadata, sitemap, robots, favicon e social image.
 - [ ] Sostituire tutti i placeholder con fotografie autentiche, compresse e dotate di alt pertinente.
 - [ ] Verificare prezzi, coperture, cauzione, patente, ritiro, assistenza e contatti.

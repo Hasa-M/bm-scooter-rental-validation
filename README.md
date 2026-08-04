@@ -21,13 +21,29 @@ Copiare `.env.example` in un file d’ambiente locale non versionato e valorizza
 
 - `NEXT_PUBLIC_SITE_URL`: dominio canonico definitivo;
 - `DATABASE_URL`: connection string PostgreSQL fornita da Neon, usata soltanto lato server;
+- `BETTER_AUTH_SECRET`: segreto casuale ad alta entropia, lungo almeno 32 caratteri, usato per firma e cifratura;
+- `BETTER_AUTH_URL`: origine pubblica esatta dell'applicazione, senza slash finale;
+- `GITHUB_CLIENT_ID` e `GITHUB_CLIENT_SECRET`: credenziali dell'OAuth App GitHub dedicata;
+- `ADMIN_GITHUB_USER_ID`: ID numerico dell'unico account GitHub autorizzato;
+- `ADMIN_DASHBOARD_ENABLED`: deve essere esattamente `true` per esporre l'area admin;
 - `DATA_PROVIDER_NAME`: nome reale del fornitore che riceve e conserva le risposte;
 - `DATA_PROVIDER_ROLE`: ruolo privacy verificato del fornitore;
 - `DATA_PROVIDER_REGION`: luogo o regione effettiva del trattamento;
 - `DATA_PROVIDER_TRANSFER_SAFEGUARDS`: garanzie effettivamente applicabili agli eventuali trasferimenti;
-- `DATA_PROVIDER_PRIVACY_POLICY_URL`: link reale all’informativa del fornitore, se disponibile.
+- `DATA_PROVIDER_PRIVACY_POLICY_URL`: link reale all'informativa del fornitore, obbligatorio per attivare il modulo.
 
-`DATABASE_URL`, nome, ruolo e regione del provider sono controllati lato server. Le garanzie di trasferimento e il link alla policy devono essere valorizzati quando effettivamente applicabili. Se manca la configurazione minima, l’API restituisce `503` con un messaggio generico e non salva alcun dato. Non inserire segreti nel repository.
+`DATABASE_URL` e tutti i campi `DATA_PROVIDER_*` sono controllati lato server. Se ne manca uno, l'API restituisce `503` con un messaggio generico e non salva alcun dato. Non inserire segreti nel repository.
+
+## Configurazione GitHub OAuth e dashboard
+
+1. Creare o aprire l'OAuth App da GitHub, **Settings → Developer settings → OAuth Apps**.
+2. Usare `https://www.bosainscooter.it` come Homepage URL e `https://www.bosainscooter.it/api/auth/callback/github` come Authorization callback URL.
+3. Copiare Client ID e un nuovo Client Secret nelle variabili protette dell'ambiente interessato. GitHub mostra il secret soltanto al momento della generazione.
+4. Generare `BETTER_AUTH_SECRET` con `npx auth@latest secret` oppure `openssl rand -base64 32`; non riutilizzarlo tra ambienti che hanno database separati.
+5. Recuperare l'ID GitHub numerico dell'amministratore dalla risposta autenticata `GET https://api.github.com/user` o dal profilo API pubblico e impostarlo come `ADMIN_GITHUB_USER_ID`.
+6. Abilitare `ADMIN_DASHBOARD_ENABLED=true` soltanto dopo aver configurato tutte le variabili precedenti e applicato le migration.
+
+Better Auth richiede per GitHub gli scope `read:user` e `user:email`. Conserva il profilo amministrativo, i token OAuth cifrati e i metadati di sessione previsti dallo schema. Le sessioni scadono dopo otto ore e i record di sessione/verifica scaduti vengono rimossi al successivo accesso admin o OAuth.
 
 ## Configurazione Neon e migration
 
@@ -54,7 +70,13 @@ Copiare `.env.example` in un file d’ambiente locale non versionato e valorizza
    npm run dev
    ```
 
-La persistenza usa due tabelle. `research_responses` contiene il questionario e non contiene email; l’eventuale email è salvata in `contact_requests`. Le due tabelle restano collegabili tramite la foreign key interna `research_response_id`, e i due inserimenti avvengono nella stessa transazione. Gli UUID non vengono restituiti al browser. L’invio di notifiche email non fa parte di questa implementazione.
+La persistenza usa due tabelle. `research_responses` contiene il questionario e non contiene email; l'eventuale email è salvata in `contact_requests`. Le due tabelle restano collegabili tramite la foreign key interna `research_response_id`, e i due inserimenti avvengono nella stessa transazione. Gli UUID non vengono restituiti al browser. L'invio di notifiche email non fa parte di questa implementazione.
+
+## Hosting Vercel
+
+`vercel.json` fissa le funzioni server nella regione `fra1` di Francoforte, vicina al database Neon in `eu-central-1`. Gli asset statici restano distribuiti tramite la rete edge globale di Vercel. Il progetto assume che non sia configurato alcun Log Drain: prima di abilitarne uno occorre documentare fornitore, dati esportati, retention, ruolo privacy e trasferimenti.
+
+Verificare nel progetto Vercel che tutte le variabili siano presenti nel corretto ambiente. Preview e Production devono avere credenziali e database separati quando vengono entrambi abilitati. Controllare il piano Vercel attivo per registrare la retention effettiva dei Runtime Logs.
 
 ## Blocco prima della produzione
 
@@ -63,9 +85,11 @@ Il modulo non può essere attivato in produzione finché:
 1. il provider non è stato scelto;
 2. è stato verificato il luogo di conservazione e trattamento;
 3. è stato chiarito e documentato il suo ruolo privacy;
-4. è stato sottoscritto l’eventuale accordo sul trattamento dei dati;
-5. `/it/privacy` e `/en/privacy` sono state aggiornate con dati reali;
-6. è stato definito e implementato un processo effettivo di cancellazione, anonimizzazione irreversibile o rinnovo documentato della necessità.
+4. sono stati verificati o sottoscritti i DPA applicabili di Neon e Vercel, inclusi sub-responsabili e trasferimenti;
+5. `DATA_PROVIDER_TRANSFER_SAFEGUARDS` descrive soltanto garanzie realmente applicabili;
+6. la configurazione OAuth GitHub, gli scope e l'account autorizzato sono stati verificati;
+7. `/it/privacy` e `/en/privacy` riportano dati reali e coerenti con il deploy;
+8. è stato definito e implementato un processo effettivo di cancellazione, anonimizzazione irreversibile o rinnovo documentato della necessità.
 
 `reviewAfter` è una scadenza operativa di revisione fissata a 24 mesi, non una cancellazione automatica. Il sistema di storage definitivo deve eseguire e documentare l’esito della revisione.
 

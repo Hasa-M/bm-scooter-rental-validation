@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { GithubSignInButton } from "@/components/admin/auth-buttons";
 import { getAdminAccess } from "@/lib/admin/access";
 import { headers } from "next/headers";
@@ -21,6 +22,10 @@ export default async function AdminLoginPage({
         <p className="admin-eyebrow">Area riservata</p>
         <h1>Dashboard amministrativa</h1>
         <p>L&apos;accesso &egrave; consentito esclusivamente all&apos;account GitHub autorizzato.</p>
+        <p>
+          L&apos;accesso usa cookie tecnici e tratta i dati del profilo e della sessione descritti
+          nell&apos; <Link href="/it/privacy">informativa privacy</Link>.
+        </p>
         {error ? <p className="admin-error">Account non autorizzato o accesso annullato.</p> : null}
         <GithubSignInButton />
       </section>

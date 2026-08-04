@@ -332,24 +332,30 @@ export const enPages: PageContent[] = [
         heading: "Data, purposes and lawful bases",
         body: [
           "For validation we collect requested period, scooter quantity, age range, 50cc/125cc preference, stay location, origin macro-region and whether the licence has been held for more than five years. We do not ask for a name, exact age, address or documents. An optional notes field is available with a 500-character limit and must not contain sensitive data.",
-          "Responses are designed not to identify a person directly and are used to measure demand, seasonality and product fit. Any technical data strictly required for security and operation is processed under the controller's legitimate interests, GDPR Article 6(1)(f), following a necessity and balancing assessment.",
+          "Responses are designed not to identify a person directly and are used to measure demand, seasonality and interest in the service. These data and technical metadata required for delivery, security and abuse prevention are processed under the controller's legitimate interests, GDPR Article 6(1)(f), following a necessity and balancing assessment.",
+          "As hosting provider, Vercel may process each visitor's IP address, approximate location derived from the IP address, request URL and parameters, date and time, response status, execution region and user-agent. These data are not added to the research response or used by the controller for profiling or advertising.",
           "If you voluntarily request contact, we collect your email on the basis of consent under Article 6(1)(a). Consent is separate, optional and withdrawable. If you later make a specific availability or information request, necessary data may be processed to take pre-contractual steps at your request under Article 6(1)(b).",
+          "The administration area is restricted to one authorised GitHub account. GitHub ID, name, email, email-verification status, profile image, OAuth scopes, encrypted OAuth tokens, session token and timestamps, IP address and user-agent are processed for authentication, access control and security. The lawful basis is the controller's legitimate interest in protecting and administering the service under Article 6(1)(f) GDPR.",
         ],
       },
       {
         heading: "Required and optional data",
         body: [
           "The fields without direct identifiers and confirmation that the notice was read are required to submit a response. Notes, contact, email and related consent are always optional. Without contact, the form does not display or submit an email address.",
+          "OAuth and session data are required only for the administrator who chooses to access the restricted area; the public website does not require a GitHub account.",
         ],
       },
       {
         heading: "Recipients and providers",
-        body: [],
+        body: [
+          "Responses and contact requests can be viewed only by the controller through a protected dashboard and are not sold or used for advertising. Technical providers may process only the data needed to provide the database, hosting, security and authentication services under the roles and agreements described below.",
+        ],
       },
       {
         heading: "Transfers outside the EEA",
         body: [
-          "No international transfers through the form will take place until the actual processing location and applicable safeguards have been verified and described in the preceding section. If the provider processes data outside the European Economic Area, this notice will state the safeguards that actually apply.",
+          "The database is configured in the region stated above. Vercel uses a global edge network, and GitHub also processes data in the United States and other countries. Transfers subject to the GDPR rely, according to the service and applicable agreement, on adequacy decisions such as the EU-US Data Privacy Framework and/or the European Commission's Standard Contractual Clauses.",
+          "The form remains disabled unless the safeguards actually verified for the database provider have been configured.",
         ],
       },
       {
@@ -357,6 +363,8 @@ export const enPages: PageContent[] = [
         body: [
           "Raw responses are used for market research and undergo a documented necessity review at least every 24 months. If an individual record is no longer necessary, it is erased or converted into genuinely anonymous aggregate data. Irreversibly anonymous statistics may be retained without a fixed end date.",
           "Email addresses are kept only while needed to communicate service availability or until consent is withdrawn. Necessity is reviewed at least every 24 months; if the purpose is no longer current, the email is erased or renewed consent is requested. The absence of an erasure request does not justify unlimited retention.",
+          "Administrative sessions have an eight-hour expiry that may be refreshed while in use. They are deleted on sign-out or, once expired, on the next administrative or OAuth request. Expired OAuth verification records are removed in the same way. The GitHub profile, linked account and encrypted OAuth tokens are kept while administrative access remains authorised and necessary.",
+          "Vercel technical logs follow the native retention of the active plan and are not exported through a Log Drain. Any change to the plan, retention or log destination requires a new assessment and an update to this notice.",
         ],
       },
       {
@@ -369,13 +377,14 @@ export const enPages: PageContent[] = [
       {
         heading: "Cookies and analytics",
         body: [
-          "The site does not install third-party analytics or non-essential cookies. Only technical data necessary for operation and security may exist. Before any non-essential tool is introduced, this notice must be updated and a valid user choice collected where required.",
+          "The site does not install third-party analytics or non-essential cookies. The administration area uses a first-party session cookie that is HttpOnly, Secure in production and SameSite=Lax, with an eight-hour expiry, plus a short-lived cookie that protects the OAuth flow. These cookies are strictly necessary and are not used for profiling or advertising.",
+          "Before any non-essential tool, analytics or other tracking is introduced, this notice must be updated and a valid user choice collected where required.",
         ],
       },
       {
         heading: "Updates",
         body: [
-          "This notice must be updated whenever the controller, contacts, providers, purposes, lawful bases, retention periods or tracking technologies change. Organisational review: August 2026.",
+          "This notice must be updated whenever the controller, contacts, providers, purposes, lawful bases, retention periods or tracking technologies change. Last organisational review: 4 August 2026.",
         ],
       },
     ],
