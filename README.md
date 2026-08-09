@@ -10,7 +10,7 @@ The application is designed to answer a concrete business question: is there eno
 
 It supports that goal by:
 
-- presenting the service hypothesis in Italian and English;
+- presenting the service hypothesis in Italian, English, and French;
 - publishing locally focused commercial and informational content;
 - collecting structured demand signals such as dates, vehicle type, party size, and visitor origin;
 - keeping optional contact details separate from research answers;
@@ -24,7 +24,7 @@ It supports that goal by:
 - **Fail-closed configuration:** submissions return a generic `503` response and persist nothing when the database or required privacy-provider metadata is incomplete.
 - **Defence-in-depth admin access:** the dashboard is feature-gated and restricted to one configured GitHub account. Better Auth sessions are database-backed, OAuth tokens are encrypted, and protected data repositories repeat the authorization check.
 - **Server-first architecture:** public content is statically generated where possible, while form submission, authentication, and administrative queries remain server-side.
-- **International SEO:** canonical URLs, `hreflang`, metadata, JSON-LD, sitemap, robots directives, breadcrumbs, and social previews are generated centrally for both locales.
+- **International SEO:** canonical URLs, `hreflang`, metadata, JSON-LD, sitemap, robots directives, breadcrumbs, and social previews are generated centrally for all three locales.
 - **Operationally explicit data lifecycle:** records include a 24-month review date. This is an operational review deadline, not an automatic deletion claim.
 
 ## Architecture
@@ -164,7 +164,7 @@ The test suite covers input validation, database constraints and transactional b
 ```text
 app/          Next.js routes, API handlers, metadata, and admin pages
 components/   Public and administrative React components
-content/      Typed Italian and English page content
+content/      Typed Italian, English, and French page content
 docs/         SEO, content, launch, and privacy operations notes
 drizzle/      Versioned PostgreSQL migrations
 lib/          Domain logic, configuration, persistence, auth, and SEO utilities

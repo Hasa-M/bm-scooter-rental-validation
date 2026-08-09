@@ -1,4 +1,4 @@
-export type Locale = "it" | "en";
+export type Locale = "it" | "en" | "fr";
 export type SourceLink = { label: string; href: string };
 export type Section = { heading: string; body: string[]; bullets?: string[]; sources?: SourceLink[] };
 export type Faq = { question: string; answer: string };

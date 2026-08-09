@@ -28,12 +28,12 @@ export const businessConfig = {
 
     seasonalRates: [
       {
-        period: { it: "Bassa stagione (maggio, giugno, ottobre)", en: "Low season (May, June, October)" },
+        period: { it: "Bassa stagione (maggio, giugno, ottobre)", en: "Low season (May, June, October)", fr: "Basse saison (mai, juin, octobre)" },
         fullDay: 55,
         sevenDays: 360,
       },
       {
-        period: { it: "Alta stagione (luglio, agosto, settembre)", en: "High season (July, August, September)" },
+        period: { it: "Alta stagione (luglio, agosto, settembre)", en: "High season (July, August, September)", fr: "Haute saison (juillet, août, septembre)" },
         fullDay: 65,
         sevenDays: 425,
       },

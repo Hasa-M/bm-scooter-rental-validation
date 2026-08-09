@@ -6,7 +6,7 @@ const root = new URL("../", import.meta.url);
 const read = (path) => readFile(new URL(path, root), "utf8");
 
 test("content entries use unique primary keywords per locale", async () => {
-  for (const locale of ["it", "en"]) {
+  for (const locale of ["it", "en", "fr"]) {
     const source = await read("content/" + locale + "/index.ts");
     const keywords = [...source.matchAll(/primaryKeyword:\s*"([^"]+)"/g)].map((match) => match[1].toLowerCase());
     assert.ok(keywords.length >= 12, locale + " has at least 12 mapped pages");
@@ -24,6 +24,7 @@ test("metadata creates canonical, hreflang, descriptions and indexable robots", 
   assert.match(metadata, /modifiedTime:\s*page\.lastModified/);
   assert.match(hreflang, /"it-IT"/);
   assert.match(hreflang, /"en"/);
+  assert.match(hreflang, /"fr-FR"/);
   assert.match(hreflang, /"x-default"/);
   assert.match(hreflang, /canonical/);
 });
@@ -79,7 +80,7 @@ test("shared validation form separates research without direct identifiers from 
   assert.match(source, /name="contactConsent"/);
   assert.match(source, /name="privacyNoticeAcknowledged"/);
   assert.match(source, /name="notes" maxLength=\{500\}/);
-  assert.ok(source.includes('href={"/" + locale + "/privacy"}'));
+  assert.match(source, /confidentialite/);
   assert.doesNotMatch(source, /name="name"|name="age"|privacyConsent|defaultChecked/);
   assert.doesNotMatch(source, /localStorage/);
 });
@@ -144,9 +145,10 @@ test("localized content states provisional commercial and rental requirements", 
 
 test("availability API returns language-aware customer messages", async () => {
   const source = await read("app/api\/availability/route.ts");
-  assert.match(source, /data\.language !== "en"/);
+  assert.match(source, /locale === "fr"/);
   assert.match(source, /Completa tutti i campi obbligatori/);
   assert.match(source, /Please complete all required fields/);
+  assert.match(source, /Veuillez remplir tous les champs obligatoires/);
 });
 
 test("UI refinements and centralized image registry are present", async () => {
@@ -267,4 +269,21 @@ test("privacy configuration and pages disclose controller and provider gate", as
   assert.match(combined, /GitHub/);
   assert.match(combined, /Garante|Italian Data Protection Authority/);
   assert.doesNotMatch(it + en, /\[RAGIONE SOCIALE\]|streetAddress|PostHog/);
+});
+
+test("French pages are complete and wired into international SEO", async () => {
+  const fr = await read("content/fr/index.ts");
+  const content = await read("lib/content/index.ts");
+  const sitemap = await read("app/sitemap.ts");
+  const metadata = await read("lib/seo/metadata.ts");
+  const images = await read("lib/config/images.ts");
+
+  assert.match(content, /fr: frPages/);
+  assert.match(sitemap, /locales.flatMap/);
+  assert.match(metadata, /fr_FR/);
+  assert.match(images, /location-scooter-bosa/);
+  assert.match(fr, /location scooter Bosa/i);
+  assert.match(fr, /slug: "confidentialite"/);
+  assert.match(fr, /en cours de validation/i);
+  assert.ok([...fr.matchAll(/primaryKeyword:\s*"([^"]+)"/g)].length >= 12);
 });

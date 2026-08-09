@@ -34,4 +34,4 @@ La mappa assegna un intento e una keyword primaria distinti a ogni URL. Title, H
 - Homepage e pagina commerciale potrebbero competere se la homepage viene ottimizzata per “noleggio scooter Bosa”. Mantenerla sul tema più ampio “scooter a Bosa” e usare la commerciale come unica destinazione transazionale.
 - Bosa e Bosa Marina devono avere contenuti e logistica realmente distinti. Se non emerge un’offerta specifica per la marina, valutare di accorpare la pagina.
 - Le guide “senza auto” e “come muoversi” si sovrappongono: la prima deve restare una guida di pianificazione vacanza, la seconda un confronto dei mezzi.
-- Le versioni inglesi sono equivalenti linguistiche collegate da hreflang e canonical autoreferenziale, non nuove pagine da differenziare artificialmente.
+- Le versioni inglesi e francesi sono equivalenti linguistiche collegate da hreflang e canonical autoreferenziale, non nuove pagine da differenziare artificialmente.

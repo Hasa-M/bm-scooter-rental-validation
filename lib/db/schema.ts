@@ -113,7 +113,7 @@ export const researchResponses = pgTable(
       "research_responses_origin_area_check",
       sql`${table.originArea} in ('sardinia', 'italy', 'eu', 'europe-non-eu', 'north-america', 'other')`,
     ),
-    check("research_responses_language_check", sql`${table.language} in ('it', 'en')`),
+    check("research_responses_language_check", sql`${table.language} in ('it', 'en', 'fr')`),
     check(
       "research_responses_purpose_check",
       sql`${table.researchPurpose} = 'market-validation'`,

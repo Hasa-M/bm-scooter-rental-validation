@@ -15,8 +15,10 @@ export function createMetadata(locale: Locale, page: PageContent): Metadata {
     robots: { index: true, follow: true },
     openGraph: {
       ...openGraphType,
-      locale: locale === "it" ? "it_IT" : "en_GB",
-      alternateLocale: locale === "it" ? ["en_GB"] : ["it_IT"],
+      locale: { it: "it_IT", en: "en_GB", fr: "fr_FR" }[locale],
+      alternateLocale: ["it_IT", "en_GB", "fr_FR"].filter(
+        (candidate) => candidate !== { it: "it_IT", en: "en_GB", fr: "fr_FR" }[locale],
+      ),
       siteName: "Bosa in Scooter",
       title: page.title,
       description: page.description,

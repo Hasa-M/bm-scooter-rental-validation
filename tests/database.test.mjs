@@ -39,6 +39,7 @@ test("migration enforces the foreign key, cascade, limits, checks and submitted 
   assert.match(migration, /scooters" between 1 and 3/);
   assert.match(migration, /vehicle_type" in \('50cc', '125cc'\)/);
   assert.match(migration, /language" in \('it', 'en'\)/);
+  assert.match(migration, /language" in \('it', 'en', 'fr'\)/);
   assert.match(migration, /research_purpose" = 'market-validation'/);
   assert.match(migration, /purpose" = 'service-availability-contact'/);
   assert.match(migration, /CREATE INDEX "research_responses_submitted_at_idx".*"submitted_at"/);

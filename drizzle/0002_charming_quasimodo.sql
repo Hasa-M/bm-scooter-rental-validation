@@ -1,0 +1,2 @@
+ALTER TABLE "research_responses" DROP CONSTRAINT "research_responses_language_check";--> statement-breakpoint
+ALTER TABLE "research_responses" ADD CONSTRAINT "research_responses_language_check" CHECK ("research_responses"."language" in ('it', 'en', 'fr'));

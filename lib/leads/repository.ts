@@ -12,7 +12,7 @@ export type ResearchResponse = {
   stayLocation: ServiceLocation;
   originArea: OriginArea;
   notes?: string;
-  language: "it" | "en";
+  language: "it" | "en" | "fr";
   submittedAt: string;
   researchPurpose: "market-validation";
   /** Operational review deadline; this field does not trigger automatic deletion. */
