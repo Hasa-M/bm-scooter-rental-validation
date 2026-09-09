@@ -2,7 +2,7 @@
 
 Deployed site: **https://www.bosainscooter.it/it**
 
-Monitoring Platform: **https://www.bosainscooter.it/admin**
+Monitoring platform: https://www.bosainscooter.it/admin
 
 A bilingual market-validation platform for a potential 50cc and 125cc scooter rental service in Bosa, Sardinia.
 
